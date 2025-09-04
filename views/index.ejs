@@ -1,30 +1,42 @@
 <%- include('partials/header') %>
 
-<!-- HERO -->
+<!-- HERO SLIDER -->
 <section class="relative mb-12 bg-gradient-to-r from-white to-brand/5">
   <div class="px-6 py-12 md:py-20">
     <div class="max-w-6xl mx-auto text-center">
       <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight text-brand leading-snug">
-        Viví el deporte en vivo
+        Manuel Figueroa Viajes
       </h2>
       <div class="w-16 h-1 mx-auto bg-accent rounded mt-2 mb-6"></div>
     </div>
 
-    <!-- Banner -->
-    <div class="relative w-full flex justify-center">
-      <div class="relative w-full sm:w-4/5 md:w-3/4 lg:w-3/4">
-        <a href="/f1" class="block relative overflow-hidden rounded-2xl transition-transform transform hover:scale-[1.02]">
-          <img src="/images/f1.jpeg" alt="Fórmula 1" class="w-full h-80 object-cover rounded-2xl" />
-          <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
-            <h3 class="text-4xl sm:text-5xl font-extrabold mb-4">Fórmula 1</h3>
-            <span
-              class="inline-block text-lg font-semibold text-white bg-accent px-6 py-3 rounded-full shadow-md 
-                     hover:bg-accent/90 hover:scale-[1.04] transform transition-all duration-300">
-              Encontrá tu entrada
-            </span>
+    <!-- Slider -->
+    <div class="relative max-w-6xl mx-auto">
+      <div id="heroSlider" class="overflow-hidden relative rounded-2xl">
+        <% if (heroImages && heroImages.length) { %>
+          <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
+            <% heroImages.forEach((imgUrl) => { %>
+              <div class="min-w-full relative">
+                <img src="<%= imgUrl %>" alt="Hero Image" class="w-full h-80 object-cover rounded-2xl" />
+                <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
+                  <!-- optional overlay text if needed -->
+                </div>
+              </div>
+            <% }) %>
           </div>
-        </a>
+        <% } else { %>
+          <!-- fallback image -->
+          <img src="/images/f1.jpeg" alt="Fórmula 1" class="w-full h-80 object-cover rounded-2xl" />
+        <% } %>
       </div>
+
+      <!-- Slider navigation buttons -->
+      <button id="prevSlide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-brand/50 text-white p-2 rounded-full hover:bg-brand/80 transition-colors">
+        &#10094;
+      </button>
+      <button id="nextSlide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-brand/50 text-white p-2 rounded-full hover:bg-brand/80 transition-colors">
+        &#10095;
+      </button>
     </div>
   </div>
 </section>
@@ -79,3 +91,30 @@
 </div>
 
 <%- include('partials/footer') %>
+
+<!-- Slider JS -->
+<script>
+  const sliderInner = document.getElementById('sliderInner');
+  const slides = sliderInner ? sliderInner.children : [];
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    sliderInner.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  document.getElementById('prevSlide')?.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+    showSlide(currentIndex);
+  });
+
+  document.getElementById('nextSlide')?.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  });
+
+  // Optional: auto-slide every 5 seconds
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }, 5000);
+</script>
