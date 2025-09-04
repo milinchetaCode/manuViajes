@@ -1,0 +1,40 @@
+<header class="bg-white py-5 px-4 shadow-md">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+
+    <!-- Logo (izquierda) -->
+    <h1 class="text-2xl font-bold flex items-center gap-2">
+      <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200">
+        <img 
+          src="/images/logoq.png" 
+          alt="Qualy Tours Logo" 
+          title="Qualy Tours" 
+          class="max-h-14 w-auto object-contain" 
+        />
+      </a>
+    </h1>
+
+    <!-- Botón Hoteles Online (centro) -->
+    <div class="my-2 md:my-0 flex justify-center w-full md:w-auto">
+      <a href="/hoteles" 
+         class="bg-red-600 text-white font-semibold text-base px-6 py-2 rounded-full shadow-lg cursor-pointer hover:bg-red-700 transition-colors">
+        Hoteles Online
+      </a>
+    </div>
+
+    <!-- Navegación (derecha) -->
+    <nav class="flex flex-col md:flex-row items-center gap-3 text-center">
+      <!-- Quiénes somos - smaller button style -->
+      <a href="/about" 
+         class="bg-red-600 text-white font-semibold text-sm px-3 py-1 rounded-full shadow-lg cursor-pointer hover:bg-red-700 transition-colors <%= currentPage === 'about' ? 'font-bold' : '' %>">
+        Quiénes somos
+      </a>
+
+      <!-- FAQ - smaller button style -->
+      <a href="/faq" 
+         class="bg-red-600 text-white font-semibold text-sm px-3 py-1 rounded-full shadow-lg cursor-pointer hover:bg-red-700 transition-colors <%= currentPage === 'faq' ? 'font-bold' : '' %>">
+        FAQ
+      </a>
+    </nav>
+
+  </div>
+</header>

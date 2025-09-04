@@ -1,0 +1,104 @@
+<%- include('partials/header') %>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiénes somos - Qualy Tours</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1D4ED8',
+            accent: '#22C55E',
+            customRed: '#DC2626',
+            darkGray: '#333333'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: white;
+      background-image: none;
+    }
+  </style>
+</head>
+<body class="text-gray-800 font-sans">
+
+<main class="bg-gray-50 min-h-screen py-10">
+  <div class="container mx-auto px-4">
+
+    <!-- Page Title -->
+    <h1 class="text-4xl font-bold text-center text-darkGray mb-8">
+      ¿Quiénes somos?
+    </h1>
+
+    <!-- Tickets y Accesos Exclusivos -->
+    <section class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mb-8">
+      <h2 class="text-2xl font-semibold text-customRed mb-4">
+        Tickets y Accesos Exclusivos: La Tecnología al Servicio de tu Pasión
+      </h2>
+      <p class="mb-4 text-gray-800 leading-relaxed">
+        En Qualy Tours, entendemos que el acceso al evento es el corazón de la experiencia. Por ello, hemos desarrollado un departamento especializado en la venta de tickets que nos distingue en el mercado.
+      </p>
+      <p class="mb-4 text-gray-800 leading-relaxed">
+        Gracias a una robusta integración tecnológica, conectamos nuestra plataforma con los sitios de venta de tickets oficiales más importantes del mundo. Esta tecnología nos permite garantizar a nuestros clientes el acceso a una variedad de entradas y ubicaciones que, de otro modo, serían difíciles de conseguir.
+      </p>
+      <ul class="list-disc pl-6 space-y-2 mb-4 text-gray-800">
+        <li><strong>Acceso Garantizado:</strong> Olvídate de los intermediarios. Al trabajar exclusivamente con fuentes oficiales, aseguramos la validez de cada entrada y evitamos sorpresas de último momento.</li>
+        <li><strong>Variedad sin Precedentes:</strong> Nuestra tecnología nos brinda acceso a un inventario global, permitiéndonos ofrecer desde entradas estándar hasta los accesos VIP más exclusivos y codiciados en los eventos deportivos más grandes del planeta.</li>
+        <li><strong>Transparencia y Seguridad:</strong> Cada compra es procesada con la máxima seguridad, brindándote la tranquilidad de que tu inversión está protegida.</li>
+      </ul>
+      <p class="text-gray-800 leading-relaxed">
+        Este departamento no es solo un servicio, es una promesa de que vivirás cada evento en la mejor ubicación posible, con la confianza y el respaldo que solo Qualy Tours puede ofrecer.
+      </p>
+    </section>
+
+    <!-- Experiencias Exclusivas y Acompañadas -->
+    <section class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mb-8">
+      <h2 class="text-2xl font-semibold text-customRed mb-4">
+        Experiencias Exclusivas y Acompañadas
+      </h2>
+      <p class="mb-4 text-gray-800 leading-relaxed">
+        En Qualy Tours, cada viaje es una experiencia cuidadosamente planificada. Ofrecemos salidas acompañadas, garantizando que cada detalle, desde la logística hasta los accesos más exclusivos, sea manejado por expertos. Nos aseguramos de que cada viaje sea una vivencia fluida, segura y verdaderamente inolvidable.
+      </p>
+      <p class="text-gray-800 leading-relaxed">
+        Somos más que una agencia de viajes; somos el puente entre tu pasión por el deporte y la realidad de vivirla en primera fila, con la calidad y la exclusividad que solo una trayectoria desde 2008 puede ofrecer.
+      </p>
+    </section>
+
+    <!-- CTA -->
+    <div class="text-center mt-10">
+      <h3 class="text-2xl font-bold text-darkGray mb-2">
+        ¿Quieres saber más sobre nosotros?
+      </h3>
+      <p class="mb-4 text-gray-800">
+        Estamos aquí para ayudarte a vivir tu pasión deportiva en primera fila.
+      </p>
+      <a
+        href="https://wa.me/5491166891154?text=<%= encodeURIComponent(
+          'Hola, quiero más información sobre Qualy Tours y sus servicios.'
+        ) %>"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 bg-customRed hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold shadow-lg transition-all duration-200 transform hover:scale-105"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="white" viewBox="0 0 24 24">
+          <path d="M20.52 3.48A11.96 11.96 0 0 0 12 0C5.373 0 0 5.373 0 12a11.96 11.96 0 0 0 3.48 8.52l-1.72 6.48 6.48-1.72A11.96 11.96 0 0 0 12 24c6.627 0 12-5.373 12-12 0-3.2-1.2-6.2-3.48-8.52zm-8.52 17c-2.4 0-4.68-.88-6.48-2.32l-.48-.36-3.84 1.02 1.02-3.84-.36-.48A9.956 9.956 0 0 1 2 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.64-7.44c-.32-.16-1.88-.92-2.16-1.04s-.48-.16-.68.16-.78.92-.96 1.12-.36.24-.68.08a8.6 8.6 0 0 1-2.52-1.56 9.48 9.48 0 0 1-1.76-2.16c-.16-.32 0-.48.12-.64s.28-.36.42-.54.16-.28.24-.48.08-.32 0-.48c-.08-.16-.68-1.64-.92-2.24s-.48-.48-.68-.48-.32 0-.48 0a1.07 1.07 0 0 0-.8.36c-.28.28-1.08 1.08-1.08 2.64s1.12 3.08 1.28 3.28 2.16 3.44 5.28 4.8c.72.32 1.28.52 1.72.68.72.24 1.36.2 1.88.12.56-.08 1.88-.76 2.16-1.52.28-.76.28-1.44.2-1.52-.08-.08-.28-.12-.6-.28z"/>
+        </svg>
+        Contáctanos por WhatsApp
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>
+
+</body>
+</html>

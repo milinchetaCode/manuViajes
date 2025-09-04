@@ -1,0 +1,157 @@
+<%- include('partials/header') %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basket Tickets - Qualy Tours</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: '#1D4ED8', accent: '#22C55E' }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="text-gray-800 font-sans bg-white">
+
+<!-- HERO -->
+<div class="relative w-full h-56 md:h-72 bg-gray-900">
+  <img src="/images/basquet.jpeg" alt="Basketball" class="absolute inset-0 w-full h-full object-cover opacity-70">
+  <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-bold mb-2">Basket Tickets</h1>
+    <p class="text-lg md:text-xl">Encuentra y reserva tus entradas para los mejores partidos</p>
+  </div>
+</div>
+
+<div class="content-container px-4 py-8 max-w-5xl mx-auto">
+  <% if (!Array.isArray(events) || events.length === 0) { %>
+    <p class="text-center text-gray-600 italic">No events found.</p>
+  <% } else { %>
+    <ul id="events-list" class="divide-y divide-gray-200 border rounded-lg shadow-sm bg-white">
+      <% events.forEach(event => { %>
+        <li class="event-item hidden flex flex-col md:flex-row items-start md:items-center justify-between p-4 gap-4">
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-brand mb-1"><%= event.event_name || 'Evento sin nombre' %></h3>
+
+            <!-- Fecha y Hora -->
+            <p class="text-sm text-gray-600 mb-1">
+              📅 <%= event.date_start ? new Date(event.date_start).toLocaleDateString('es-ES', { day:'2-digit', month:'short', year:'numeric' }) : 'Fecha no disponible' %>
+              🕒 <%= event.date_start ? new Date(event.date_start).toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' }) : '' %>
+              <% if(event.date_stop) { %> - <%= new Date(event.date_stop).toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' }) %> <% } %>
+            </p>
+
+            <!-- Lugar -->
+            <p class="text-sm text-gray-500 mb-1">
+              📍 <%= event.venue_name || 'Lugar no especificado' %><% if(event.city) { %> - <%= event.city %><% } %>
+            </p>
+
+            <!-- Precio -->
+            <p class="text-sm text-green-700 font-semibold">
+              💶
+              <% if(event.min_ticket_price_eur && event.max_ticket_price_eur) { %>
+                €<%= event.min_ticket_price_eur %> - €<%= event.max_ticket_price_eur %>
+              <% } else if(event.min_ticket_price_eur) { %>
+                €<%= event.min_ticket_price_eur %>
+              <% } else { %>
+                No disponible
+              <% } %>
+            </p>
+          </div>
+
+          <!-- Botón Detalles -->
+          <div class="shrink-0">
+            <a href="/event/<%= event.event_id %>" class="inline-block text-sm text-white bg-accent px-4 py-2 rounded hover:bg-brand">
+              Ver detalles
+            </a>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+
+    <!-- Paginación -->
+    <div id="pagination" class="flex justify-center mt-6 gap-2 flex-wrap"></div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const itemsPerPage = 8;
+        let currentPage = 1;
+        const eventItems = Array.from(document.querySelectorAll('.event-item'));
+        const totalPages = Math.ceil(eventItems.length / itemsPerPage);
+        const maxButtons = 5;
+        const paginationEl = document.getElementById('pagination');
+
+        if (eventItems.length === 0) {
+          paginationEl.innerHTML = '';
+          return;
+        }
+
+        function showPage(page) {
+          const start = (page - 1) * itemsPerPage;
+          const end = start + itemsPerPage;
+          eventItems.forEach((el, i) => el.classList.toggle('hidden', i < start || i >= end));
+          renderPagination();
+        }
+
+        function createPageButton(pageNum) {
+          const btn = document.createElement('button');
+          btn.textContent = pageNum;
+          btn.className = `px-3 py-1 rounded ${pageNum === currentPage ? 'bg-brand text-white' : 'bg-gray-200'}`;
+          btn.addEventListener('click', () => { currentPage = pageNum; showPage(currentPage); });
+          return btn;
+        }
+
+        function createEllipsis() {
+          const span = document.createElement('span');
+          span.textContent = '...';
+          span.className = 'px-2 py-1';
+          return span;
+        }
+
+        function renderPagination() {
+          paginationEl.innerHTML = '';
+
+          const prevBtn = document.createElement('button');
+          prevBtn.textContent = 'Anterior';
+          prevBtn.className = 'bg-accent text-white px-3 py-1 rounded hover:bg-brand disabled:opacity-50';
+          prevBtn.disabled = currentPage === 1;
+          prevBtn.addEventListener('click', () => { currentPage--; showPage(currentPage); });
+          paginationEl.appendChild(prevBtn);
+
+          let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+          let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+          if (endPage - startPage < maxButtons - 1) startPage = Math.max(1, endPage - maxButtons + 1);
+
+          if (startPage > 1) {
+            paginationEl.appendChild(createPageButton(1));
+            if (startPage > 2) paginationEl.appendChild(createEllipsis());
+          }
+
+          for (let i = startPage; i <= endPage; i++) {
+            paginationEl.appendChild(createPageButton(i));
+          }
+
+          if (endPage < totalPages) {
+            if (endPage < totalPages - 1) paginationEl.appendChild(createEllipsis());
+            paginationEl.appendChild(createPageButton(totalPages));
+          }
+
+          const nextBtn = document.createElement('button');
+          nextBtn.textContent = 'Siguiente';
+          nextBtn.className = 'bg-accent text-white px-3 py-1 rounded hover:bg-brand disabled:opacity-50';
+          nextBtn.disabled = currentPage === totalPages;
+          nextBtn.addEventListener('click', () => { currentPage++; showPage(currentPage); });
+          paginationEl.appendChild(nextBtn);
+        }
+
+        showPage(currentPage);
+      });
+    </script>
+  <% } %>
+</div>
+</body>
+</html>
+<%- include('partials/footer') %>

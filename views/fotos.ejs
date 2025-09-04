@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Galería Admin - QualyTours</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Buttons */
+    button {
+      @apply transition-all duration-300 ease-in-out;
+    }
+    button:hover {
+      @apply shadow-lg;
+    }
+
+    /* Image Cards */
+    .image-card {
+      @apply bg-white rounded-lg shadow-md p-2 flex flex-col items-center transition-transform duration-200 hover:scale-105;
+    }
+    .image-card img {
+      @apply max-w-full h-40 object-cover rounded-lg mb-2;
+    }
+    .image-card p {
+      @apply text-gray-700 text-xs break-all truncate;
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      @apply bg-gray-50 p-6 rounded-lg shadow-md;
+    }
+
+    /* Fade-in animation for images */
+    .fade-in {
+      @apply opacity-0 transform translate-y-4 transition-all duration-700;
+    }
+    .fade-in.visible {
+      @apply opacity-100 translate-y-0;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-6 font-sans">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center mb-6 bg-white shadow-md rounded-lg p-4">
+    <h1 class="text-2xl font-bold text-green-800">Galería Admin - QualyTours</h1>
+    <div class="flex space-x-2">
+      <a href="/admin/panel" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded shadow-lg">Volver al Panel</a>
+      <a href="/admin/logout" class="text-red-600 hover:underline self-center">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <!-- Paquetes Gallery Section -->
+  <div class="gallery-section">
+    <h2 class="text-xl font-semibold mb-4 text-green-800">Paquetes Images</h2>
+
+    <!-- Upload Section with horizontal lines -->
+    <hr class="mb-4 border-gray-300">
+    <form action="/admin/photos/upload" method="POST" enctype="multipart/form-data" class="flex flex-col md:flex-row items-start md:items-center gap-4 mb-4">
+      <input type="hidden" name="folder" value="qualyTours/paquetes">
+      <input type="file" name="image" required class="border p-2 rounded">
+      <button type="submit" class="bg-green-700 hover:bg-brand/90 text-white px-4 py-2 rounded shadow-lg">Subir</button>
+      <p class="text-sm text-gray-600 mt-2 md:mt-0">Luego de subir la foto esperar unos segundos y refrescar la pagina.</p>
+    </form>
+    <hr class="mb-6 border-gray-300">
+
+    <!-- Image Grid -->
+    <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <% paquetesImages.forEach((img) => { %>
+        <div class="image-card fade-in">
+          <img src="<%= img.secure_url %>" alt="<%= img.public_id %>">
+          <p class="text-xs text-gray-700 break-all truncate"><%= img.secure_url %></p>
+          <div class="flex space-x-2 mt-2">
+            <button type="button" onclick="navigator.clipboard.writeText('<%= img.secure_url %>')" title="Copiar URL" class="bg-brand hover:bg-blue-500 text-white px-2 py-1 rounded text-sm">Copiar URL</button>
+            <form action="/admin/photos/delete" method="POST">
+              <input type="hidden" name="public_id" value="<%= img.public_id %>">
+              <button type="submit" title="Eliminar imagen" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded text-sm">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <script>
+    // Fade-in animation for images
+    window.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.fade-in');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, index * 100); // stagger effect
+      });
+    });
+  </script>
+
+</body>
+</html>

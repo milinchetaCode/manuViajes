@@ -1,0 +1,68 @@
+[
+  {
+    "id": "pkg1",
+    "eventName": "Formula 1 Grand Prix 2026",
+    "ticketPrice": 150,
+    "flightInfo": "Round trip from NYC to Monaco",
+    "hotelInfo": "5-star hotel, 3 nights",
+    "description": "Enjoy the full F1 weekend with tickets, flight, and luxury hotel.",
+    "availabilityDates": "2025-05-20 to 2025-05-25",
+    "visible": true,
+    "photo": "f1"
+  },
+  {
+    "id": "pkg2",
+    "eventName": "UEFA Champions League Final",
+    "ticketPrice": 200,
+    "flightInfo": "Round trip from London to Istanbul",
+    "hotelInfo": "4-star hotel, 2 nights",
+    "description": "Watch the CL final live with complete travel package.",
+    "availabilityDates": "2025-06-10 to 2025-06-15",
+    "visible": true,
+    "photo": "futbol"
+  },
+  {
+    "id": "pkg3",
+    "eventName": "Wimbledon Finals 2025",
+    "ticketPrice": 180,
+    "flightInfo": "Round trip from Paris to London",
+    "hotelInfo": "3-star hotel, 2 nights near the venue",
+    "description": "Experience the Wimbledon finals with ease and comfort.",
+    "availabilityDates": "2025-07-12 to 2025-07-14",
+    "visible": true,
+    "photo": "basquet"
+  },
+  {
+    "id": "pkg4",
+    "eventName": "NBA All-Star Weekend 2025",
+    "ticketPrice": 220,
+    "flightInfo": "Round trip from Toronto to Las Vegas",
+    "hotelInfo": "Luxury suite, 4 nights",
+    "description": "Basketball’s biggest stars in one place – travel and stay included.",
+    "availabilityDates": "2025-02-13 to 2025-02-17",
+    "visible": true,
+    "photo": "tenis"
+  },
+  {
+    "id": "pkg5",
+    "eventName": "Olympic Games Opening Ceremony",
+    "ticketPrice": 250,
+    "flightInfo": "Round trip from Madrid to Los Angeles",
+    "hotelInfo": "4-star hotel, 3 nights downtown",
+    "description": "Be part of the excitement at the Olympic opening ceremony.",
+    "availabilityDates": "2025-07-24 to 2025-07-27",
+    "visible": true,
+    "photo": "ciudad"
+  },
+  {
+    "id": "pkg6",
+    "eventName": "Super Bowl LIX",
+    "ticketPrice": 300,
+    "flightInfo": "Round trip from Berlin to Miami",
+    "hotelInfo": "5-star beachfront hotel, 4 nights",
+    "description": "The biggest night in American football – in style.",
+    "availabilityDates": "2025-02-02 to 2025-02-06",
+    "visible": true,
+    "photo": "playa"
+  }
+]

@@ -1,0 +1,40 @@
+<div class="relative mx-4 md:mx-12 overflow-hidden rounded-lg shadow-lg">
+  <div id="hero-slider" class="relative w-full h-64 md:h-96">
+    <% heroImages.forEach((img, index) => { %>
+      <div class="absolute inset-0 transition-opacity duration-1000 <% if(index !== 0) { %>opacity-0<% } %>">
+        <img src="<%= img.secure_url %>" alt="Hero Image <%= index+1 %>" class="w-full h-full object-contain mx-auto">
+      </div>
+    <% }) %>
+  </div>
+
+  <!-- Navigation buttons -->
+  <button id="prevSlide" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-green-700 text-white px-3 py-1 rounded opacity-75 hover:opacity-100">‹</button>
+  <button id="nextSlide" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-green-700 text-white px-3 py-1 rounded opacity-75 hover:opacity-100">›</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('#hero-slider > div');
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('opacity-0', i !== index);
+      slide.classList.toggle('opacity-100', i === index);
+    });
+  }
+
+  document.getElementById('nextSlide').addEventListener('click', () => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  });
+
+  document.getElementById('prevSlide').addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  });
+
+  setInterval(() => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  }, 5000);
+</script>
