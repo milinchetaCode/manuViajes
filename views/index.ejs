@@ -1,117 +1,129 @@
-<%- include('partials/header') %>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ManuViajes</title>
+  <link rel="stylesheet" href="/styles/output.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-bg text-text font-sans">
 
-<!-- HERO SLIDER -->
-<section class="relative mb-12 brand-gradient">
-  <div class="px-6 py-12 md:py-20">
-    <div class="max-w-6xl mx-auto text-center">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight text-white leading-snug">
-        Manuel Figueroa Viajes
-      </h2>
-      <div class="w-16 h-1 mx-auto bg-accent rounded mt-2 mb-6"></div>
-    </div>
+  <!-- Header -->
+  <%- include('partials/header') %>
 
-    <!-- Slider -->
-    <div class="relative max-w-6xl mx-auto">
-      <div id="heroSlider" class="overflow-hidden relative rounded-2xl">
-        <% if (heroImages && heroImages.length) { %>
-          <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
-            <% heroImages.forEach((imgUrl) => { %>
-              <div class="min-w-full relative">
-                <img src="<%= imgUrl %>" alt="Hero Image" class="w-full h-80 object-cover rounded-2xl" />
-                <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
-                  <!-- Optional overlay text if needed -->
-                </div>
-              </div>
-            <% }) %>
-          </div>
-        <% } else { %>
-          <img src="/images/f1.jpeg" alt="Fórmula 1" class="w-full h-80 object-cover rounded-2xl" />
-        <% } %>
+  <!-- HERO SLIDER -->
+  <section class="relative mb-12 brand-gradient">
+    <div class="px-6 py-12 md:py-20">
+      <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight text-white leading-snug">
+          Manuel Figueroa Viajes
+        </h2>
+        <div class="w-16 h-1 mx-auto bg-accent rounded mt-2 mb-6"></div>
       </div>
 
-      <!-- Slider navigation buttons -->
-      <button id="prevSlide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-brand/50 text-white p-2 rounded-full hover:bg-brand/80 transition-colors">
-        &#10094;
-      </button>
-      <button id="nextSlide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-brand/50 text-white p-2 rounded-full hover:bg-brand/80 transition-colors">
-        &#10095;
-      </button>
-    </div>
-  </div>
-</section>
+      <!-- Slider -->
+      <div class="relative max-w-6xl mx-auto">
+        <div id="heroSlider" class="overflow-hidden relative rounded-2xl">
+          <% if (heroImages && heroImages.length) { %>
+            <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
+              <% heroImages.forEach((imgUrl) => { %>
+                <div class="min-w-full relative">
+                  <img src="<%= imgUrl %>" alt="Hero Image" class="w-full h-80 object-cover rounded-2xl" />
+                  <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4"></div>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <img src="/images/f1.jpeg" alt="Fórmula 1" class="w-full h-80 object-cover rounded-2xl" />
+          <% } %>
+        </div>
 
-<!-- Paquetes turísticos -->
-<div class="px-4 md:px-6 lg:px-8">
-  <section class="mb-12">
-    <div class="text-center mb-8">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2 text-brand">
-        <i data-feather="package" class="w-6 h-6 text-accent"></i>
-        Paquetes turísticos
-      </h2>
-      <div class="w-16 h-1 mx-auto bg-accent rounded mt-2 mb-6"></div>
+        <!-- Slider navigation buttons -->
+        <button id="prevSlide" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-brand/50 text-white p-2 rounded-full hover:bg-brand/80 transition-colors">
+          &#10094;
+        </button>
+        <button id="nextSlide" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-brand/50 text-white p-2 rounded-full hover:bg-brand/80 transition-colors">
+          &#10095;
+        </button>
+      </div>
     </div>
-
-    <% if (packages && packages.length) { %>
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% packages.filter(pkg => pkg.visible).forEach(pkg => { %>
-          <li class="card transition-all duration-300 hover:shadow-xl">
-            <img 
-              src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
-              alt="<%= pkg.eventName %>"
-              class="w-full h-44 object-cover rounded-2xl border border-gray-200 mb-4"
-            />
-            <span class="badge-accent mb-2">Paquete</span>
-            <h3 class="text-xl font-bold tracking-tight text-text mb-2">
-              <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
-                <%= pkg.eventName %>
-              </a>
-            </h3>
-            <p class="text-sm text-text mb-1"><strong>📅 Fechas:</strong> <%= pkg.availabilityDates %></p>
-            <p class="text-lg font-bold text-accent mt-3">
-              <% if (pkg.ticketPrice) { %>
-                💶 u$d <%= pkg.ticketPrice.toLocaleString('es-ES') %>
-              <% } else { %>
-                Precio no disponible
-              <% } %>
-            </p>
-            <a href="/paquete/<%= pkg.id %>" class="btn-brand mt-3 inline-block">
-              Ver detalles
-            </a>
-          </li>
-        <% }) %>
-      </ul>
-    <% } else { %>
-      <p class="text-center text-text">No hay paquetes disponibles en este momento.</p>
-    <% } %>
   </section>
-</div>
 
-<%- include('partials/footer') %>
+  <!-- Paquetes turísticos -->
+  <div class="px-4 md:px-6 lg:px-8">
+    <section class="mb-12">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2 text-brand">
+          <i data-feather="package" class="w-6 h-6 text-accent"></i>
+          Paquetes turísticos
+        </h2>
+        <div class="w-16 h-1 mx-auto bg-accent rounded mt-2 mb-6"></div>
+      </div>
 
-<!-- Slider JS -->
-<script>
-  const sliderInner = document.getElementById('sliderInner');
-  const slides = sliderInner ? sliderInner.children : [];
-  let currentIndex = 0;
+      <% if (packages && packages.length) { %>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% packages.filter(pkg => pkg.visible).forEach(pkg => { %>
+            <li class="card transition-all duration-300 hover:shadow-xl">
+              <img 
+                src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
+                alt="<%= pkg.eventName %>"
+                class="w-full h-44 object-cover rounded-2xl border border-gray-200 mb-4"
+              />
+              <span class="badge-accent mb-2">Paquete</span>
+              <h3 class="text-xl font-bold tracking-tight text-text mb-2">
+                <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
+                  <%= pkg.eventName %>
+                </a>
+              </h3>
+              <p class="text-sm text-text mb-1"><strong>📅 Fechas:</strong> <%= pkg.availabilityDates %></p>
+              <p class="text-lg font-bold text-accent mt-3">
+                <% if (pkg.ticketPrice) { %>
+                  💶 u$d <%= pkg.ticketPrice.toLocaleString('es-ES') %>
+                <% } else { %>
+                  Precio no disponible
+                <% } %>
+              </p>
+              <a href="/paquete/<%= pkg.id %>" class="btn-brand mt-3 inline-block">
+                Ver detalles
+              </a>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-center text-text">No hay paquetes disponibles en este momento.</p>
+      <% } %>
+    </section>
+  </div>
 
-  function showSlide(index) {
-    if(slides.length === 0) return;
-    sliderInner.style.transform = `translateX(-${index * 100}%)`;
-  }
+  <%- include('partials/footer') %>
 
-  document.getElementById('prevSlide')?.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    showSlide(currentIndex);
-  });
+  <!-- Slider JS -->
+  <script>
+    const sliderInner = document.getElementById('sliderInner');
+    const slides = sliderInner ? sliderInner.children : [];
+    let currentIndex = 0;
 
-  document.getElementById('nextSlide')?.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  });
+    function showSlide(index) {
+      if(slides.length === 0) return;
+      sliderInner.style.transform = `translateX(-${index * 100}%)`;
+    }
 
-  setInterval(() => {
-    if(slides.length === 0) return;
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  }, 5000);
-</script>
+    document.getElementById('prevSlide')?.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(currentIndex);
+    });
+
+    document.getElementById('nextSlide')?.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    });
+
+    setInterval(() => {
+      if(slides.length === 0) return;
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }, 5000);
+  </script>
+</body>
+</html>
