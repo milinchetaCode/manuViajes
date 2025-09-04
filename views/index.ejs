@@ -19,7 +19,7 @@
               <div class="min-w-full relative">
                 <img src="<%= imgUrl %>" alt="Hero Image" class="w-full h-80 object-cover rounded-2xl" />
                 <div class="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-4">
-                  <!-- optional overlay text if needed -->
+                  <!-- Optional overlay text if needed -->
                 </div>
               </div>
             <% }) %>
@@ -99,6 +99,7 @@
   let currentIndex = 0;
 
   function showSlide(index) {
+    if(slides.length === 0) return;
     sliderInner.style.transform = `translateX(-${index * 100}%)`;
   }
 
@@ -112,8 +113,9 @@
     showSlide(currentIndex);
   });
 
-  // Optional: auto-slide every 5 seconds
+  // Auto-slide every 5 seconds
   setInterval(() => {
+    if(slides.length === 0) return;
     currentIndex = (currentIndex + 1) % slides.length;
     showSlide(currentIndex);
   }, 5000);
