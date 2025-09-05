@@ -13,9 +13,9 @@
   <%- include('partials/header') %>
 
   <!-- HERO -->
-  <section class="relative mb-16 brand-gradient">
+  <section class="relative mb-16">
     <div class="relative max-w-6xl mx-auto text-center py-20 px-6">
-      <h1 class="text-4xl md:text-5xl font-bold text-white leading-snug">
+      <h1 class="text-4xl md:text-5xl font-bold leading-snug">
         Helping you find your way
       </h1>
       <div class="divider"></div>
@@ -52,7 +52,7 @@
   <div class="px-4 md:px-6 lg:px-8">
     <section class="mb-16">
       <div class="text-center mb-10">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2 text-brand">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2">
           <i data-feather="package" class="w-6 h-6 text-accent"></i>
           Paquetes turísticos
         </h2>
@@ -69,12 +69,12 @@
                 class="w-full h-48 object-cover rounded-xl mb-4"
               />
               <span class="badge-accent mb-2 inline-block">Paquete</span>
-              <h3 class="text-xl font-bold tracking-tight text-text mb-2 font-serif">
+              <h3 class="text-xl font-bold tracking-tight mb-2 font-serif">
                 <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
                   <%= pkg.eventName %>
                 </a>
               </h3>
-              <p class="text-sm text-text mb-1"><strong>📅 Fechas:</strong> <%= pkg.availabilityDates %></p>
+              <p class="text-sm mb-1"><strong>📅 Fechas:</strong> <%= pkg.availabilityDates %></p>
               <p class="text-lg font-bold text-accent mt-3">
                 <% if (pkg.ticketPrice) { %>
                   💶 u$d <%= pkg.ticketPrice.toLocaleString('es-ES') %>
@@ -89,11 +89,12 @@
           <% }) %>
         </ul>
       <% } else { %>
-        <p class="text-center text-text">No hay paquetes disponibles en este momento.</p>
+        <p class="text-center">No hay paquetes disponibles en este momento.</p>
       <% } %>
     </section>
   </div>
 
+  <!-- Footer -->
   <%- include('partials/footer') %>
 
   <!-- Slider JS -->
