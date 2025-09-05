@@ -30,18 +30,21 @@
     <!-- Hero Slider -->
     <div class="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl">
       <div id="heroSlider" class="overflow-hidden relative">
-        <% if (heroImages && heroImages.length) { %>
-          <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
-            <% heroImages.forEach((imgUrl) => { %>
+        <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
+          <% if (heroImages && heroImages.length) { %>
+            <% heroImages.forEach(imgUrl => { %>
               <div class="min-w-full relative">
                 <img src="<%= imgUrl %>" alt="Hero Image" class="w-full h-[500px] object-cover" />
                 <div class="absolute inset-0 bg-black/30"></div>
               </div>
             <% }) %>
-          </div>
-        <% } else { %>
-          <img src="/images/f1.jpeg" alt="Fórmula 1" class="w-full h-[500px] object-cover" />
-        <% } %>
+          <% } else { %>
+            <div class="min-w-full relative">
+              <img src="/images/f1.jpeg" alt="Fórmula 1" class="w-full h-[500px] object-cover" />
+              <div class="absolute inset-0 bg-black/30"></div>
+            </div>
+          <% } %>
+        </div>
       </div>
 
       <!-- Slider navigation buttons -->
@@ -126,11 +129,12 @@
       showSlide(currentIndex);
     });
 
-    setInterval(() => {
-      if (slides.length === 0) return;
-      currentIndex = (currentIndex + 1) % slides.length;
-      showSlide(currentIndex);
-    }, 5000);
+    if (slides.length > 1) {
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+      }, 5000);
+    }
 
     feather.replace();
   </script>
