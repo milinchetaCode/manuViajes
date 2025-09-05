@@ -4,136 +4,135 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ManuViajes</title>
+
+  <!-- Tailwind compiled CSS -->
   <link rel="stylesheet" href="/styles/output.css">
+
+  <!-- Theme overrides (make sure theme.css exists) -->
+  <link rel="stylesheet" href="/styles/theme.css">
+
   <script src="https://unpkg.com/feather-icons"></script>
 </head>
+<body class="font-sans bg-brand text-light">
 
-<!-- inline fallback ensures navy shows immediately even before CSS loads -->
-<body style="background:#1A2238; color:#F7F7FA; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;">
-
-  <!-- Header partial (kept as partial) -->
+  <!-- Header -->
   <%- include('partials/header') %>
 
-  <div class="container">
+  <!-- HERO -->
+  <section class="relative mb-16">
+    <div class="relative max-w-6xl mx-auto text-center py-20 px-6">
+      <h1 class="text-4xl md:text-5xl font-bold leading-snug">
+        Manuel Figueroa Viajes
+      </h1>
+      <div class="divider"></div>
+    </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-inner">
-        <!-- Use your real title here -->
-        <h1 class="title">Manuel Figueroa Viajes</h1>
-        <div class="divider"></div>
-      </div>
-
-      <!-- Slider -->
-      <div class="hero-slider" aria-hidden="false">
-        <div id="heroSlider" class="slider-inner">
-          <% if (heroImages && heroImages.length) { %>
-            <div id="sliderInner" class="slides">
-              <% heroImages.forEach((imgUrl) => { %>
-                <div class="slide">
-                  <img src="<%= imgUrl %>" alt="Hero Image">
-                  <div class="overlay"></div>
-                </div>
-              <% }) %>
-            </div>
-          <% } else { %>
-            <div id="sliderInner" class="slides">
-              <div class="slide">
-                <img src="/images/f1.jpeg" alt="Fórmula 1">
-                <div class="overlay"></div>
+    <!-- Hero Slider -->
+    <div class="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl">
+      <div id="heroSlider" class="overflow-hidden relative">
+        <% if (heroImages && heroImages.length) { %>
+          <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
+            <% heroImages.forEach((imgUrl) => { %>
+              <div class="min-w-full relative">
+                <img src="<%= imgUrl %>" alt="Hero Image" class="w-full h-[500px] object-cover" />
+                <div class="absolute inset-0 bg-black/30"></div>
               </div>
-            </div>
-          <% } %>
-        </div>
-
-        <!-- arrows -->
-        <button id="prevSlide" class="slider-arrow left" aria-label="Previous slide">&#10094;</button>
-        <button id="nextSlide" class="slider-arrow right" aria-label="Next slide">&#10095;</button>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <img src="/images/f1.jpeg" alt="Fórmula 1" class="w-full h-[500px] object-cover" />
+        <% } %>
       </div>
-    </section>
 
-    <!-- Paquetes turísticos -->
-    <section class="packages">
-      <div class="section-head">
-        <h2>
-          <i data-feather="package" style="color:var(--accent);"></i>
+      <!-- Slider navigation buttons -->
+      <button id="prevSlide" class="absolute top-1/2 left-4 -translate-y-1/2 bg-white/20 text-white p-3 rounded-full hover:bg-accent hover:text-brand transition">
+        &#10094;
+      </button>
+      <button id="nextSlide" class="absolute top-1/2 right-4 -translate-y-1/2 bg-white/20 text-white p-3 rounded-full hover:bg-accent hover:text-brand transition">
+        &#10095;
+      </button>
+    </div>
+  </section>
+
+  <!-- Paquetes turísticos -->
+  <main class="px-4 md:px-6 lg:px-8">
+    <section class="mb-16">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2">
+          <i data-feather="package" class="w-6 h-6 text-accent"></i>
           Paquetes turísticos
         </h2>
         <div class="divider"></div>
       </div>
 
       <% if (packages && packages.length) { %>
-        <ul class="grid" role="list" aria-label="Paquetes">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <% packages.filter(pkg => pkg.visible).forEach(pkg => { %>
-            <li class="card" role="listitem">
+            <li class="card">
               <img 
                 src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
                 alt="<%= pkg.eventName %>"
+                class="w-full h-48 object-cover rounded-xl mb-4"
               />
-              <div style="display:flex; gap:8px; align-items:center;">
-                <span class="badge-accent">Paquete</span>
-              </div>
-
-              <h3>
-                <a href="/paquete/<%= pkg.id %>" style="color:inherit; text-decoration:none;">
+              <span class="badge-accent mb-2 inline-block">Paquete</span>
+              <h3 class="text-xl font-bold tracking-tight mb-2 font-serif text-brand">
+                <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
                   <%= pkg.eventName %>
                 </a>
               </h3>
-
-              <p><strong>📅 Fechas:</strong> <%= pkg.availabilityDates %></p>
-
-              <p class="price">
+              <p class="text-sm mb-1 text-brand">
+                <strong>📅 Fechas:</strong> <%= pkg.availabilityDates %>
+              </p>
+              <p class="text-lg font-bold text-accent mt-3">
                 <% if (pkg.ticketPrice) { %>
                   💶 u$d <%= pkg.ticketPrice.toLocaleString('es-ES') %>
                 <% } else { %>
                   Precio no disponible
                 <% } %>
               </p>
-
-              <a href="/paquete/<%= pkg.id %>" class="btn-brand">Ver detalles</a>
+              <a href="/paquete/<%= pkg.id %>" class="btn-brand mt-4 inline-block">
+                Ver detalles
+              </a>
             </li>
           <% }) %>
         </ul>
       <% } else { %>
-        <p style="text-align:center; color:rgba(247,247,250,0.9);">No hay paquetes disponibles en este momento.</p>
+        <p class="text-center">No hay paquetes disponibles en este momento.</p>
       <% } %>
     </section>
-  </div>
+  </main>
 
-  <!-- Footer partial -->
+  <!-- Footer -->
   <%- include('partials/footer') %>
 
   <!-- Slider JS -->
   <script>
-    feather.replace();
-
     const sliderInner = document.getElementById('sliderInner');
     const slides = sliderInner ? sliderInner.children : [];
     let currentIndex = 0;
 
-    function showSlide(index){
-      if (!sliderInner || slides.length === 0) return;
+    function showSlide(index) {
+      if (slides.length === 0) return;
       sliderInner.style.transform = `translateX(-${index * 100}%)`;
     }
 
     document.getElementById('prevSlide')?.addEventListener('click', () => {
-      if (!slides.length) return;
       currentIndex = (currentIndex - 1 + slides.length) % slides.length;
       showSlide(currentIndex);
     });
 
     document.getElementById('nextSlide')?.addEventListener('click', () => {
-      if (!slides.length) return;
       currentIndex = (currentIndex + 1) % slides.length;
       showSlide(currentIndex);
     });
 
-    // auto-advance
     setInterval(() => {
-      if (!slides.length) return;
+      if (slides.length === 0) return;
       currentIndex = (currentIndex + 1) % slides.length;
       showSlide(currentIndex);
     }, 5000);
+
+    feather.replace();
   </script>
 </body>
 </html>
