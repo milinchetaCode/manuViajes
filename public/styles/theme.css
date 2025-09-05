@@ -1,58 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+
 :root { 
-  --brand: #1A2238; 
-  --accent: #D4AF37; 
-  --bg: #F7F7FA; 
-  --text: #1f2937; 
+  --brand: #1A2238;   /* navy */
+  --accent: #D4AF37;  /* gold */
+  --bg: #f7f7fa;      /* light gray */
+  --text: #1f2937;    /* dark gray */
 }
 
 html, body {
   background: var(--bg);
   color: var(--text);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
+  line-height: 1.6;
 }
 
-/* Brand gradient */
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Brand gradient / hero background */
 .brand-gradient {
-  background: linear-gradient(135deg, #0f172a, #1A2238);
+  background: var(--brand);
+}
+
+/* Accent divider */
+.divider {
+  width: 60px;
+  height: 3px;
+  margin: 1rem auto;
+  background: var(--accent);
+  border-radius: 999px;
 }
 
 /* Card styling */
 .card {
   background: #fff;
   border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.05);
-  border: 1px solid rgba(17,24,39,.06);
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.05);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,.1);
 }
 
 /* Buttons */
 .btn-brand {
   background: var(--brand);
   color: #fff;
-  border-radius: .75rem;
-  padding: .6rem 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
   font-weight: 600;
-  transition: transform .05s ease, box-shadow .2s ease, background-color .2s ease;
+  transition: background .2s;
 }
 .btn-brand:hover {
-  background: #0e1626;
-  box-shadow: 0 8px 16px rgba(26,34,56,.25);
+  background: #0f172a;
 }
 
 .btn-accent {
-  background: #c8b273;       /* base color */
-  color: #111827;            /* text color, dark for contrast */
-  border-radius: .75rem;
-  padding: .6rem 1rem;
+  background: var(--accent);
+  color: #1A2238;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
   font-weight: 700;
-  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  transition: background .2s;
 }
-
 .btn-accent:hover {
-  background-color: #b49c5e;  /* slightly darker for hover */
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  background: #c19f32;
 }
-
 
 /* Badge */
 .badge-accent {
