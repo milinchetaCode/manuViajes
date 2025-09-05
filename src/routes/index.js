@@ -33,7 +33,11 @@ router.get("/", async (req, res) => {
         prefix: "ManuFigueroaViajes/HeroSlider/", // Cloudinary folder
         max_results: 50,
       });
+
+      console.log("Cloudinary folder contents:", result.resources); // <-- DEBUG
+
       heroImages = result.resources.map((img) => img.secure_url);
+      console.log("Hero images extracted:", heroImages); // <-- DEBUG
     } catch (err) {
       console.error("Cloudinary error:", err);
     }
