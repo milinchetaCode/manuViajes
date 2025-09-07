@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
     try {
       const result = await cloudinary.api.resources({
         type: "upload",
-        prefix: "ManuFigueroaViajes/HeroSlider/", // Cloudinary folder
+        prefix: "ManuFigueroaViajes/HeroSlider", // Cloudinary folder
         max_results: 50,
       });
 
