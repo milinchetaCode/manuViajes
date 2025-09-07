@@ -25,21 +25,20 @@ router.get("/", async (req, res) => {
       ...packagesObj[key],
     }));
 
-    // Dynamic Hero Images from Cloudinary
+    // Dynamic Hero Images from Cloudinary (fixed)
     let heroImages = [];
     try {
-      const result = await cloudinary.api.resources({
-        type: "upload",
-        prefix: "ManuFigueroaViajes/HeroSlider", // Cloudinary folder
-        max_results: 50,
-      });
+      const result = await cloudinary.search
+        .expression("folder:ManuFigueroaViajes/HeroSlider")
+        .sort_by("public_id", "desc")
+        .max_results(50)
+        .execute();
 
       console.log("Cloudinary folder contents:", result.resources); // <-- DEBUG
 
       heroImages = result.resources.map((img) => img.secure_url);
       console.log("Hero images extracted:", heroImages); // <-- DEBUG
 
-      // Optional: log each public_id
       result.resources.forEach((img, index) => {
         console.log(`Image ${index}: ${img.public_id}`);
       });
