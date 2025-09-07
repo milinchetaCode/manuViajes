@@ -24,7 +24,28 @@ if (missing.length > 0) {
 
 const app = express();
 app.disable('x-powered-by');
-app.use(helmet());
+
+// ✅ Custom Helmet config to allow Cloudinary images
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        baseUri: ["'self'"],
+        fontSrc: ["'self'", "https:", "data:"],
+        formAction: ["'self'"],
+        frameAncestors: ["'self'"],
+        imgSrc: ["'self'", "data:", "https://res.cloudinary.com"],
+        objectSrc: ["'none'"],
+        scriptSrc: ["'self'"],
+        scriptSrcAttr: ["'none'"],
+        styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+        upgradeInsecureRequests: [],
+      },
+    },
+  })
+);
+
 app.use(compression());
 app.use(morgan('combined'));
 app.use(rateLimiter);
