@@ -60,45 +60,73 @@ router.get('/admin/panel', isAuthenticated, async (req, res) => {
   }
 });
 
-// 🔒 Guardar cambios de paquetes y destacados (POST)
 router.post('/admin/panel', isAuthenticated, async (req, res) => {
   try {
     const paquetesForm = req.body.paquetes;
     const destacadosForm = req.body.destacados;
 
-    if (!paquetesForm || typeof paquetesForm !== 'object') {
-      throw new Error('Datos inválidos para paquetes.');
+    // Defensive checks
+    if (!paquetesForm || typeof paquetesForm !== 'object' || Object.keys(paquetesForm).length === 0) {
+      return res.status(400).send('No hay datos de paquetes para guardar.');
     }
     if (!destacadosForm || typeof destacadosForm !== 'object') {
-      throw new Error('Datos inválidos para destacados.');
+      return res.status(400).send('Datos inválidos para destacados.');
     }
 
-    const paquetes = Object.entries(paquetesForm).map(([id, pkg]) => ({
-      id: id,
-      eventName: typeof pkg.eventName === 'string' ? pkg.eventName.trim() : '',
-      ticketPrice: parseFloat(pkg.ticketPrice),
-      flightInfo: typeof pkg.flightInfo === 'string' ? pkg.flightInfo.trim() : '',
-      hotelInfo: typeof pkg.hotelInfo === 'string' ? pkg.hotelInfo.trim() : '',
-      description: typeof pkg.description === 'string' ? pkg.description.trim() : '',
-      availabilityDates: typeof pkg.availabilityDates === 'string' ? pkg.availabilityDates.trim() : '',
-      visible: pkg.visible === '1' || pkg.visible === true,
-      foto: typeof pkg.foto === 'string' ? pkg.foto.trim() : ''
-    }));
+    // Load current data from Gist
+    const existingPackages = await loadPackagesJSON();
 
+    // Map form data, merging with existing data to avoid accidental deletion
+    const paquetes = Object.entries(paquetesForm).map(([id, pkg]) => {
+      const existing = existingPackages.find(p => p.id === id) || {};
+
+      return {
+        id,
+        eventName: typeof pkg.eventName === 'string' && pkg.eventName.trim() !== ''
+          ? pkg.eventName.trim()
+          : existing.eventName || '',
+        ticketPrice: pkg.ticketPrice
+          ? parseFloat(pkg.ticketPrice)
+          : existing.ticketPrice || 0,
+        flightInfo: typeof pkg.flightInfo === 'string' && pkg.flightInfo.trim() !== ''
+          ? pkg.flightInfo.trim()
+          : existing.flightInfo || '',
+        hotelInfo: typeof pkg.hotelInfo === 'string' && pkg.hotelInfo.trim() !== ''
+          ? pkg.hotelInfo.trim()
+          : existing.hotelInfo || '',
+        description: typeof pkg.description === 'string' && pkg.description.trim() !== ''
+          ? pkg.description.trim()
+          : existing.description || '',
+        availabilityDates: typeof pkg.availabilityDates === 'string' && pkg.availabilityDates.trim() !== ''
+          ? pkg.availabilityDates.trim()
+          : existing.availabilityDates || '',
+        visible: pkg.visible === '1' || existing.visible || false,
+        foto: typeof pkg.foto === 'string' && pkg.foto.trim() !== ''
+          ? pkg.foto.trim()
+          : existing.foto || '',
+        photoUrl: typeof pkg.photoUrl === 'string' && pkg.photoUrl.trim() !== ''
+          ? pkg.photoUrl.trim()
+          : existing.photoUrl || ''
+      };
+    });
+
+    // Validate numeric fields
     for (const pkg of paquetes) {
       if (isNaN(pkg.ticketPrice) || pkg.ticketPrice < 0) {
-        throw new Error(`Precio inválido para paquete ID ${pkg.id}`);
+        return res.status(400).send(`Precio inválido para paquete ID ${pkg.id}`);
       }
     }
 
+    // Save safely to Gist
     await savePackagesJSON(paquetes);
     await saveDestacadosJSON(destacadosForm);
 
     res.redirect('/admin/panel');
   } catch (error) {
     console.error('Error procesando formulario o guardando en Gist:', error);
-    res.status(400).send('Error en los datos: ' + error.message);
+    res.status(500).send('Error interno al guardar los datos: ' + error.message);
   }
 });
+
 
 module.exports = router;
