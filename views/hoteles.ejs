@@ -1,56 +1,30 @@
-<%- include('partials/header') %>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qualy Tours - Buscador de Hoteles</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#1D4ED8',
-            accent: '#22C55E',
-            customRed: '#DC2626',
-            darkGray: '#333333'
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body { 
-      background-color: white; 
-      background-image: none; 
-    }
-    .section-heading-blue { color: #003366; } /* darkGray */
-    .section-description-blue { color: rgba(0, 51, 102, 0.8); } /* darkGray with opacity */
-  </style>
+  <title>Manuel Figueroa Viajes - Buscador de Hoteles</title>
+  <link rel="stylesheet" href="/css/theme.css">
 </head>
-<body class="text-gray-800 font-sans">
+<body>
+
+  <%- include('partials/header') %>
 
   <!-- ✅ Core Tatajuba engine script SOLO en esta página -->
   <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine/scripts"></script>
 
-  <section class="relative mb-12">
-    <div class="px-6 py-10 md:py-16">
-      <div class="max-w-3xl mx-auto">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 tracking-tight text-darkGray">
-  Buscador de Hoteles
-</h1>
-<p class="text-base sm:text-lg md:text-xl mb-6 text-darkGray/80">
-  Encontrá el mejor hotel para tu viaje.
-</p>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 class="title">Buscador de Hoteles</h1>
+      <div class="divider"></div>
+      <p>Encontrá el mejor hotel para tu viaje.</p>
+    </div>
 
-
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 text-gray-900">
-          <div id="bmEngine">
-            <!-- ✅ Widget de hoteles -->
-            <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine?type=hotel"></script>
-          </div>
+    <div class="container">
+      <div class="card">
+        <div id="bmEngine">
+          <!-- ✅ Widget de hoteles -->
+          <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine?type=hotel"></script>
         </div>
       </div>
     </div>
