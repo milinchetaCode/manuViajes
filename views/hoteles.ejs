@@ -1,35 +1,91 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Manu Figueroa Viajes - Buscador de Hoteles</title>
-  <link rel="stylesheet" href="/css/theme.css">
-</head>
-<body>
 
+  <!-- 1) compiled Tailwind / utility classes (must be first) -->
+  <link rel="stylesheet" href="/styles/output.css">
+
+  <!-- 2) theme overrides (must come after so it can tweak variables & components) -->
+  <link rel="stylesheet" href="/styles/theme.css">
+
+  <!-- optional icons (as in your example) -->
+  <script src="https://unpkg.com/feather-icons"></script>
+
+  <!-- small page-specific tweaks (optional) -->
+  <style>
+    /* make sure the widget sits nicely inside the white .card provided by theme.css */
+    /* If the vendor widget injects its own heavy inline styles, you can inspect and target them more precisely. */
+    .hotel-wrapper { padding: 18px; }
+    /* lightweight safe rule: keep the card look even if widget contains white blocks */
+    .card #bmEngine { margin: 0; }
+  </style>
+</head>
+<body class="font-sans bg-brand text-light">
+
+  <!-- header partial must be inside body -->
   <%- include('partials/header') %>
 
-  <!-- ✅ Core Tatajuba engine script SOLO en esta página -->
-  <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine/scripts"></script>
-
-  <section class="hero">
-    <div class="hero-inner">
-      <h1 class="title">Buscador de Hoteles</h1>
+  <!-- HERO -->
+  <section class="relative mb-16">
+    <div class="relative max-w-6xl mx-auto text-center py-20 px-6">
+      <h1 class="text-4xl md:text-5xl font-bold leading-snug">
+        Manuel Figueroa Viajes
+      </h1>
       <div class="divider"></div>
-      <p>Encontrá el mejor hotel para tu viaje.</p>
+
+      <!-- smaller subtitle -->
+      <p class="mt-6 text-lg">Buscador de Hoteles — encontrá el mejor hotel para tu viaje.</p>
     </div>
 
-    <div class="container">
-      <div class="card">
-        <div id="bmEngine">
-          <!-- ✅ Widget de hoteles -->
-          <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine?type=hotel"></script>
+    <!-- optional hero slider placeholder (keeps visual parity with your other page) -->
+    <div class="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl">
+      <div id="heroSlider" class="overflow-hidden relative">
+        <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
+          <% if (heroImages && heroImages.length) { %>
+            <% heroImages.forEach(imgUrl => { %>
+              <div class="min-w-full relative">
+                <img src="<%= imgUrl %>" alt="Hero Image" class="w-full h-[420px] object-cover" />
+                <div class="absolute inset-0 bg-black/30"></div>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <div class="min-w-full relative">
+              <img src="/images/f1.jpeg" alt="Fondo" class="w-full h-[420px] object-cover" />
+              <div class="absolute inset-0 bg-black/30"></div>
+            </div>
+          <% } %>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- HOTEL SEARCH: use your theme .container + .card so it looks identical to other pages -->
+  <main class="px-4 md:px-6 lg:px-8">
+    <section class="mb-16">
+      <div class="container">
+        <div class="card hotel-wrapper">
+          <!-- Core Tatajuba engine script (only on this page) -->
+          <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine/scripts"></script>
+
+          <!-- Widget container -->
+          <div id="bmEngine" aria-live="polite">
+            <!-- widget (vendor script) -->
+            <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine?type=hotel"></script>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- footer partial -->
   <%- include('partials/footer') %>
+
+  <!-- your page scripts (slider, small interactions) -->
+  <script src="/js/heroSlider.js" defer></script>
+  <!-- initialize feather icons (if used) -->
+  <script> if (window.feather) feather.replace() </script>
 </body>
 </html>
