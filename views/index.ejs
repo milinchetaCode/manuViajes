@@ -8,8 +8,11 @@
   <!-- Tailwind compiled CSS -->
   <link rel="stylesheet" href="/styles/output.css">
 
-  <!-- Theme overrides -->
+  <!-- Theme overrides (make sure theme.css exists) -->
   <link rel="stylesheet" href="/styles/theme.css">
+
+  <!-- Local Feather Icons -->
+  <script src="/js/feather.min.js" defer></script>
 </head>
 <body class="font-sans bg-brand text-light">
 
@@ -104,11 +107,6 @@
   <!-- Footer -->
   <%- include('partials/footer') %>
 
-  <!-- Scripts -->
-  <script src="/js/feather.min.js" defer></script>
-  <script src="/js/heroSlider.js" defer></script>
-  <script src="/js/main.js" defer></script> <!-- Move your inline JS here -->
-
   <!-- Floating WhatsApp Button -->
   <a 
     href="https://wa.me/5491133931500?text=Hola,%20quiero%20más%20información%20sobre%20Manuel%20Figueroa%20Viajes" 
@@ -119,6 +117,9 @@
   >
     <i data-feather="message-circle" class="w-6 h-6"></i>
   </a>
+
+  <!-- Main JS (contains feather, lightbox, slider) -->
+  <script src="/js/main.js" defer></script>
 
 </body>
 </html>
