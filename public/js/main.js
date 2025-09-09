@@ -1,5 +1,4 @@
 // main.js
-
 document.addEventListener('DOMContentLoaded', () => {
   // --- Feather Icons ---
   if (typeof feather !== 'undefined') {
@@ -16,11 +15,31 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     const slides = sliderInner.children;
     const totalSlides = slides.length;
+    let autoSlideInterval;
 
     const updateSlider = () => {
       sliderInner.style.transform = `translateX(-${currentIndex * 100}%)`;
     };
 
+    const startAutoSlide = () => {
+      autoSlideInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlider();
+      }, 5000); // 5 seconds
+    };
+
+    const stopAutoSlide = () => {
+      clearInterval(autoSlideInterval);
+    };
+
+    // Start auto slide
+    startAutoSlide();
+
+    // Pause auto-slide on hover
+    heroSlider.addEventListener('mouseenter', stopAutoSlide);
+    heroSlider.addEventListener('mouseleave', startAutoSlide);
+
+    // Manual navigation
     prevSlide.addEventListener('click', () => {
       currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
       updateSlider();
