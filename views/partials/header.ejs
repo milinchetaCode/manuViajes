@@ -1,15 +1,18 @@
 <header class="header-brand py-5 px-4 shadow-md">
   <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
 
-    <!-- Logo -->
-    <h1 class="text-2xl font-bold flex items-center gap-2">
-      <a href="/" class="logo-link flex items-center gap-2">
+    <!-- Logo + Title -->
+    <h1 class="flex items-center gap-3">
+      <a href="/" class="logo-link flex items-center gap-3">
         <img 
           src="/images/logo.png" 
           alt="Logo" 
-          title="Manuel Figueroa Viajes" 
+          title="Manu Figueroa Viajes" 
           class="max-h-14 w-auto object-contain" 
         />
+        <span class="text-xl md:text-2xl font-bold tracking-tight text-light">
+          Manu Figueroa Viajes
+        </span>
       </a>
     </h1>
 
@@ -25,7 +28,7 @@
         Asistencia Médica
       </a>
       <a href="/about" class="btn-accent <%= currentPage === 'aereos' ? 'font-bold' : '' %>">
-        <i data-feather="airplay" class="w-4 h-4"></i>
+        <i data-feather="navigation" class="w-4 h-4"></i>
         Aéreos
       </a>
     </nav>
