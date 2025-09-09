@@ -12,6 +12,16 @@
   <link rel="stylesheet" href="/styles/theme.css">
 
   <script src="https://unpkg.com/feather-icons"></script>
+
+  <style>
+    /* Fix: ensure text inside white cards uses dark text */
+    .bg-white {
+      color: var(--card-text) !important;
+    }
+    .bg-white p {
+      color: rgba(17,24,39,0.85) !important; /* softer dark gray for readability */
+    }
+  </style>
 </head>
 <body class="font-sans bg-brand text-light">
 
@@ -26,7 +36,7 @@
     <div class="divider mx-auto mb-12"></div>
 
     <!-- About Text Section (Card) -->
-    <section class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 mb-16 text-gray-800">
+    <section class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 mb-16">
       <p class="leading-relaxed mb-4">
         Lic. en Turismo, con más de 20 años de trayectoria en la industria, desarrollada en múltiples ámbitos, desde compañías aéreas internacionales de primer nivel, agencias de viajes locales y hasta habiendo emprendido un proyecto propio.
       </p>
@@ -40,7 +50,7 @@
       <h3 class="text-2xl md:text-3xl font-bold text-brand mb-4">
         ¿Quieres saber más sobre nosotros?
       </h3>
-      <p class="mb-6 text-gray-800">
+      <p class="mb-6 text-light">
         Estamos aquí para ayudarte a vivir tu pasión deportiva en primera fila.
       </p>
       <a
