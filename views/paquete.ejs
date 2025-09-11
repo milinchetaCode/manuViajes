@@ -46,7 +46,7 @@
             <li><strong>📅 Fechas:</strong> <%= paquete.availabilityDates %></li>
           </ul>
 
-          <p class="text-2xl text-accent font-bold mt-6">💵 U$S <%= paquete.ticketPrice %></p>
+          <p class="text-2xl text-accent font-bold mt-6">💵 <%= paquete.ticketPrice %></p>
 
           <!-- WhatsApp Button -->
           <a
@@ -70,7 +70,7 @@
           <p class="mt-4 text-sm text-gray-700">
             ¿No tenés WhatsApp?
             <a
-              href="mailto:info@manuelfigueroaviajes.com?subject=<%= encodeURIComponent('Consulta sobre paquete: ' + paquete.eventName) %>&body=<%= encodeURIComponent(
+              href="mailto:Manufigueroa@consolidglobal.com?subject=<%= encodeURIComponent('Consulta sobre paquete: ' + paquete.eventName) %>&body=<%= encodeURIComponent(
                 `Hola, estoy interesado en el siguiente paquete:\n\n` +
                 `Evento: ${paquete.eventName}\n` +
                 `Descripción: ${paquete.description}\n` +
