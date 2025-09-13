@@ -53,12 +53,17 @@
               class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"/>
           </div>
 
-          <!-- Ticket Price -->
-          <div>
-            <label class="block mb-1 font-semibold" for="ticketPrice-<%= pkg.id %>">Precio (u$d)</label>
-            <input id="ticketPrice-<%= pkg.id %>" type="number" name="paquetes[<%= pkg.id %>][ticketPrice]" value="<%= pkg.ticketPrice %>" min="0" step="0.01" required
-              class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"/>
-          </div>
+         <!-- Ticket Price -->
+<div>
+  <label class="block mb-1 font-semibold" for="ticketPrice-<%= pkg.id %>">Precio</label>
+  <input id="ticketPrice-<%= pkg.id %>" 
+         type="text" 
+         name="paquetes[<%= pkg.id %>][ticketPrice]" 
+         value="<%= pkg.ticketPrice %>" 
+         required
+         class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"/>
+</div>
+
 
           <!-- Flight Info -->
           <div class="md:col-span-2">
