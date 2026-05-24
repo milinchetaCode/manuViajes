@@ -1,0 +1,14 @@
+[
+  {
+    "id": "f1-monaco",
+    "photo": "/images/button/f1.jpeg"
+  },
+  {
+    "id": "fb-clasico",
+    "photo": "/images/button/futbol.jpeg"
+  },
+  {
+    "id": "tn-roland",
+    "photo": "/images/button/tenis.jpeg"
+  }
+]

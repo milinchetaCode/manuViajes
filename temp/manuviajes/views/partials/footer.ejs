@@ -1,0 +1,45 @@
+</main>
+<footer class="bg-gray-900 text-gray-300 px-6 py-10 text-sm">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 text-center sm:text-center">
+    <!-- Contact Info -->
+    <div>
+      <h3 class="text-lg font-semibold text-white mb-2">
+      <p>Powered By Consolid Global Travel Solutions</p></h3>
+      <p>Tel: <a href="tel:+54 9 11 3393-1500" class="text-customRed hover:text-red-700">+54 9 11 3393-1500</a></p>
+      
+    </div>
+
+    <!-- Experiencia Button (Centered) -->
+    <div class="flex flex-col items-center justify-center">
+      <a href="/about" class="btn-brand <%= currentPage === 'about' ? 'font-bold' : '' %> flex items-center gap-2">
+        <i data-feather="star" class="w-4 h-4"></i>
+        Experiencia
+      </a>
+    </div>
+
+    <!-- Social Media (optional) -->
+    <!--
+    <div>
+      <h3 class="text-lg font-semibold text-white mb-2">Síguenos</h3>
+      <div class="flex justify-center gap-4 mt-2">
+        <a href="#" class="hover:text-white" aria-label="Facebook">
+          <i class="fab fa-facebook fa-lg"></i>
+        </a>
+        <a href="#" class="hover:text-white" aria-label="Instagram">
+          <i class="fab fa-instagram fa-lg"></i>
+        </a>
+        <a href="#" class="hover:text-white" aria-label="Twitter">
+          <i class="fab fa-x-twitter fa-lg"></i>
+        </a>
+      </div>
+    </div>
+    -->
+  </div>
+
+  <div class="mt-8 text-center text-xs text-gray-500">
+    © <%= new Date().getFullYear() %> Manu Figueroa Viajes.
+    <a href="/admin/login" class="ml-4 text-gray-500 hover:text-gray-400" style="font-size: 0.75rem; opacity: 0.6;">
+      Panel Admin
+    </a>
+  </div>
+</footer>

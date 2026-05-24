@@ -2,18 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 // Instead of utils/packages (which expects an array), import directly
-const { loadPackagesJSON } = require('../services/gistStorage');
+const { loadPackagesJSON } = require('../services/supabaseStorage');
 
 router.get('/paquete/:id', async (req, res) => {
   try {
-    // Load packages object from Gist
-    const packagesObj = await loadPackagesJSON();
+    // Load packages from database
+    const packagesData = await loadPackagesJSON();
 
-    // Convert object → array of { id, ...pkg }
-    const packages = Object.entries(packagesObj).map(([id, pkg]) => ({
-      id,
-      ...pkg,
-    }));
+    // Convert to array if it is in legacy map format
+    const packages = Array.isArray(packagesData)
+      ? packagesData
+      : Object.entries(packagesData).map(([id, pkg]) => ({ id, ...pkg }));
 
     // Find the package by id from URL param
     const paquete = packages.find(pkg => pkg.id === req.params.id);

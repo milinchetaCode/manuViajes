@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manu Figueroa Viajes - Buscador de Hoteles</title>
+
+  <!-- Tailwind compiled CSS -->
+  <link rel="stylesheet" href="/styles/output.css">
+
+  <!-- Theme overrides -->
+  <link rel="stylesheet" href="/styles/theme.css">
+</head>
+<body class="font-sans bg-brand text-light">
+
+  <!-- Header -->
+  <%- include('partials/header') %>
+
+  <!-- HOTEL SEARCH -->
+  <section class="relative mb-16">
+    <div class="container text-center py-16">
+      <h1 class="text-4xl md:text-5xl font-bold leading-snug">
+        Buscador de Hoteles
+      </h1>
+      <div class="divider mx-auto"></div>
+      <p class="mt-6 text-lg">Encontrá el mejor hotel para tu viaje.</p>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        <!-- Core Tatajuba engine script SOLO en esta página -->
+        <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine/scripts"></script>
+
+        <div id="bmEngine">
+          <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/qualytours/engine?type=hotel"></script>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <%- include('partials/footer') %>
+</body>
+</html>

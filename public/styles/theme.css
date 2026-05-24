@@ -236,3 +236,76 @@ p { margin: 0 0 0.6rem 0; color: rgba(247,247,250,0.95); }
   display: inline-block;
   vertical-align: middle;
 }
+/* -------------- Look & Feel Enhancements -------------- */
+
+/* Global typography & spacing */
+html { line-height: 1.6; }
+h1, h2, h3 { letter-spacing: -0.4px; }
+
+/* Header sticky and contrast */
+.header-brand {
+  background: rgba(26,34,56,.93);
+}
+header.header-brand {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 30;
+  backdrop-filter: blur(4px);
+}
+
+/* Slider arrow colors */
+.slider-arrow {
+  background: var(--accent);
+  color: var(--brand);
+}
+.slider-arrow:hover {
+  transform: scale(1.08);
+}
+
+/* Card hover elevation */
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(2,6,23,.22);
+}
+
+/* Button focus & active states */
+.btn-brand:focus,
+.btn-accent:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.btn-brand:active,
+.btn-accent:active {
+  transform: translateY(1px);
+}
+
+/* Footer spacing */
+.footer {
+  padding: 48px 0;
+  font-size: 0.925rem;
+  line-height: 1.5;
+}
+
+/* Badge accent tweak */
+.badge-accent {
+  background: rgba(212,175,55,.15);
+  border-color: rgba(212,175,55,.3);
+}
+
+/* Mobile-first tweaks */
+@media (max-width: 640px) {
+  .hero .title { font-size: 1.75rem; }
+  .card img { height: 140px; }
+  .header-brand { padding: 1rem; }
+}
+
+/* Lightbox transition (if using) */
+#lightboxImg {
+  transition: opacity .3s ease-out;
+}
+
+/* Added top margin for fixed header */
+body {
+  padding-top: 80px; /* adjust based on header height */
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "f1-monaco-pack",
+    "eventName": "Paquete Gran Premio de Mónaco 2026",
+    "ticketPrice": 1450,
+    "flightInfo": "Vuelo ida y vuelta Buenos Aires / Niza con escalas",
+    "hotelInfo": "Estadía de 4 noches en Hotel Best Western Laffayette Monaco",
+    "description": "El paquete más espectacular del año para disfrutar de la carrera más legendaria de la F1 en vivo en el circuito callejero de Mónaco.",
+    "availabilityDates": "Del 21 al 25 de mayo 2026",
+    "visible": true,
+    "foto": "f1",
+    "photoUrl": ""
+  },
+  {
+    "id": "futbol-clasico-pack",
+    "eventName": "Paquete El Clásico - Real Madrid vs Barcelona",
+    "ticketPrice": 890,
+    "flightInfo": "Vuelo directo Madrid ida y vuelta",
+    "hotelInfo": "Hotel Tryp Gran Vía de 3 estrellas, céntrico",
+    "description": "Vive la máxima rivalidad del fútbol mundial con entradas garantizadas de Categoría 2 para el Estadio Santiago Bernabéu.",
+    "availabilityDates": "Del 23 al 26 de octubre 2026",
+    "visible": true,
+    "foto": "futbol",
+    "photoUrl": ""
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "name": "ManuViajes",
+  "description": "Una boutique de viajes y eventos deportivos de primer nivel, incluyendo paquetes exclusivos de Fórmula 1, Fútbol, Tenis y Básquet.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

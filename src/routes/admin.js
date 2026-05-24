@@ -11,7 +11,7 @@ const {
   savePackagesJSON,
   loadDestacadosJSON,
   saveDestacadosJSON,
-} = require('../services/gistStorage');
+} = require('../services/supabaseStorage');
 
 // Configure Cloudinary
 cloudinary.config({
@@ -53,8 +53,10 @@ router.get('/logout', (req, res) => {
 ============================ */
 router.get('/panel', requireLogin, async (req, res) => {
   try {
-    let paquetesObj = await loadPackagesJSON();
-    const paquetes = Object.entries(paquetesObj).map(([id, pkg]) => ({ id, ...pkg }));
+    const packagesData = await loadPackagesJSON();
+    const paquetes = Array.isArray(packagesData)
+      ? packagesData
+      : Object.entries(packagesData).map(([id, pkg]) => ({ id, ...pkg }));
     
     const destacados = await loadDestacadosJSON();
 
@@ -71,8 +73,55 @@ router.get('/panel', requireLogin, async (req, res) => {
 
 router.post('/panel', requireLogin, async (req, res) => {
   try {
-    await savePackagesJSON(req.body.paquetes);
-    await saveDestacadosJSON(req.body.destacados);
+    const paquetesForm = req.body.paquetes;
+
+    if (!paquetesForm || typeof paquetesForm !== 'object') {
+      return res.status(400).send('Datos de paquetes inválidos.');
+    }
+
+    const existingPackages = await loadPackagesJSON();
+    const existingArray = Array.isArray(existingPackages)
+      ? existingPackages
+      : Object.entries(existingPackages).map(([id, pkg]) => ({ id, ...pkg }));
+
+    const paquetes = Object.entries(paquetesForm).map(([id, pkg]) => {
+      const existing = existingArray.find(p => p.id === id) || {};
+
+      let ticketPrice = parseFloat(pkg.ticketPrice);
+      if (isNaN(ticketPrice) || ticketPrice < 0) {
+        ticketPrice = parseFloat(existing.ticketPrice) || 0;
+      }
+
+      return {
+        id,
+        eventName: typeof pkg.eventName === 'string' && pkg.eventName.trim() !== ''
+          ? pkg.eventName.trim()
+          : existing.eventName || '',
+        ticketPrice,
+        flightInfo: typeof pkg.flightInfo === 'string'
+          ? pkg.flightInfo.trim()
+          : existing.flightInfo || '',
+        hotelInfo: typeof pkg.hotelInfo === 'string'
+          ? pkg.hotelInfo.trim()
+          : existing.hotelInfo || '',
+        description: typeof pkg.description === 'string'
+          ? pkg.description.trim()
+          : existing.description || '',
+        availabilityDates: typeof pkg.availabilityDates === 'string'
+          ? pkg.availabilityDates.trim()
+          : existing.availabilityDates || '',
+        visible: pkg.visible === '1',
+        foto: typeof pkg.foto === 'string' ? pkg.foto.trim() : existing.foto || '',
+        photoUrl: typeof pkg.photoUrl === 'string' ? pkg.photoUrl.trim() : existing.photoUrl || ''
+      };
+    });
+
+    await savePackagesJSON(paquetes);
+
+    if (req.body.destacados !== undefined) {
+      await saveDestacadosJSON(req.body.destacados);
+    }
+
     res.redirect('/admin/panel');
   } catch (err) {
     console.error('Error saving admin data:', err);

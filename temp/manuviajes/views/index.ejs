@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manu Figueroa Viajes</title>
+
+  <!-- Tailwind compiled CSS -->
+  <link rel="stylesheet" href="/styles/output.css">
+
+  <!-- Theme overrides (make sure theme.css exists) -->
+  <link rel="stylesheet" href="/styles/theme.css">
+
+  <!-- Local Feather Icons -->
+  <script src="/js/feather.min.js" defer></script>
+</head>
+<body class="font-sans bg-brand text-light">
+
+  <!-- Header -->
+  <%- include('partials/header') %>
+
+  <!-- HERO -->
+  <section class="relative mb-16">
+    <div class="relative max-w-6xl mx-auto text-center py-20 px-6">
+      <div class="divider"></div>
+    </div>
+
+    <!-- Hero Slider -->
+    <div class="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl">
+      <div id="heroSlider" class="overflow-hidden relative">
+        <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
+          <% if (heroImages && heroImages.length) { %>
+            <% heroImages.forEach(imgUrl => { %>
+              <div class="min-w-full relative">
+                <img 
+                  src="<%= imgUrl %>" 
+                  class="w-full h-[500px] object-contain object-center cursor-pointer hero-img" 
+                />
+                <!-- Overlay but non-blocking for clicks -->
+                <div class="absolute inset-0 bg-black/30 pointer-events-none"></div>
+              </div>
+            <% }) %>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Slider navigation buttons -->
+      <button id="prevSlide" class="absolute top-1/2 left-4 -translate-y-1/2 bg-white/20 text-white p-3 rounded-full hover:bg-accent hover:text-brand transition">
+        &#10094;
+      </button>
+      <button id="nextSlide" class="absolute top-1/2 right-4 -translate-y-1/2 bg-white/20 text-white p-3 rounded-full hover:bg-accent hover:text-brand transition">
+        &#10095;
+      </button>
+    </div>
+  </section>
+
+  <!-- Paquetes turísticos -->
+  <main class="px-4 md:px-6 lg:px-8">
+    <section class="mb-16">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2">
+          Paquetes turísticos
+        </h2>
+        <div class="divider"></div>
+      </div>
+
+      <% if (packages && packages.length) { %>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <% packages.filter(pkg => pkg.visible).forEach(pkg => { %>
+            <li class="card">
+              <img 
+                src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
+                alt="<%= pkg.eventName %>"
+                class="w-full h-48 object-contain rounded-xl mb-4 bg-gray-100"
+              />
+              <span class="badge-accent mb-2 inline-block">Paquete</span>
+              <h3 class="text-xl font-bold tracking-tight mb-2 font-serif text-brand">
+                <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
+                  <%= pkg.eventName %>
+                </a>
+              </h3>
+              <p class="text-sm mb-1 text-brand">
+                <strong>📅 Fechas:</strong> <%= pkg.availabilityDates %>
+              </p>
+              <p class="text-lg font-bold text-accent mt-3">
+                <% if (pkg.ticketPrice) { %>
+                  💶 <%= pkg.ticketPrice.toLocaleString('es-ES') %>
+                <% } else { %>
+                  Precio no disponible
+                <% } %>
+              </p>
+              <a href="/paquete/<%= pkg.id %>" class="btn-brand mt-4 inline-block">
+                Ver detalles
+              </a>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="text-center">No hay paquetes disponibles en este momento.</p>
+      <% } %>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <%- include('partials/footer') %>
+
+  <!-- Floating WhatsApp Button -->
+  <a 
+    href="https://wa.me/5491133931500?text=Hola,%20quiero%20más%20información%20sobre%20Manu%20Figueroa%20Viajes" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50 transition transform hover:scale-110"
+    aria-label="Contáctanos por WhatsApp"
+  >
+    <i data-feather="message-circle" class="w-6 h-6"></i>
+  </a>
+
+<!-- Lightbox -->
+<div id="lightbox" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+  
+
+  <!-- Fullscreen Image (pointer-events-none so button works) -->
+  <img id="lightboxImg" 
+       src="" 
+       alt="Full size" 
+       class="h-screen w-screen object-contain shadow-2xl pointer-events-none">
+</div>
+
+
+  <!-- Main JS (contains feather, lightbox, slider) -->
+  <script src="/js/main.js" defer></script>
+
+</body>
+</html>

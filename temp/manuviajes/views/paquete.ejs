@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= paquete.eventName %> - Manuel Figueroa Viajes</title>
+
+  <!-- Tailwind + Theme -->
+  <link rel="stylesheet" href="/styles/output.css">
+  <link rel="stylesheet" href="/styles/theme.css">
+
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-brand text-light font-sans">
+
+  <!-- Navbar -->
+  <%- include('partials/header') %>
+
+  <!-- Page content -->
+  <section class="px-4 py-16 max-w-5xl mx-auto">
+    <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-lg border border-gray-100">
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Image + Badge -->
+        <div class="relative">
+          <img 
+            src="<%= paquete.photoUrl && paquete.photoUrl.trim() !== '' 
+                    ? paquete.photoUrl.trim() 
+                    : (paquete.foto && paquete.foto.trim() !== '' ? '/images/' + paquete.foto.trim() + '.jpeg' : '/images/default.jpeg') %>" 
+            alt="<%= paquete.eventName %>" 
+            class="w-full h-64 object-cover rounded-2xl shadow-sm border border-gray-200"
+          />
+          <span class="absolute top-4 left-4 badge-accent text-xs sm:text-sm font-semibold px-4 py-2 rounded-full shadow-md">
+            Paquete
+          </span>
+        </div>
+
+        <!-- Details -->
+        <div>
+          <!-- GOLD title -->
+          <h1 class="text-3xl sm:text-4xl font-bold text-accent mb-4 tracking-tight"><%= paquete.eventName %></h1>
+
+          <p class="text-gray-700 mb-4 whitespace-pre-line"><%= paquete.description %></p>
+
+          <ul class="space-y-2 text-gray-700 text-sm sm:text-base">
+            <li><strong>📅 Fechas:</strong> <%= paquete.availabilityDates %></li>
+          </ul>
+
+          <p class="text-2xl text-accent font-bold mt-6">💵 <%= paquete.ticketPrice %></p>
+
+          <!-- WhatsApp Button -->
+          <a
+            href="https://wa.me/5491133931500?text=<%= encodeURIComponent(
+              `Hola, estoy interesado en el paquete:\n\n` +
+              `Evento: ${paquete.eventName}\n` +
+              `Descripción: ${paquete.description}\n` +
+              `Fechas: ${paquete.availabilityDates}\n` +
+              `Precio: U$S ${paquete.ticketPrice}\n\n` +
+              `Por favor, contáctenme para más detalles. Gracias!`
+            ) %>"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-accent inline-flex items-center gap-3 mt-6"
+          >
+            <i data-feather="message-circle" class="w-5 h-5 text-light"></i>
+            Contáctanos por WhatsApp
+          </a>
+
+          <!-- Email fallback -->
+          <p class="mt-4 text-sm text-gray-700">
+            ¿No tenés WhatsApp?
+            <a
+              href="mailto:Manufigueroa@consolidglobal.com?subject=<%= encodeURIComponent('Consulta sobre paquete: ' + paquete.eventName) %>&body=<%= encodeURIComponent(
+                `Hola, estoy interesado en el siguiente paquete:\n\n` +
+                `Evento: ${paquete.eventName}\n` +
+                `Descripción: ${paquete.description}\n` +
+                `Vuelo: ${paquete.flightInfo}\n` +
+                `Precio: U$S ${paquete.ticketPrice}\n\n` +
+                `Espero su respuesta. Gracias.`
+              ) %>"
+              class="text-accent hover:underline"
+            >
+              Contáctanos por email
+            </a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    feather.replace();
+  </script>
+</body>
+</html>

@@ -4,7 +4,7 @@ const cloudinary = require("cloudinary").v2;
 const {
   loadPackagesJSON,
   loadDestacadosJSON,
-} = require("../services/gistStorage");
+} = require("../services/supabaseStorage");
 
 // Configure Cloudinary from env variables
 cloudinary.config({
@@ -16,14 +16,13 @@ cloudinary.config({
 // HOME PAGE
 router.get("/", async (req, res) => {
   try {
-    const packagesObj = await loadPackagesJSON();
+    const packagesData = await loadPackagesJSON();
     const events = await loadDestacadosJSON();
 
-    // Convert object to array
-    const packages = Object.keys(packagesObj).map((key) => ({
-      id: key,
-      ...packagesObj[key],
-    }));
+    // Convert to array if it is in legacy map format
+    const packages = Array.isArray(packagesData)
+      ? packagesData
+      : Object.entries(packagesData).map(([id, pkg]) => ({ id, ...pkg }));
 
     // Dynamic Hero Images from Cloudinary (fixed)
     let heroImages = [];
