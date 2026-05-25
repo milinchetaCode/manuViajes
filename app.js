@@ -66,7 +66,7 @@ app.set('trust proxy', 1);
 // Middleware
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuración de express-session (antes de las rutas)
 app.use(session({
