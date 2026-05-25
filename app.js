@@ -11,10 +11,7 @@ const { getConfig } = require('./config/env');
 
 dotenv.config();
 
-// Provide fallback defaults so development/review modes run out-of-the-box
-if (!process.env.SESSION_SECRET) process.env.SESSION_SECRET = 'fallback_session_secret_for_dev';
-if (!process.env.ADMIN_USER) process.env.ADMIN_USER = 'admin';
-if (!process.env.ADMIN_PASS) process.env.ADMIN_PASS = 'admin';
+
 
 const config = getConfig();
 
