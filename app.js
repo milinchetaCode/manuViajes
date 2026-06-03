@@ -63,6 +63,8 @@ app.set('trust proxy', 1);
 // Middleware
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
+
+// ✅ CRITICAL: Static middleware MUST come BEFORE routes to serve images properly
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuración de express-session (antes de las rutas)
@@ -84,7 +86,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// Routes - AFTER static middleware
 const indexRoutes = require('./src/routes/index');
 const paqueteRoutes = require('./src/routes/paquete');
 const adminRoutes = require('./src/routes/admin');
@@ -107,7 +109,7 @@ app.get('/faq', (req, res) => {
   res.render('faq', { currentPage: 'faq' });
 });
 
-// ✅ Catch-all 404 handler (must go last)
+// ✅ Catch-all 404 handler (must go LAST, after static and all routes)
 app.use((req, res) => {
   res.status(404).render('404', {
     message: 'Página no encontrada',
