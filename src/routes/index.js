@@ -16,13 +16,8 @@ cloudinary.config({
 // HOME PAGE
 router.get("/", async (req, res) => {
   try {
-    const packagesData = await loadPackagesJSON();
-    const events = await loadDestacadosJSON();
-
-    // Convert to array if it is in legacy map format
-    const packages = Array.isArray(packagesData)
-      ? packagesData
-      : Object.entries(packagesData).map(([id, pkg]) => ({ id, ...pkg }));
+    const packages = await getPackages();
+    const events = await getDestacados();
 
     // Dynamic Hero Images from Cloudinary (fixed)
     let heroImages = [];
