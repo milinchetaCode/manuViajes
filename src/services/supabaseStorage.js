@@ -1,13 +1,13 @@
 // src/services/supabaseStorage.js
-// Supabase storage driver for packages (stored in 'packages' table) and highlights (still in mv_settings)
+// Supabase storage driver for packages and highlights (mv_settings)
 
 const { createClient } = require('@supabase/supabase-js');
 
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Supabase configuration missing.');
+  throw new Error('Supabase configuration missing. Set SUPABASE_URL and SUPABASE_KEY environment variables.');
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -24,7 +24,7 @@ async function getPackages() {
   return data;
 }
 
-/** Create a new package. `pkg` should contain fields matching columns (except id). */
+/** Create a new package */
 async function createPackage(pkg) {
   const { data, error } = await supabase.from('packages').insert([pkg]);
   if (error) {
@@ -34,7 +34,7 @@ async function createPackage(pkg) {
   return data[0];
 }
 
-/** Update an existing package by id. */
+/** Update a package by id */
 async function updatePackage(id, pkg) {
   const { data, error } = await supabase.from('packages').update(pkg).eq('id', id);
   if (error) {
@@ -44,7 +44,7 @@ async function updatePackage(id, pkg) {
   return data[0];
 }
 
-/** Hard delete a package by id. */
+/** Delete a package by id */
 async function deletePackage(id) {
   const { error } = await supabase.from('packages').delete().eq('id', id);
   if (error) {
@@ -54,37 +54,54 @@ async function deletePackage(id) {
   return true;
 }
 
-// ---------- Destacados (highlights) still stored as JSON in mv_settings ----------
-async function loadDestacadosJSON() {
-  try {
-    const { data, error } = await supabase
-      .from('mv_settings')
-      .select('value')
-      .eq('key', 'destacados')
-      .single();
-    if (error) {
-      if (error.code === 'PGRST116') return [];
-      throw error;
-    }
-    return data?.value || [];
-  } catch (err) {
-    console.error('❌ Supabase loadDestacadosJSON error:', err.message);
+// ---------- Packages JSON (legacy) ----------
+/** Load packages JSON stored under key 'packages' */
+async function loadPackagesJSON() {
+  const { data, error } = await supabase.from('mv_settings').select('value').eq('key', 'packages').single();
+  if (error) {
+    console.warn('⚠️ Supabase loadPackagesJSON error:', error.message);
     return [];
   }
+  return data?.value || [];
 }
 
-async function saveDestacadosJSON(data) {
-  if (!data) data = [];
-  try {
-    const { error } = await supabase
-      .from('mv_settings')
-      .upsert({ key: 'destacados', value: data, updated_at: new Date() });
-    if (error) throw error;
-    console.log('✅ [Supabase] Destacados saved.');
-  } catch (err) {
-    console.error('❌ Supabase saveDestacadosJSON error:', err.message);
-    throw err;
+/** Save packages JSON */
+async function savePackagesJSON(packages) {
+  const payload = { key: 'packages', value: packages, updated_at: new Date() };
+  const { error } = await supabase.from('mv_settings').upsert(payload);
+  if (error) {
+    console.error('❌ Supabase savePackagesJSON error:', error.message);
+    throw error;
   }
+  console.log('✅ Packages saved to Supabase.');
+}
+
+// ---------- Destacados (highlights) ----------
+/** Load destacados JSON */
+async function loadDestacadosJSON() {
+  const { data, error } = await supabase.from('mv_settings').select('value').eq('key', 'destacados').single();
+  if (error) {
+    if (error.code === 'PGRST116') return [];
+    console.error('❌ Supabase loadDestacadosJSON error:', error.message);
+    throw error;
+  }
+  return data?.value || [];
+}
+
+/** Get destacados (alias for loadDestacadosJSON) */
+async function getDestacados() {
+  return await loadDestacadosJSON();
+}
+
+/** Save destacados JSON */
+async function saveDestacadosJSON(highlights) {
+  const payload = { key: 'destacados', value: highlights, updated_at: new Date() };
+  const { error } = await supabase.from('mv_settings').upsert(payload);
+  if (error) {
+    console.error('❌ Supabase saveDestacadosJSON error:', error.message);
+    throw error;
+  }
+  console.log('✅ Destacados saved to Supabase.');
 }
 
 module.exports = {
@@ -92,6 +109,9 @@ module.exports = {
   createPackage,
   updatePackage,
   deletePackage,
+  loadPackagesJSON,
+  savePackagesJSON,
   loadDestacadosJSON,
+  getDestacados,
   saveDestacadosJSON,
 };
