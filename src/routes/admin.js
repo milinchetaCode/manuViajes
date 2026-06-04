@@ -73,9 +73,13 @@ router.get('/panel', requireLogin, async (req, res) => {
 
 router.post('/panel', requireLogin, async (req, res) => {
   try {
-    const paquetesForm = req.body.paquetes;
+    let paquetesForm = req.body.paquetes;
 
-    if (!paquetesForm || typeof paquetesForm !== 'object') {
+    if (paquetesForm === undefined) {
+      paquetesForm = {};
+    }
+
+    if (typeof paquetesForm !== 'object') {
       return res.status(400).send('Datos de paquetes inválidos.');
     }
 

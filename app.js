@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 const rateLimiter = require('./middleware/rateLimiter');
-const { getConfig } = require('./config/env');  
+const { getConfig } = require('./config/env');
 
 
 dotenv.config();
@@ -72,7 +72,6 @@ app.set('trust proxy', 1);
 // Middleware
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
-
 // ✅ CRITICAL: Static middleware MUST come BEFORE routes to serve images properly
 app.use(express.static(path.join(__dirname, 'public')));
 
