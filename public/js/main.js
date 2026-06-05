@@ -72,4 +72,26 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target.id === 'lightbox') window.closeLightbox();
     });
   }
+
+  // --- Continent Filter Chips ---
+  const chips = document.querySelectorAll('#continent-filters .chip');
+  const cards = document.querySelectorAll('#packages-grid .card');
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', function() {
+      // Update active state
+      chips.forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+
+      // Filter cards
+      const continent = this.dataset.continent;
+      cards.forEach(card => {
+        if (continent === 'all' || card.dataset.continent === continent) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
 });

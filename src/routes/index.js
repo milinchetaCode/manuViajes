@@ -3,6 +3,7 @@ const router = express.Router();
 const cloudinary = require("cloudinary").v2;
 const {
   getPackages,
+  getContinents,
 } = require("../services/supabaseStorage");
 
 // Configure Cloudinary from env variables
@@ -17,6 +18,7 @@ router.get("/", async (req, res) => {
   try {
     // getPackages now returns empty array on error instead of throwing
     const packages = await getPackages();
+    const continents = await getContinents();
 
     // Dynamic Hero Images from Cloudinary (graceful fallback)
     let heroImages = [];
@@ -37,6 +39,7 @@ router.get("/", async (req, res) => {
     res.render("index", {
       packages, // Will be empty array if Supabase fails
       heroImages, // Will be empty array if Cloudinary fails
+      continents, // Array of distinct continents
       currentPage: "home",
     });
   } catch (err) {

@@ -101,9 +101,30 @@ async function deletePackage(id) {
   return true;
 }
 
+/** Get distinct continents from packages table */
+async function getContinents() {
+  try {
+    const { data, error } = await supabase
+      .from('packages')
+      .select('continent')
+      .not('continent', 'is', null);
+    if (error) {
+      console.error('❌ Supabase getContinents error:', error.message);
+      return [];
+    }
+    // Extract unique continents
+    const continents = [...new Set((data || []).map(row => row.continent).filter(Boolean))];
+    return continents.sort();
+  } catch (err) {
+    console.error('❌ Supabase connection error in getContinents:', err.message);
+    return [];
+  }
+}
+
 module.exports = {
   supabase,
   getPackages,
+  getContinents,
   createPackage,
   updatePackage,
   deletePackage,

@@ -66,10 +66,20 @@
           <div class="divider"></div>
         </div>
 
+        <!-- Continent Filter Chips -->
+        <% if (continents && continents.length) { %>
+        <div class="flex flex-wrap gap-2 justify-center mb-8" id="continent-filters">
+          <button class="btn-accent chip active" data-continent="all">Todos</button>
+          <% continents.forEach(cont => { %>
+            <button class="btn-accent chip" data-continent="<%= cont %>"><%= cont %></button>
+          <% }) %>
+        </div>
+        <% } %>
+
         <% if (packages && packages.length) { %>
-          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-grid">
             <% packages.filter(pkg=> pkg.visible).forEach(pkg => { %>
-              <li class="card">
+              <li class="card" data-continent="<%= pkg.continent || 'unknown' %>">
                 <img
                   src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
                   alt="<%= pkg.eventName %>" class="w-full h-48 object-contain rounded-xl mb-4 bg-gray-100" />
