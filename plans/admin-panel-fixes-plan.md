@@ -415,3 +415,11 @@ The three issues are interconnected and stem from:
 3. Inefficient card-based layout for large datasets
 
 The proposed table-based redesign with proper AJAX operations will solve all three issues and provide a much better admin experience for managing 50+ packages.
+
+## Continent Field Integration
+The `packages` table now includes a `continent` column (see `update_packages_continent.sql`). To support this, we:
+- Added continent input fields to package forms in `views/admin/panel.ejs`.
+- Updated the create and update endpoints in `src/routes/admin.js` to handle the `continent` field.
+- Modified client scripts (`public/js/admin-panel.js` and `public/js/admin-panel-table.js`) to populate and save the continent value.
+- Ran the migration script to add the column and index.
+This documents the changes made to support the new continent field.

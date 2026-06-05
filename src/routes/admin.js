@@ -118,6 +118,9 @@ router.post('/panel', requireLogin, async (req, res) => {
         photoUrl: typeof pkg.photoUrl === 'string'
           ? pkg.photoUrl.trim()
           : (existing ? existing.photoUrl : ''),
+        continent: typeof pkg.continent === 'string'
+          ? pkg.continent.trim()
+          : (existing ? existing.continent : ''),
         visible: pkg.visible === true || pkg.visible === '1',
       };
 
@@ -147,6 +150,7 @@ router.post('/panel/create', requireLogin, async (req, res) => {
       description: '',
       availabilityDates: '',
       photoUrl: '',
+      continent: '',
       visible: true,
     });
     res.json(newPackage);

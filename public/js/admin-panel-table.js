@@ -467,6 +467,10 @@
         '<input type="text" id="edit-ticketPrice" value="' + (pkg.ticketPrice || '') + '" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"/>' +
       '</div>' +
       '<div>' +
+        '<label class="block mb-1 font-semibold">Continente</label>' +
+        '<input type="text" id="edit-continent" value="' + (pkg.continent || '') + '" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"/>' +
+      '</div>' +
+      '<div>' +
         '<label class="block mb-1 font-semibold">Fechas Disponibles</label>' +
         '<input type="text" id="edit-availabilityDates" value="' + (pkg.availabilityDates || '') + '" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"/>' +
       '</div>' +

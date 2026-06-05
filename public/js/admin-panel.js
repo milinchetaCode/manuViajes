@@ -66,6 +66,12 @@ document.addEventListener('DOMContentLoaded', function() {
         eventNameInput.value = newPackage.eventName || 'Nuevo Paquete';
       }
 
+      // Add continent input
+      var continentInput = newCard.querySelector('input[name="paquetes[' + newPackage.id + '][continent]"]');
+      if (continentInput) {
+        continentInput.value = newPackage.continent || '';
+      }
+
       packagesContainer.appendChild(newCard);
       console.log('New package card added successfully');
 
