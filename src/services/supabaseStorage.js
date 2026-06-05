@@ -1,5 +1,5 @@
 // src/services/supabaseStorage.js
-// Supabase storage driver for packages and highlights (mv_settings)
+// Supabase storage driver for packages
 
 const { createClient } = require('@supabase/supabase-js');
 
@@ -13,35 +13,82 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 console.log('🔌 [Supabase] Client initialized successfully.');
 
-// ---------- Packages Table CRUD ----------
-/** Get all packages */
-async function getPackages() {
-  const { data, error } = await supabase.from('packages').select('*');
-  if (error) {
-    console.error('❌ Supabase getPackages error:', error.message);
-    throw error;
-  }
-  return data;
+// ---------- Field mapping helpers ----------
+// DB uses snake_case, templates use camelCase
+
+/** Convert a DB row (snake_case) to a JS object (camelCase) for templates */
+function dbRowToPackage(row) {
+  return {
+    id: row.id,
+    eventName: row.event_name || '',
+    ticketPrice: row.ticket_price || '',
+    flightInfo: row.flight_info || '',
+    hotelInfo: row.hotel_info || '',
+    description: row.description || '',
+    availabilityDates: row.availability_dates || '',
+    photoUrl: row.photo_url || '',
+    visible: row.visible !== undefined ? row.visible : true,
+  };
 }
 
-/** Create a new package */
+/** Convert a JS object (camelCase) to a DB row (snake_case) for inserts/updates */
+function packageToDbRow(pkg) {
+  const row = {};
+  if (pkg.eventName !== undefined) row.event_name = pkg.eventName;
+  if (pkg.ticketPrice !== undefined) row.ticket_price = pkg.ticketPrice;
+  if (pkg.flightInfo !== undefined) row.flight_info = pkg.flightInfo;
+  if (pkg.hotelInfo !== undefined) row.hotel_info = pkg.hotelInfo;
+  if (pkg.description !== undefined) row.description = pkg.description;
+  if (pkg.availabilityDates !== undefined) row.availability_dates = pkg.availabilityDates;
+  if (pkg.photoUrl !== undefined) row.photo_url = pkg.photoUrl;
+  if (pkg.visible !== undefined) row.visible = pkg.visible;
+  // Also accept already-snake_case fields (from the first POST handler)
+  if (pkg.event_name !== undefined) row.event_name = pkg.event_name;
+  if (pkg.ticket_price !== undefined) row.ticket_price = pkg.ticket_price;
+  if (pkg.flight_info !== undefined) row.flight_info = pkg.flight_info;
+  if (pkg.hotel_info !== undefined) row.hotel_info = pkg.hotel_info;
+  if (pkg.availability_dates !== undefined) row.availability_dates = pkg.availability_dates;
+  if (pkg.photo_url !== undefined) row.photo_url = pkg.photo_url;
+  return row;
+}
+
+// ---------- Packages Table CRUD ----------
+
+/** Get all packages (returns camelCase objects for templates) */
+async function getPackages() {
+  try {
+    const { data, error } = await supabase.from('packages').select('*');
+    if (error) {
+      console.error('❌ Supabase getPackages error:', error.message);
+      return []; // Return empty array instead of throwing
+    }
+    return (data || []).map(dbRowToPackage);
+  } catch (err) {
+    console.error('❌ Supabase connection error:', err.message);
+    return []; // Return empty array on connection failure
+  }
+}
+
+/** Create a new package (accepts camelCase or snake_case fields) */
 async function createPackage(pkg) {
-  const { data, error } = await supabase.from('packages').insert([pkg]);
+  const row = packageToDbRow(pkg);
+  const { data, error } = await supabase.from('packages').insert([row]).select();
   if (error) {
     console.error('❌ Supabase createPackage error:', error.message);
     throw error;
   }
-  return data[0];
+  return data && data[0] ? dbRowToPackage(data[0]) : null;
 }
 
-/** Update a package by id */
+/** Update a package by id (accepts camelCase or snake_case fields) */
 async function updatePackage(id, pkg) {
-  const { data, error } = await supabase.from('packages').update(pkg).eq('id', id);
+  const row = packageToDbRow(pkg);
+  const { data, error } = await supabase.from('packages').update(row).eq('id', id).select();
   if (error) {
     console.error('❌ Supabase updatePackage error:', error.message);
     throw error;
   }
-  return data[0];
+  return data && data[0] ? dbRowToPackage(data[0]) : null;
 }
 
 /** Delete a package by id */
@@ -54,64 +101,10 @@ async function deletePackage(id) {
   return true;
 }
 
-// ---------- Packages JSON (legacy) ----------
-/** Load packages JSON stored under key 'packages' */
-async function loadPackagesJSON() {
-  const { data, error } = await supabase.from('mv_settings').select('value').eq('key', 'packages').single();
-  if (error) {
-    console.warn('⚠️ Supabase loadPackagesJSON error:', error.message);
-    return [];
-  }
-  return data?.value || [];
-}
-
-/** Save packages JSON */
-async function savePackagesJSON(packages) {
-  const payload = { key: 'packages', value: packages, updated_at: new Date() };
-  const { error } = await supabase.from('mv_settings').upsert(payload);
-  if (error) {
-    console.error('❌ Supabase savePackagesJSON error:', error.message);
-    throw error;
-  }
-  console.log('✅ Packages saved to Supabase.');
-}
-
-// ---------- Destacados (highlights) ----------
-/** Load destacados JSON */
-async function loadDestacadosJSON() {
-  const { data, error } = await supabase.from('mv_settings').select('value').eq('key', 'destacados').single();
-  if (error) {
-    if (error.code === 'PGRST116') return [];
-    console.error('❌ Supabase loadDestacadosJSON error:', error.message);
-    throw error;
-  }
-  return data?.value || [];
-}
-
-/** Get destacados (alias for loadDestacadosJSON) */
-async function getDestacados() {
-  return await loadDestacadosJSON();
-}
-
-/** Save destacados JSON */
-async function saveDestacadosJSON(highlights) {
-  const payload = { key: 'destacados', value: highlights, updated_at: new Date() };
-  const { error } = await supabase.from('mv_settings').upsert(payload);
-  if (error) {
-    console.error('❌ Supabase saveDestacadosJSON error:', error.message);
-    throw error;
-  }
-  console.log('✅ Destacados saved to Supabase.');
-}
-
 module.exports = {
+  supabase,
   getPackages,
   createPackage,
   updatePackage,
   deletePackage,
-  loadPackagesJSON,
-  savePackagesJSON,
-  loadDestacadosJSON,
-  getDestacados,
-  saveDestacadosJSON,
 };

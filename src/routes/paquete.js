@@ -1,18 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-// Instead of utils/packages (which expects an array), import directly
-const { loadPackagesJSON } = require('../services/supabaseStorage');
+// Use getPackages which reads directly from the packages table
+const { getPackages } = require('../services/supabaseStorage');
 
 router.get('/paquete/:id', async (req, res) => {
   try {
-    // Load packages from database
-    const packagesData = await loadPackagesJSON();
-
-    // Convert to array if it is in legacy map format
-    const packages = Array.isArray(packagesData)
-      ? packagesData
-      : Object.entries(packagesData).map(([id, pkg]) => ({ id, ...pkg }));
+    // Load packages from the packages table (returns camelCase objects)
+    const packages = await getPackages();
 
     // Find the package by id from URL param
     const paquete = packages.find(pkg => pkg.id === req.params.id);

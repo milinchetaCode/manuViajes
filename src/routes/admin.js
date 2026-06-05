@@ -5,88 +5,14 @@ const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 const requireLogin = require('../../middleware/requireLogin');
 
-// Services for package CRUD and destacados
+// Services for package CRUD
 const {
+  supabase,
   getPackages,
   createPackage,
   updatePackage,
   deletePackage,
-  loadDestacadosJSON,
-  saveDestacadosJSON,
 } = require('../services/supabaseStorage');
-
-// ADMIN PANEL GET
-router.get('/panel', requireLogin, async (req, res) => {
-  try {
-    const paquetes = await getPackages();
-    const destacados = await loadDestacadosJSON();
-    res.render('admin/panel', { paquetes, destacados, user: req.session.user });
-  } catch (err) {
-    console.error('Error loading admin data:', err);
-    res.status(500).send('Error loading admin data');
-  }
-});
-
-// ADMIN PANEL SAVE (create/update)
-router.post('/panel', requireLogin, async (req, res) => {
-  try {
-    const paquetesForm = req.body.paquetes || {};
-    // Ensure paquetesForm is an object
-    if (typeof paquetesForm !== 'object') {
-      return res.status(400).send('Datos de paquetes inválidos.');
-    }
-    // Process each package entry
-    const keys = Object.keys(paquetesForm);
-    for (const id of keys) {
-      const pkg = paquetesForm[id];
-      // Determine if this is a new package (no id in DB)
-      const exists = await supabase.from('packages').select('id').eq('id', id).single();
-      if (exists.data) {
-        await updatePackage(id, {
-          event_name: pkg.eventName,
-          ticket_price: pkg.ticketPrice,
-          flight_info: pkg.flightInfo,
-          hotel_info: pkg.hotelInfo,
-          description: pkg.description,
-          availability_dates: pkg.availabilityDates,
-          photo_url: pkg.photoUrl,
-          visible: pkg.visible === '1',
-        });
-      } else {
-        await createPackage({
-          event_name: pkg.eventName,
-          ticket_price: pkg.ticketPrice,
-          flight_info: pkg.flightInfo,
-          hotel_info: pkg.hotelInfo,
-          description: pkg.description,
-          availability_dates: pkg.availabilityDates,
-          photo_url: pkg.photoUrl,
-          visible: pkg.visible === '1',
-        });
-      }
-    }
-    if (req.body.destacados !== undefined) {
-      await saveDestacadosJSON(req.body.destacados);
-    }
-    res.redirect('/admin/panel');
-  } catch (err) {
-    console.error('Error saving admin data:', err);
-    res.status(500).send('Error saving admin data');
-  }
-});
-
-// DELETE package endpoint
-router.post('/panel/delete/:id', requireLogin, async (req, res) => {
-  try {
-    const id = req.params.id;
-    await deletePackage(id);
-    res.sendStatus(200);
-  } catch (err) {
-    console.error('Error deleting package:', err);
-    res.status(500).send('Error deleting package');
-  }
-});
-
 
 // Configure Cloudinary
 cloudinary.config({
@@ -126,26 +52,19 @@ router.get('/logout', (req, res) => {
 /* ============================
    ADMIN PANEL
 ============================ */
+
+// GET — Load packages from the packages table
 router.get('/panel', requireLogin, async (req, res) => {
   try {
-    const packagesData = await loadPackagesJSON();
-    const paquetes = Array.isArray(packagesData)
-      ? packagesData
-      : Object.entries(packagesData).map(([id, pkg]) => ({ id, ...pkg }));
-    
-    const destacados = await loadDestacadosJSON();
-
-    res.render('admin/panel', {
-      paquetes,
-      destacados,
-      user: req.session.user,
-    });
+    const paquetes = await getPackages();
+    res.render('admin/panel', { paquetes, user: req.session.user });
   } catch (err) {
     console.error('Error loading admin data:', err);
     res.status(500).send('Error loading admin data');
   }
 });
 
+// POST — Save packages to the packages table (create/update)
 router.post('/panel', requireLogin, async (req, res) => {
   try {
     let paquetesForm = req.body.paquetes;
@@ -158,51 +77,60 @@ router.post('/panel', requireLogin, async (req, res) => {
       return res.status(400).send('Datos de paquetes inválidos.');
     }
 
-    const existingPackages = await loadPackagesJSON();
-    const existingArray = Array.isArray(existingPackages)
-      ? existingPackages
-      : Object.entries(existingPackages).map(([id, pkg]) => ({ id, ...pkg }));
+    // Load existing packages to merge unchanged fields
+    const existingPackages = await getPackages();
 
-    const paquetes = Object.entries(paquetesForm).map(([id, pkg]) => {
-      const existing = existingArray.find(p => p.id === id) || {};
+    const keys = Object.keys(paquetesForm);
+    for (const id of keys) {
+      const pkg = paquetesForm[id];
+      const existing = existingPackages.find(p => p.id === id);
 
-      // Accept both text and numeric prices (e.g. "USD 300", "call us", 300, etc.)
-      let ticketPrice = pkg.ticketPrice || existing.ticketPrice || '';
-
-      return {
-        id,
+      const packageData = {
         eventName: typeof pkg.eventName === 'string' && pkg.eventName.trim() !== ''
           ? pkg.eventName.trim()
-          : existing.eventName || '',
-        ticketPrice,
+          : (existing ? existing.eventName : ''),
+        ticketPrice: pkg.ticketPrice || (existing ? existing.ticketPrice : ''),
         flightInfo: typeof pkg.flightInfo === 'string'
           ? pkg.flightInfo.trim()
-          : existing.flightInfo || '',
+          : (existing ? existing.flightInfo : ''),
         hotelInfo: typeof pkg.hotelInfo === 'string'
           ? pkg.hotelInfo.trim()
-          : existing.hotelInfo || '',
+          : (existing ? existing.hotelInfo : ''),
         description: typeof pkg.description === 'string'
           ? pkg.description.trim()
-          : existing.description || '',
+          : (existing ? existing.description : ''),
         availabilityDates: typeof pkg.availabilityDates === 'string'
           ? pkg.availabilityDates.trim()
-          : existing.availabilityDates || '',
+          : (existing ? existing.availabilityDates : ''),
+        photoUrl: typeof pkg.photoUrl === 'string'
+          ? pkg.photoUrl.trim()
+          : (existing ? existing.photoUrl : ''),
         visible: pkg.visible === '1',
-        foto: typeof pkg.foto === 'string' ? pkg.foto.trim() : existing.foto || '',
-        photoUrl: typeof pkg.photoUrl === 'string' ? pkg.photoUrl.trim() : existing.photoUrl || ''
       };
-    });
 
-    await savePackagesJSON(paquetes);
-
-    if (req.body.destacados !== undefined) {
-      await saveDestacadosJSON(req.body.destacados);
+      if (existing) {
+        await updatePackage(id, packageData);
+      } else {
+        await createPackage(packageData);
+      }
     }
 
     res.redirect('/admin/panel');
   } catch (err) {
     console.error('Error saving admin data:', err);
     res.status(500).send('Error saving admin data');
+  }
+});
+
+// DELETE package endpoint
+router.post('/panel/delete/:id', requireLogin, async (req, res) => {
+  try {
+    const id = req.params.id;
+    await deletePackage(id);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('Error deleting package:', err);
+    res.status(500).send('Error deleting package');
   }
 });
 

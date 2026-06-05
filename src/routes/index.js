@@ -3,7 +3,6 @@ const router = express.Router();
 const cloudinary = require("cloudinary").v2;
 const {
   getPackages,
-  getDestacados,
 } = require("../services/supabaseStorage");
 
 // Configure Cloudinary from env variables
@@ -16,10 +15,10 @@ cloudinary.config({
 // HOME PAGE
 router.get("/", async (req, res) => {
   try {
+    // getPackages now returns empty array on error instead of throwing
     const packages = await getPackages();
-    const events = await getDestacados();
 
-    // Dynamic Hero Images from Cloudinary (fixed)
+    // Dynamic Hero Images from Cloudinary (graceful fallback)
     let heroImages = [];
     try {
       const result = await cloudinary.search
@@ -28,26 +27,20 @@ router.get("/", async (req, res) => {
         .max_results(50)
         .execute();
 
-    //  console.log("Cloudinary folder contents:", result.resources); // <-- DEBUG
-
       heroImages = result.resources.map((img) => img.secure_url);
-      //console.log("Hero images extracted:", heroImages); // <-- DEBUG
-
-      result.resources.forEach((img, index) => {
-        //console.log(`Image ${index}: ${img.public_id}`);
-      });
     } catch (err) {
-      //console.error("Cloudinary error:", err);
+      console.error("Cloudinary error:", err.message);
+      // heroImages stays empty array - page still loads
     }
 
+    // Page loads even if Supabase or Cloudinary fail
     res.render("index", {
-      packages,
-      events,
-      heroImages, // pass to template
+      packages, // Will be empty array if Supabase fails
+      heroImages, // Will be empty array if Cloudinary fails
       currentPage: "home",
     });
   } catch (err) {
-   // console.error("Error loading data!", err);
+    console.error("Error loading home page:", err);
     res.status(500).send("Error loading site data");
   }
 });
