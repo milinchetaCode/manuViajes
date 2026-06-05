@@ -57,7 +57,8 @@ router.get('/logout', (req, res) => {
 router.get('/panel', requireLogin, async (req, res) => {
   try {
     const paquetes = await getPackages();
-    res.render('admin/panel', { paquetes, user: req.session.user });
+    // Use new table-based view
+    res.render('admin/panel-table', { paquetes, user: req.session.user });
   } catch (err) {
     console.error('Error loading admin data:', err);
     res.status(500).send('Error loading admin data');
@@ -68,6 +69,16 @@ router.get('/panel', requireLogin, async (req, res) => {
 router.post('/panel', requireLogin, async (req, res) => {
   try {
     let paquetesForm = req.body.paquetes;
+
+    // Handle JSON string from table view
+    if (typeof paquetesForm === 'string') {
+      try {
+        paquetesForm = JSON.parse(paquetesForm);
+      } catch (e) {
+        console.error('Error parsing paquetes JSON:', e);
+        return res.status(400).send('Datos de paquetes inválidos.');
+      }
+    }
 
     if (paquetesForm === undefined) {
       paquetesForm = {};
@@ -105,7 +116,7 @@ router.post('/panel', requireLogin, async (req, res) => {
         photoUrl: typeof pkg.photoUrl === 'string'
           ? pkg.photoUrl.trim()
           : (existing ? existing.photoUrl : ''),
-        visible: pkg.visible === '1',
+        visible: pkg.visible === true || pkg.visible === '1',
       };
 
       if (existing) {

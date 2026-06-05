@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración - Paquetes</title>
+  <link rel="stylesheet" href="/styles/output.css">
+  <style>
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .admin-table th {
+      background: #f9fafb;
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 2px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .admin-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .admin-table tbody tr:hover {
+      background: #f9fafb;
+    }
+    .admin-table tbody tr.expanded {
+      background: #f0fdf4;
+    }
+    .expanded-row {
+      display: none;
+    }
+    .expanded-row.show {
+      display: table-row;
+    }
+    .expanded-content {
+      padding: 24px;
+      background: #f9fafb;
+    }
+    .pagination {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 24px;
+    }
+    .pagination button {
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .pagination button:hover:not(:disabled) {
+      background: #f3f4f6;
+      border-color: #9ca3af;
+    }
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .pagination button.active {
+      background: #16a34a;
+      color: white;
+      border-color: #16a34a;
+    }
+    .search-box {
+      position: relative;
+    }
+    .search-box input {
+      padding-left: 40px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-visible {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    .badge-hidden {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white py-5 px-4 shadow-md mb-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <h1 class="text-2xl font-bold text-green-800">Panel de Administración - Paquetes</h1>
+      <div class="flex items-center gap-4">
+        <a href="/admin/fotos" class="bg-accent text-white font-semibold px-4 py-2 rounded shadow hover:bg-accent/90 transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          Galería de Fotos
+        </a>
+        <a href="/admin/logout" class="text-red-600 font-semibold hover:underline">Cerrar sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 pb-20">
+
+    <!-- Controls Bar -->
+    <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <!-- Search -->
+        <div class="search-box flex-1 max-w-md">
+          <svg class="search-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Buscar por nombre, precio o fecha..." 
+            class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none"
+          />
+        </div>
+
+        <!-- Filter -->
+        <select id="filter-visible" class="rounded-lg border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-accent focus:outline-none">
+          <option value="all">Todos los paquetes</option>
+          <option value="visible">Solo visibles</option>
+          <option value="hidden">Solo ocultos</option>
+        </select>
+
+        <!-- Add Button -->
+        <button type="button" id="btn-add-package" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition-colors flex items-center gap-2 whitespace-nowrap">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Agregar Paquete
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="mt-4 flex gap-4 text-sm text-gray-600">
+        <span>Total: <strong id="total-count">0</strong></span>
+        <span>Visibles: <strong id="visible-count">0</strong></span>
+        <span>Ocultos: <strong id="hidden-count">0</strong></span>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">
+                <input type="checkbox" id="select-all" class="rounded border-gray-300 text-accent focus:ring-accent" title="Seleccionar todos"/>
+              </th>
+              <th style="width: 80px;">Estado</th>
+              <th style="width: 250px;">Nombre del Evento</th>
+              <th style="width: 120px;">Precio</th>
+              <th style="width: 150px;">Fechas</th>
+              <th style="width: 80px;">Foto</th>
+              <th style="width: 120px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="packages-tbody">
+            <!-- Rows will be inserted here by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="text-center py-12 hidden">
+        <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+        </svg>
+        <p class="text-gray-600 text-lg">No se encontraron paquetes</p>
+        <p class="text-gray-500 text-sm mt-2">Agrega un nuevo paquete para comenzar</p>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination-container" class="pagination p-4 border-t border-gray-200">
+        <!-- Pagination buttons will be inserted here -->
+      </div>
+    </div>
+
+    <!-- Save Button (Sticky) -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg p-4 z-50">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <span class="text-sm text-gray-600">
+          <span id="changes-count">0</span> cambios pendientes
+        </span>
+        <button type="button" id="btn-save-all" class="bg-accent hover:bg-accent/90 text-white font-bold px-8 py-3 rounded-full shadow-lg transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+          </svg>
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Edit Modal -->
+  <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+        <h2 class="text-xl font-bold text-gray-800" id="modal-title">Editar Paquete</h2>
+        <button type="button" id="btn-close-modal" class="text-gray-500 hover:text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="p-6" id="modal-content">
+        <!-- Form will be inserted here -->
+      </div>
+
+      <div class="sticky bottom-0 bg-gray-50 border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
+        <button type="button" id="btn-cancel-modal" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors">
+          Cancelar
+        </button>
+        <button type="button" id="btn-save-modal" class="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script>
+    // Pass server data to JavaScript
+    window.packagesData = <%- JSON.stringify(paquetes) %>;
+  </script>
+  <script src="/js/admin-panel-table.js"></script>
+</body>
+</html>
