@@ -57,6 +57,8 @@ router.get('/logout', (req, res) => {
 router.get('/panel', requireLogin, async (req, res) => {
   try {
     const paquetes = await getPackages();
+    console.log('📦 [Admin Panel] Loaded packages:', paquetes.length, 'packages');
+    console.log('📦 [Admin Panel] Package data:', JSON.stringify(paquetes, null, 2));
     // Use new table-based view
     res.render('admin/panel-table', { paquetes, user: req.session.user });
   } catch (err) {

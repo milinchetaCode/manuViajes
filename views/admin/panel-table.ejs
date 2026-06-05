@@ -243,11 +243,10 @@
     </div>
   </div>
 
+  <!-- Pass data via data attribute (CSP compliant) -->
+  <div id="packages-data" style="display:none;" data-packages="<%= encodeURIComponent(JSON.stringify(paquetes)) %>"></div>
+  
   <!-- External JavaScript -->
-  <script>
-    // Pass server data to JavaScript
-    window.packagesData = <%- JSON.stringify(paquetes) %>;
-  </script>
   <script src="/js/admin-panel-table.js"></script>
 </body>
 </html>

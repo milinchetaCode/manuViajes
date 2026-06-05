@@ -4,12 +4,16 @@
 (function() {
   'use strict';
 
-  // Load packages data from embedded script tag
+  // Load packages data from data attribute
   function loadPackagesData() {
     try {
-      var dataScript = document.getElementById('packages-data');
-      if (dataScript && dataScript.textContent) {
-        return JSON.parse(dataScript.textContent);
+      var dataElement = document.getElementById('packages-data');
+      if (dataElement) {
+        var encodedData = dataElement.getAttribute('data-packages');
+        if (encodedData) {
+          var decodedData = decodeURIComponent(encodedData);
+          return JSON.parse(decodedData);
+        }
       }
     } catch (e) {
       console.error('Error parsing packages data:', e);
@@ -53,7 +57,8 @@
 
   // Initialize
   function init() {
-    console.log('Admin panel table initialized with', state.packages.length, 'packages');
+    console.log('📊 [Admin Panel Table] Initialized with', state.packages.length, 'packages');
+    console.log('📊 [Admin Panel Table] Package data:', state.packages);
     
     // Bind events
     elements.searchInput.addEventListener('input', handleSearch);
