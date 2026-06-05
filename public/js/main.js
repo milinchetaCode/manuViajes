@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       img.addEventListener('click', () => {
         lightboxImg.src = img.src;
         lightbox.classList.remove('hidden');
+        history.pushState({ lightboxOpen: true }, '');
       });
     });
 
@@ -72,6 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target.id === 'lightbox') window.closeLightbox();
     });
   }
+
+  // Handle browser back/forward navigation when lightbox is open
+  window.addEventListener('popstate', function() {
+    if (document.getElementById('lightbox')) {
+      document.getElementById('lightbox').classList.add('hidden');
+    }
+  });
 
   // --- Continent Filter Chips ---
   const chips = document.querySelectorAll('#continent-filters .chip');
