@@ -79,7 +79,8 @@
         <% if (packages && packages.length) { %>
           <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-grid">
             <% packages.filter(pkg=> pkg.visible).forEach(pkg => { %>
-              <li class="card" data-continent="<%= pkg.continent || 'unknown' %>">
+              <li class="card relative" data-continent="<%= pkg.continent || 'unknown' %>">
+                <span class="absolute top-2 left-2 bg-white text-xs font-medium px-2 py-1 rounded-full shadow"> <%= pkg.continent || 'unknown' %> </span>
                 <img
                   src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
                   alt="<%= pkg.eventName %>" class="w-full h-48 object-contain rounded-xl mb-4 bg-gray-100" />
