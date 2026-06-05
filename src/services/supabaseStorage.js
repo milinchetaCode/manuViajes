@@ -27,6 +27,7 @@ function dbRowToPackage(row) {
     description: row.description || '',
     availabilityDates: row.availability_dates || '',
     photoUrl: row.photo_url || '',
+    continent: row.continent || '',
     visible: row.visible !== undefined ? row.visible : true,
   };
 }
@@ -41,6 +42,7 @@ function packageToDbRow(pkg) {
   if (pkg.description !== undefined) row.description = pkg.description;
   if (pkg.availabilityDates !== undefined) row.availability_dates = pkg.availabilityDates;
   if (pkg.photoUrl !== undefined) row.photo_url = pkg.photoUrl;
+  if (pkg.continent !== undefined) row.continent = pkg.continent;
   if (pkg.visible !== undefined) row.visible = pkg.visible;
   // Also accept already-snake_case fields (from the first POST handler)
   if (pkg.event_name !== undefined) row.event_name = pkg.event_name;
@@ -49,6 +51,7 @@ function packageToDbRow(pkg) {
   if (pkg.hotel_info !== undefined) row.hotel_info = pkg.hotel_info;
   if (pkg.availability_dates !== undefined) row.availability_dates = pkg.availability_dates;
   if (pkg.photo_url !== undefined) row.photo_url = pkg.photo_url;
+  if (pkg.continent !== undefined) row.continent = pkg.continent;
   return row;
 }
 

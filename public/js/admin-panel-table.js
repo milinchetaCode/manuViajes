@@ -519,6 +519,7 @@
     // Get form values
     pkg.eventName = document.getElementById('edit-eventName').value;
     pkg.ticketPrice = document.getElementById('edit-ticketPrice').value;
+    pkg.continent = document.getElementById('edit-continent').value;
     pkg.availabilityDates = document.getElementById('edit-availabilityDates').value;
     pkg.flightInfo = document.getElementById('edit-flightInfo').value;
     pkg.hotelInfo = document.getElementById('edit-hotelInfo').value;
