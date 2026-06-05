@@ -30,9 +30,11 @@
             alt="<%= paquete.eventName %>" 
             class="w-full h-64 object-cover rounded-2xl shadow-sm border border-gray-200"
           />
-          <span class="absolute top-4 left-4 badge-accent text-xs sm:text-sm font-semibold px-4 py-2 rounded-full shadow-md">
-            Paquete
-          </span>
+          <% if (paquete.continent) { %>
+            <span class="absolute top-4 left-4 btn-accent chip text-xs sm:text-sm font-semibold px-4 py-2 rounded-full shadow-md">
+              <%= paquete.continent %>
+            </span>
+          <% } %>
         </div>
 
         <!-- Details -->
