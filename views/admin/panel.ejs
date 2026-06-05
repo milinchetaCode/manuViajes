@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Administración - Paquetes</title>
   <link rel="stylesheet" href="/styles/output.css">
-  <script src="https://unpkg.com/feather-icons"></script>
   <style>
     .save-button-container {
       position: sticky;
@@ -27,7 +26,10 @@
       <h1 class="text-2xl font-bold text-green-800">Panel de Administración - Paquetes</h1>
       <div class="flex items-center gap-4">
         <a href="/admin/fotos" class="bg-accent text-white font-semibold px-4 py-2 rounded shadow hover:bg-accent/90 transition-colors flex items-center gap-2">
-          <i data-feather="image" class="w-4 h-4"></i> Galería de Fotos
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          Galería de Fotos
         </a>
         <a href="/admin/logout" class="text-red-600 font-semibold hover:underline">Cerrar sesión</a>
       </div>
@@ -39,7 +41,10 @@
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
       <h2 class="text-xl font-bold text-gray-700">Listado de Paquetes</h2>
       <button type="button" id="btn-add-package" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition-colors flex items-center gap-2">
-        <i data-feather="plus" class="w-4 h-4"></i> Agregar Nuevo Paquete
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Agregar Nuevo Paquete
       </button>
     </div>
 
@@ -59,7 +64,9 @@
               </div>
             </div>
             <button type="button" class="btn-delete-package bg-red-100 hover:bg-red-200 text-red-600 p-2 rounded-lg transition-colors" title="Eliminar Paquete">
-              <i data-feather="trash-2" class="w-5 h-5"></i>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+              </svg>
             </button>
           </div>
 
@@ -135,8 +142,11 @@
 
       <!-- Sticky Save Button -->
       <div class="save-button-container text-right">
-        <button type="submit" class="bg-accent hover:bg-accent/90 text-white font-bold px-8 py-3 rounded-full shadow-lg transition-colors">
-          <i data-feather="save" class="w-4 h-4 inline"></i> Guardar Cambios
+        <button type="submit" class="bg-accent hover:bg-accent/90 text-white font-bold px-8 py-3 rounded-full shadow-lg transition-colors flex items-center gap-2 justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+          </svg>
+          Guardar Cambios
         </button>
       </div>
 
@@ -158,7 +168,9 @@
           </div>
         </div>
         <button type="button" class="btn-delete-package bg-red-100 hover:bg-red-200 text-red-600 p-2 rounded-lg transition-colors" title="Eliminar Paquete">
-          <i data-feather="trash-2" class="w-5 h-5"></i>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
         </button>
       </div>
 
@@ -228,140 +240,158 @@
   </template>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('Admin panel script DOMContentLoaded');
-    // Initialize Feather icons if available
-    if (typeof feather !== 'undefined') {
-      feather.replace();
-    }
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Admin panel script loaded');
 
-    const btnAddPackage = document.getElementById('btn-add-package');
-    const packagesContainer = document.getElementById('packages-container');
-    const template = document.getElementById('package-card-template');
+    var btnAddPackage = document.getElementById('btn-add-package');
+    var packagesContainer = document.getElementById('packages-container');
+    var template = document.getElementById('package-card-template');
+
+    console.log('Button:', btnAddPackage);
+    console.log('Container:', packagesContainer);
+    console.log('Template:', template);
 
     if (!btnAddPackage || !packagesContainer || !template) {
-      console.error('Add package button or container/template missing');
+      console.error('Required elements missing!');
+      console.error('Button exists:', !!btnAddPackage);
+      console.error('Container exists:', !!packagesContainer);
+      console.error('Template exists:', !!template);
       return;
     }
 
     // Add package button - creates package in backend first
-    btnAddPackage.addEventListener('click', async () => {
-      console.log('Add package button clicked');
+    btnAddPackage.addEventListener('click', function() {
+      console.log('Add package button clicked!');
       
       // Disable button to prevent double-clicks
       btnAddPackage.disabled = true;
-      btnAddPackage.textContent = 'Creando...';
+      btnAddPackage.innerHTML = 'Creando...';
 
-      try {
-        // Call backend to create package with UUID
-        const response = await fetch('/admin/panel/create', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
+      // Call backend to create package with UUID
+      fetch('/admin/panel/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(function(response) {
+        console.log('Response status:', response.status);
         if (!response.ok) {
-          throw new Error('Error creating package');
+          throw new Error('Error creating package: ' + response.status);
         }
-
-        const newPackage = await response.json();
+        return response.json();
+      })
+      .then(function(newPackage) {
         console.log('New package created:', newPackage);
 
         // Use template content and replace placeholder with real UUID
-        let content = template.innerHTML;
-        content = content.replaceAll('__ID__', newPackage.id);
+        var content = template.innerHTML;
+        // Replace all occurrences of __ID__
+        content = content.split('__ID__').join(newPackage.id);
 
         // Create element and add to container
-        const tempDiv = document.createElement('div');
+        var tempDiv = document.createElement('div');
         tempDiv.innerHTML = content.trim();
-        const newCard = tempDiv.firstElementChild;
+        var newCard = tempDiv.firstElementChild;
+        
         if (!newCard) {
           console.error('Failed to create new card element');
-          return;
+          throw new Error('Failed to create card');
         }
 
         // Update the card with the package data
-        const eventNameInput = newCard.querySelector(`input[name="paquetes[${newPackage.id}][eventName]"]`);
+        var eventNameInput = newCard.querySelector('input[name="paquetes[' + newPackage.id + '][eventName]"]');
         if (eventNameInput) {
-          eventNameInput.value = newPackage.eventName;
+          eventNameInput.value = newPackage.eventName || 'Nuevo Paquete';
         }
 
         packagesContainer.appendChild(newCard);
-        console.log('New package card added');
+        console.log('New package card added successfully');
 
-        // Re-initialize icons
-        if (typeof feather !== 'undefined') {
-          feather.replace();
-        }
-
+        // Scroll to new card
         newCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      } catch (error) {
-        console.error('Error creating package:', error);
-        alert('Error al crear el paquete. Por favor, intente de nuevo.');
-      } finally {
+        
         // Re-enable button
         btnAddPackage.disabled = false;
-        btnAddPackage.innerHTML = '<i data-feather="plus" class="w-4 h-4"></i> Agregar Nuevo Paquete';
-        if (typeof feather !== 'undefined') {
-          feather.replace();
-        }
-      }
+        btnAddPackage.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Agregar Nuevo Paquete';
+      })
+      .catch(function(error) {
+        console.error('Error creating package:', error);
+        alert('Error al crear el paquete: ' + error.message + '\n\nPor favor, intente de nuevo.');
+        
+        // Re-enable button
+        btnAddPackage.disabled = false;
+        btnAddPackage.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Agregar Nuevo Paquete';
+      });
     });
 
     // Delete package event (delegated) - now calls backend
-    packagesContainer.addEventListener('click', async (e) => {
-      const deleteBtn = e.target.closest('.btn-delete-package');
+    packagesContainer.addEventListener('click', function(e) {
+      var deleteBtn = e.target.closest('.btn-delete-package');
       if (!deleteBtn) return;
       
-      const card = deleteBtn.closest('.package-card');
-      if (!card) return;
+      console.log('Delete button clicked');
       
-      const packageId = card.getAttribute('data-package-id');
+      var card = deleteBtn.closest('.package-card');
+      if (!card) {
+        console.error('Card not found');
+        return;
+      }
+      
+      var packageId = card.getAttribute('data-package-id');
+      console.log('Package ID:', packageId);
       
       // Get package name for confirmation message
-      const eventNameInput = card.querySelector('input[name*="[eventName]"]');
-      const packageName = eventNameInput ? eventNameInput.value : packageId;
+      var eventNameInput = card.querySelector('input[name*="[eventName]"]');
+      var packageName = eventNameInput ? eventNameInput.value : packageId;
       
-      const confirmDelete = confirm(`¿Está seguro de que desea eliminar el paquete "${packageName}"?\n\nEsta acción no se puede deshacer.`);
+      var confirmDelete = confirm('¿Está seguro de que desea eliminar el paquete "' + packageName + '"?\n\nEsta acción no se puede deshacer.');
       
-      if (!confirmDelete) return;
+      if (!confirmDelete) {
+        console.log('Delete cancelled by user');
+        return;
+      }
 
       // Disable delete button to prevent double-clicks
       deleteBtn.disabled = true;
       deleteBtn.style.opacity = '0.5';
 
-      try {
-        // Call backend to delete package
-        const response = await fetch(`/admin/panel/delete/${packageId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
+      // Call backend to delete package
+      fetch('/admin/panel/delete/' + packageId, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(function(response) {
+        console.log('Delete response status:', response.status);
         if (!response.ok) {
-          throw new Error('Error deleting package');
+          throw new Error('Error deleting package: ' + response.status);
         }
-
-        console.log('Package deleted:', packageId);
+        return response;
+      })
+      .then(function() {
+        console.log('Package deleted successfully:', packageId);
         
         // Remove card from DOM with animation
         card.style.transition = 'opacity 0.3s ease-out';
         card.style.opacity = '0';
-        setTimeout(() => {
+        setTimeout(function() {
           card.remove();
+          console.log('Card removed from DOM');
         }, 300);
-        
-      } catch (error) {
+      })
+      .catch(function(error) {
         console.error('Error deleting package:', error);
-        alert('Error al eliminar el paquete. Por favor, intente de nuevo.');
+        alert('Error al eliminar el paquete: ' + error.message + '\n\nPor favor, intente de nuevo.');
         
         // Re-enable button on error
         deleteBtn.disabled = false;
         deleteBtn.style.opacity = '1';
-      }
+      });
     });
+    
+    console.log('Event listeners attached successfully');
   });
 </script>
 </body>
