@@ -80,7 +80,9 @@
           <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-grid">
             <% packages.filter(pkg=> pkg.visible).forEach(pkg => { %>
               <li class="card relative" data-continent="<%= pkg.continent || 'unknown' %>">
-                <span class="btn-accent chip absolute top-2 left-2"> <%= pkg.continent || 'unknown' %> </span>
+                <% if (pkg.continent) { %>
+                  <span class="btn-accent chip text-sm absolute top-2 left-2"> <%= pkg.continent %> </span>
+                <% } %>
                 <img
                   src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
                   alt="<%= pkg.eventName %>" class="w-full h-48 object-contain rounded-xl mb-4 bg-gray-100" />
