@@ -4,9 +4,22 @@
 (function() {
   'use strict';
 
+  // Load packages data from embedded script tag
+  function loadPackagesData() {
+    try {
+      var dataScript = document.getElementById('packages-data');
+      if (dataScript && dataScript.textContent) {
+        return JSON.parse(dataScript.textContent);
+      }
+    } catch (e) {
+      console.error('Error parsing packages data:', e);
+    }
+    return [];
+  }
+
   // State
   var state = {
-    packages: window.packagesData || [],
+    packages: loadPackagesData(),
     filteredPackages: [],
     currentPage: 1,
     itemsPerPage: 20,
