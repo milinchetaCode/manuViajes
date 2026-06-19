@@ -7,9 +7,7 @@ const required = [
 ];
 
 function getConfig() {
-  if (!process.env.SESSION_SECRET) process.env.SESSION_SECRET = 'fallback_session_secret_for_dev';
-  if (!process.env.ADMIN_USER) process.env.ADMIN_USER = 'admin';
-  if (!process.env.ADMIN_PASS) process.env.ADMIN_PASS = 'admin';
+  // Environment variables must be provided; no fallback defaults for credentials or session secret.
 
   const missing = required.filter(k => !process.env[k]);
   if (missing.length) {

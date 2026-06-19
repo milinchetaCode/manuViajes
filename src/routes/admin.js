@@ -72,56 +72,54 @@ router.post('/panel', requireLogin, async (req, res) => {
   try {
     let paquetesForm = req.body.paquetes;
 
-    // Handle JSON string from table view
+    // Parse JSON if needed
     if (typeof paquetesForm === 'string') {
       try {
         paquetesForm = JSON.parse(paquetesForm);
       } catch (e) {
         console.error('Error parsing paquetes JSON:', e);
-        return res.status(400).send('Datos de paquetes inválidos.');
+        return res.status(400).send('Invalid package data');
       }
     }
 
-    if (paquetesForm === undefined) {
-      paquetesForm = {};
+    if (!paquetesForm || typeof paquetesForm !== 'object') {
+      return res.status(400).send('Invalid package data');
     }
 
-    if (typeof paquetesForm !== 'object') {
-      return res.status(400).send('Datos de paquetes inválidos.');
-    }
+    // Simple sanitization helper
+    const sanitize = (value) => {
+      if (typeof value !== 'string') return value;
+      return value.replace(/[<>"'`;]/g, ''); // strip dangerous chars
+    };
 
-    // Load existing packages to merge unchanged fields
     const existingPackages = await getPackages();
-
     const keys = Object.keys(paquetesForm);
     for (const id of keys) {
-      const pkg = paquetesForm[id];
+      const rawPkg = paquetesForm[id];
       const existing = existingPackages.find(p => p.id === id);
 
+      const pkg = {
+        eventName: sanitize(rawPkg.eventName),
+        ticketPrice: sanitize(rawPkg.ticketPrice),
+        flightInfo: sanitize(rawPkg.flightInfo),
+        hotelInfo: sanitize(rawPkg.hotelInfo),
+        description: sanitize(rawPkg.description),
+        availabilityDates: sanitize(rawPkg.availabilityDates),
+        photoUrl: sanitize(rawPkg.photoUrl),
+        continent: sanitize(rawPkg.continent),
+        visible: rawPkg.visible === true || rawPkg.visible === '1',
+      };
+
       const packageData = {
-        eventName: typeof pkg.eventName === 'string' && pkg.eventName.trim() !== ''
-          ? pkg.eventName.trim()
-          : (existing ? existing.eventName : ''),
+        eventName: pkg.eventName && pkg.eventName.trim() !== '' ? pkg.eventName.trim() : (existing ? existing.eventName : ''),
         ticketPrice: pkg.ticketPrice || (existing ? existing.ticketPrice : ''),
-        flightInfo: typeof pkg.flightInfo === 'string'
-          ? pkg.flightInfo.trim()
-          : (existing ? existing.flightInfo : ''),
-        hotelInfo: typeof pkg.hotelInfo === 'string'
-          ? pkg.hotelInfo.trim()
-          : (existing ? existing.hotelInfo : ''),
-        description: typeof pkg.description === 'string'
-          ? pkg.description.trim()
-          : (existing ? existing.description : ''),
-        availabilityDates: typeof pkg.availabilityDates === 'string'
-          ? pkg.availabilityDates.trim()
-          : (existing ? existing.availabilityDates : ''),
-        photoUrl: typeof pkg.photoUrl === 'string'
-          ? pkg.photoUrl.trim()
-          : (existing ? existing.photoUrl : ''),
-        continent: typeof pkg.continent === 'string'
-          ? pkg.continent.trim()
-          : (existing ? existing.continent : ''),
-        visible: pkg.visible === true || pkg.visible === '1',
+        flightInfo: pkg.flightInfo || (existing ? existing.flightInfo : ''),
+        hotelInfo: pkg.hotelInfo || (existing ? existing.hotelInfo : ''),
+        description: pkg.description || (existing ? existing.description : ''),
+        availabilityDates: pkg.availabilityDates || (existing ? existing.availabilityDates : ''),
+        photoUrl: pkg.photoUrl || (existing ? existing.photoUrl : ''),
+        continent: pkg.continent || (existing ? existing.continent : ''),
+        visible: pkg.visible,
       };
 
       if (existing) {
