@@ -37,6 +37,7 @@ app.use(
         fontSrc: ["'self'", "https:", "data:"],
         formAction: ["'self'"],
         frameAncestors: ["'self'"],
+        frameSrc: ["'self'", "https://www.tatajuba.travel"],
         imgSrc: ["'self'", "data:", "https://res.cloudinary.com", "blob:"],
         objectSrc: ["'none'"],
         scriptSrc: ["'self'"],
