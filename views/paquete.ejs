@@ -66,7 +66,7 @@
           </ul>
 
           <p class="text-2xl text-accent font-bold mt-6 flex items-center gap-2">
-            <i data-feather="ticket" class="w-5 h-5"></i>
+            <i data-feather="dollar-sign" class="w-5 h-5"></i>
             U$S <%= paquete.ticketPrice ? paquete.ticketPrice.toLocaleString('es-ES') : 'Consultar' %>
           </p>
 
@@ -141,7 +141,7 @@
               <%= pkg.availabilityDates %>
             </p>
             <p class="text-lg font-bold text-accent mt-2 flex items-center gap-1">
-              <i data-feather="ticket" class="w-4 h-4"></i>
+              <i data-feather="dollar-sign" class="w-4 h-4"></i>
               <% if (pkg.ticketPrice) { %>
                 U$S <%= pkg.ticketPrice.toLocaleString('es-ES') %>
               <% } else { %>
@@ -161,8 +161,7 @@
 
   <%- include('partials/footer') %>
 
-  <script>
-    feather.replace();
-  </script>
+  <!-- Main JS (contains feather, lightbox, slider) -->
+  <script src="/js/main.js" defer></script>
 </body>
 </html>
