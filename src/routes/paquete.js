@@ -17,9 +17,19 @@ router.get('/paquete/:id', async (req, res) => {
       return res.status(404).render('404', { message: 'Paquete no encontrado' });
     }
 
+    // Find related packages by continent (max 2, excluding current)
+    const relatedPackages = packages
+      .filter(pkg =>
+        pkg.continent === paquete.continent &&
+        pkg.id !== paquete.id &&
+        pkg.visible
+      )
+      .slice(0, 2);
+
     // Render the paquete template with the package data
     res.render('paquete', {
       paquete: paquete,
+      relatedPackages: relatedPackages,
       currentPage: null // optional, depends on your template logic
     });
   } catch (err) {

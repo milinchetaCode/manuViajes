@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= paquete.eventName %> - Manuel Figueroa Viajes</title>
+  <title><%= paquete.eventName %> - Manu Figueroa Viajes</title>
 
   <!-- Tailwind + Theme -->
   <link rel="stylesheet" href="/styles/output.css">
   <link rel="stylesheet" href="/styles/theme.css">
 
-  <script src="https://unpkg.com/feather-icons"></script>
+  <!-- Local Feather Icons -->
+  <script src="/js/feather.min.js" defer></script>
 </head>
 <body class="bg-brand text-light font-sans">
 
@@ -17,8 +18,20 @@
   <%- include('partials/header') %>
 
   <!-- Page content -->
-  <section class="px-4 py-16 max-w-5xl mx-auto">
-    <div class="bg-white p-6 sm:p-10 rounded-2xl shadow-lg border border-gray-100">
+  <section class="px-4 md:px-[10%] py-12 max-w-5xl mx-auto">
+    
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="Breadcrumb" class="mb-6">
+      <ol class="flex items-center gap-2 text-sm text-gray-400">
+        <li><a href="/" class="hover:text-accent transition">Inicio</a></li>
+        <li><span class="text-gray-600">/</span></li>
+        <li><a href="/#packages-grid" class="hover:text-accent transition">Paquetes</a></li>
+        <li><span class="text-gray-600">/</span></li>
+        <li class="text-light" aria-current="page"><%= paquete.eventName %></li>
+      </ol>
+    </nav>
+
+    <div class="card p-6 sm:p-10">
       <div class="grid md:grid-cols-2 gap-8">
 
         <!-- Image + Badge -->
@@ -31,7 +44,7 @@
             class="w-full h-64 object-cover rounded-2xl shadow-sm border border-gray-200"
           />
           <% if (paquete.continent) { %>
-            <span class="absolute top-4 left-4 btn-accent chip text-xs sm:text-sm font-semibold px-4 py-2 rounded-full shadow-md">
+            <span class="absolute top-4 left-4 chip text-xs sm:text-sm font-semibold px-4 py-2 rounded-full shadow-md">
               <%= paquete.continent %>
             </span>
           <% } %>
@@ -42,15 +55,22 @@
           <!-- GOLD title -->
           <h1 class="text-3xl sm:text-4xl font-bold text-accent mb-4 tracking-tight"><%= paquete.eventName %></h1>
 
-          <p class="text-gray-700 mb-4 whitespace-pre-line"><%= paquete.description %></p>
+          <p class="text-gray-700 mb-6 whitespace-pre-line"><%= paquete.description %></p>
 
-          <ul class="space-y-2 text-gray-700 text-sm sm:text-base">
-            <li><strong>📅 Fechas:</strong> <%= paquete.availabilityDates %></li>
+          <ul class="space-y-3 text-gray-700 text-sm sm:text-base">
+            <li class="flex items-center gap-2">
+              <i data-feather="calendar" class="w-4 h-4 text-accent"></i>
+              <strong>Fechas:</strong>
+              <span><%= paquete.availabilityDates %></span>
+            </li>
           </ul>
 
-          <p class="text-2xl text-accent font-bold mt-6">💵 <%= paquete.ticketPrice %></p>
+          <p class="text-2xl text-accent font-bold mt-6 flex items-center gap-2">
+            <i data-feather="ticket" class="w-5 h-5"></i>
+            U$S <%= paquete.ticketPrice ? paquete.ticketPrice.toLocaleString('es-ES') : 'Consultar' %>
+          </p>
 
-          <!-- WhatsApp Button -->
+          <!-- Enhanced WhatsApp Button with dual-line messaging -->
           <a
             href="https://wa.me/5491133931500?text=<%= encodeURIComponent(
               `Hola, estoy interesado en el paquete:\n\n` +
@@ -62,10 +82,13 @@
             ) %>"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-accent inline-flex items-center gap-3 mt-6"
+            class="btn-accent inline-flex items-center gap-3 mt-8 px-8 py-4 text-lg shadow-lg hover:shadow-xl transition"
           >
-            <i data-feather="message-circle" class="w-5 h-5 text-light"></i>
-            Contáctanos por WhatsApp
+            <i data-feather="message-circle" class="w-6 h-6"></i>
+            <div class="text-left">
+              <span class="block text-xs font-normal opacity-80">¿Tenés dudas?</span>
+              <span class="font-bold">Contáctanos por WhatsApp</span>
+            </div>
           </a>
 
           <!-- Email fallback -->
@@ -80,15 +103,60 @@
                 `Precio: U$S ${paquete.ticketPrice}\n\n` +
                 `Espero su respuesta. Gracias.`
               ) %>"
-              class="text-accent hover:underline"
+              class="inline-flex items-center gap-2 text-gray-400 hover:text-accent transition"
             >
-              Contáctanos por email
+              <i data-feather="mail" class="w-4 h-4"></i>
+              <span>Envianos un email</span>
             </a>
           </p>
         </div>
 
       </div>
     </div>
+
+    <!-- Related Packages Section -->
+    <% if (relatedPackages && relatedPackages.length) { %>
+    <section class="mt-16">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold">También te puede interesar</h2>
+        <div class="divider mx-auto"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <% relatedPackages.forEach(pkg => { %>
+          <li class="card">
+            <div class="overflow-hidden rounded-xl mb-4">
+              <img src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
+                   alt="<%= pkg.eventName %>" 
+                   class="w-full h-40 object-cover rounded-xl transition-transform duration-300 hover:scale-105" 
+                   loading="lazy" />
+            </div>
+            <h3 class="text-lg font-bold tracking-tight mb-2 font-serif text-brand">
+              <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
+                <%= pkg.eventName %>
+              </a>
+            </h3>
+            <p class="text-sm mb-1 text-brand flex items-center gap-1">
+              <i data-feather="calendar" class="w-4 h-4"></i>
+              <strong>Fechas:</strong>
+              <%= pkg.availabilityDates %>
+            </p>
+            <p class="text-lg font-bold text-accent mt-2 flex items-center gap-1">
+              <i data-feather="ticket" class="w-4 h-4"></i>
+              <% if (pkg.ticketPrice) { %>
+                U$S <%= pkg.ticketPrice.toLocaleString('es-ES') %>
+              <% } else { %>
+                Consultar
+              <% } %>
+            </p>
+            <a href="/paquete/<%= pkg.id %>" class="btn-brand mt-4 inline-block text-sm">
+              Ver detalles
+            </a>
+          </li>
+        <% }) %>
+      </div>
+    </section>
+    <% } %>
+
   </section>
 
   <%- include('partials/footer') %>
