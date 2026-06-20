@@ -455,3 +455,65 @@ body {
   padding-top: 80px;
   /* adjust based on header height */
 }
+
+/* -------------- Filter Chip Styles -------------- */
+/* Lighter pill-style filter chips with outlined border */
+.chip {
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.chip:hover {
+  background: rgba(212, 175, 55, 0.1);
+  transform: scale(1.03);
+}
+
+.chip.active {
+  background: var(--accent);
+  color: var(--brand);
+  border-color: var(--accent);
+}
+
+/* Chip badge for cards (continent label) */
+.chip.shadow-md {
+  background: var(--accent);
+  color: var(--brand);
+  border: none;
+  backdrop-filter: blur(4px);
+}
+
+/* -------------- WhatsApp Tooltip -------------- */
+.whatsapp-tooltip {
+  position: fixed;
+  bottom: 22px;
+  right: 72px;
+  background: white;
+  color: #333;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.whatsapp-btn:hover + .whatsapp-tooltip,
+.whatsapp-tooltip:hover {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .whatsapp-tooltip {
+    display: none;
+  }
+}

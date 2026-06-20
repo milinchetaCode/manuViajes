@@ -21,17 +21,29 @@
   <!-- Header -->
   <%- include('partials/header') %>
 
-  <div class="px-[10%] py-4">
-    <iframe class="w-full h-[440px] mx-auto" frameborder="0" scrolling="no" src="https://www.tatajuba.travel/es/microsite/manu/engine/iframe"></iframe>
-  </div>
-
-    <!-- HERO -->
-    <section class="relative mb-16">
-      <div class="relative max-w-6xl mx-auto text-center py-20 px-6">
-        <div class="divider"></div>
+  <!-- Tatajuba travel widget - responsive -->
+  <section class="px-4 md:px-[10%] py-8 mb-12">
+    <div class="text-center mb-6">
+      <h2 class="text-2xl sm:text-3xl font-bold font-serif">Busca tu destino</h2>
+      <div class="divider mx-auto"></div>
+    </div>
+    <div class="max-w-4xl mx-auto">
+      <div class="aspect-[16/9] md:aspect-[4/3]">
+        <iframe
+          class="w-full h-full rounded-xl shadow-lg"
+          frameborder="0"
+          scrolling="no"
+          src="https://www.tatajuba.travel/es/microsite/manu/engine/iframe"
+          title=""
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
       </div>
+    </div>
+  </section>
 
-      <!-- Hero Slider -->
+    <!-- Hero Slider -->
+    <section class="relative mb-16">
       <div class="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl">
         <div id="heroSlider" class="overflow-hidden relative">
           <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
@@ -39,7 +51,9 @@
               <% heroImages.forEach(imgUrl=> { %>
                 <div class="min-w-full relative">
                   <img src="<%= imgUrl %>"
-                    class="w-full h-[500px] object-contain object-center cursor-pointer hero-img" />
+                    class="w-full h-[250px] md:h-[350px] lg:h-[500px] object-contain object-center cursor-pointer hero-img"
+                    alt="Hero image"
+                    loading="<%= heroImages.indexOf(imgUrl) === 0 ? 'eager' : 'lazy' %>" />
                   <!-- Overlay but non-blocking for clicks -->
                   <div class="absolute inset-0 bg-black/30 pointer-events-none"></div>
                 </div>
@@ -73,9 +87,9 @@
         <!-- Continent Filter Chips -->
         <% if (continents && continents.length) { %>
         <div class="flex flex-wrap gap-2 justify-center mb-8" id="continent-filters">
-          <button class="btn-accent chip active" data-continent="all">Todos</button>
+          <button class="chip active" data-continent="all">Todos</button>
           <% continents.forEach(cont => { %>
-            <button class="btn-accent chip" data-continent="<%= cont %>"><%= cont %></button>
+            <button class="chip" data-continent="<%= cont %>"><%= cont %></button>
           <% }) %>
         </div>
         <% } %>
@@ -85,23 +99,27 @@
             <% packages.filter(pkg=> pkg.visible).forEach(pkg => { %>
               <li class="card relative" data-continent="<%= pkg.continent || 'unknown' %>">
                 <% if (pkg.continent) { %>
-                  <span class="btn-accent chip text-sm absolute top-2 left-2"> <%= pkg.continent %> </span>
+                  <span class="chip text-xs absolute top-3 left-3 z-10 shadow-md"> <%= pkg.continent %> </span>
                 <% } %>
-                <img
-                  src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
-                  alt="<%= pkg.eventName %>" class="w-full h-48 object-contain rounded-xl mb-4 bg-gray-100" />
+                <div class="overflow-hidden rounded-xl mb-4">
+                  <img
+                    src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
+                    alt="<%= pkg.eventName %>" class="w-full h-48 object-cover rounded-xl transition-transform duration-300 hover:scale-105 bg-gray-100" loading="lazy" />
+                </div>
                 <h3 class="text-xl font-bold tracking-tight mb-2 font-serif text-brand">
                   <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
                     <%= pkg.eventName %>
                   </a>
                 </h3>
-                <p class="text-sm mb-1 text-brand">
-                  <strong>📅 Fechas:</strong>
+                <p class="text-sm mb-1 text-brand flex items-center gap-1">
+                  <i data-feather="calendar" class="w-4 h-4"></i>
+                  <strong>Fechas:</strong>
                   <%= pkg.availabilityDates %>
                 </p>
-                <p class="text-lg font-bold text-accent mt-3">
+                <p class="text-lg font-bold text-accent mt-3 flex items-center gap-1">
+                  <i data-feather="ticket" class="w-4 h-4"></i>
                   <% if (pkg.ticketPrice) { %>
-                    💶 <%= pkg.ticketPrice.toLocaleString('es-ES') %>
+                    <%= pkg.ticketPrice.toLocaleString('es-ES') %>
                       <% } else { %>
                         Precio no disponible
                         <% } %>
@@ -124,10 +142,11 @@
       <!-- Floating WhatsApp Button -->
       <a href="https://wa.me/5491133931500?text=Hola,%20quiero%20más%20información%20sobre%20Manu%20Figueroa%20Viajes"
         target="_blank" rel="noopener noreferrer"
-        class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50 transition transform hover:scale-110"
+        class="whatsapp-btn fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50 transition transform hover:scale-110"
         aria-label="Contáctanos por WhatsApp">
         <i data-feather="message-circle" class="w-6 h-6"></i>
       </a>
+      <div class="whatsapp-tooltip">¿Necesitas ayuda?</div>
 
       <!-- Lightbox -->
       <div id="lightbox" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-50">
