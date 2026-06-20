@@ -44,6 +44,10 @@
 
     <!-- Hero Slider -->
     <section class="relative mb-16">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl sm:text-3xl font-bold font-serif">Nuestros destacados</h2>
+        <div class="divider mx-auto"></div>
+      </div>
       <div class="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl">
         <div id="heroSlider" class="overflow-hidden relative">
           <div class="flex transition-transform duration-700 ease-in-out" id="sliderInner">
@@ -95,7 +99,7 @@
         <% } %>
 
         <% if (packages && packages.length) { %>
-          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-grid">
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto" id="packages-grid">
             <% packages.filter(pkg=> pkg.visible).forEach(pkg => { %>
               <li class="card relative" data-continent="<%= pkg.continent || 'unknown' %>">
                 <% if (pkg.continent) { %>
