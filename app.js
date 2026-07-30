@@ -27,7 +27,7 @@ if (missing.length > 0) {
 const app = express();
 app.disable('x-powered-by');
 
-// ✅ Custom Helmet config to allow Cloudinary images and local images
+// ✅ Custom Helmet config to allow Cloudinary images, local images, and Google Analytics
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -40,9 +40,10 @@ app.use(
         frameSrc: ["'self'", "https://www.tatajuba.travel"],
         imgSrc: ["'self'", "data:", "https://res.cloudinary.com", "blob:"],
         objectSrc: ["'none'"],
-        scriptSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://www.googletagmanager.com"],
         scriptSrcAttr: ["'none'"],
         styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+        connectSrc: ["'self'", "https://*.google-analytics.com", "https://*.analytics.google.com"],
         upgradeInsecureRequests: [],
       },
     },
