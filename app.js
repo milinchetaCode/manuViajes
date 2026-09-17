@@ -40,7 +40,7 @@ app.use(
         frameSrc: ["'self'", "https://www.tatajuba.travel"],
         imgSrc: ["'self'", "data:", "https://res.cloudinary.com", "blob:"],
         objectSrc: ["'none'"],
-        scriptSrc: ["'self'", "https://www.googletagmanager.com", "https://www.tatajuba.travel"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://www.googletagmanager.com", "https://www.tatajuba.travel"],
         scriptSrcAttr: ["'none'"],
         styleSrc: ["'self'", "https:", "'unsafe-inline'"],
         connectSrc: ["'self'", "https://*.google-analytics.com", "https://*.analytics.google.com"],

@@ -6,12 +6,36 @@ const { createClient } = require('@supabase/supabase-js');
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Supabase configuration missing. Set SUPABASE_URL and SUPABASE_KEY environment variables.');
-}
+let supabase;
+let isMockMode = false;
 
-const supabase = createClient(supabaseUrl, supabaseKey);
-console.log('🔌 [Supabase] Client initialized successfully.');
+if (!supabaseUrl || !supabaseKey) {
+  console.warn('⚠️ [Supabase] Running in MOCK MODE - database operations will return empty results.');
+  console.warn('⚠️ [Supabase] Set SUPABASE_URL and SUPABASE_KEY environment variables for full functionality.');
+  isMockMode = true;
+  // Create a mock supabase client
+  supabase = {
+    from: () => ({
+      select: () => ({
+        order: () => Promise.resolve({ data: [], error: null }),
+        eq: () => ({
+          single: () => Promise.resolve({ data: null, error: null }),
+          order: () => Promise.resolve({ data: [], error: null })
+        })
+      }),
+      insert: () => Promise.resolve({ data: null, error: null }),
+      update: () => ({
+        eq: () => Promise.resolve({ data: null, error: null })
+      }),
+      delete: () => ({
+        eq: () => Promise.resolve({ data: null, error: null })
+      })
+    })
+  };
+} else {
+  supabase = createClient(supabaseUrl, supabaseKey);
+  console.log('🔌 [Supabase] Client initialized successfully.');
+}
 
 // ---------- Field mapping helpers ----------
 // DB uses snake_case, templates use camelCase

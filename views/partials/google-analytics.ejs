@@ -7,5 +7,11 @@
   gtag('js', new Date());
 
   gtag('config', '<%= process.env.GA_MEASUREMENT_ID %>');
+  
+  // Debug: Log to console to verify GA is loaded (remove in production)
+  console.log('Google Analytics initialized with ID:', '<%= process.env.GA_MEASUREMENT_ID %>');
 </script>
+<!-- GA Debug: Measurement ID is set -->
+<% } else { %>
+<!-- GA Debug: GA_MEASUREMENT_ID is NOT set -->
 <% } %>
