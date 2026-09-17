@@ -4,14 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manu Figueroa Viajes - Buscador de Hoteles</title>
+  <meta name="description" content="Buscá y reservá el mejor hotel para tu viaje con el buscador exclusivo de Manu Figueroa Viajes.">
+  <meta property="og:title" content="Buscador de Hoteles - Manu Figueroa Viajes">
+  <meta property="og:description" content="Buscá y reservá el mejor hotel para tu viaje con el buscador exclusivo de Manu Figueroa Viajes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= siteUrl %>/hoteles">
+  <meta property="og:image" content="<%= siteUrl %>/images/hero.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/fav1616.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/fav3232.png">
 
   <%- include('partials/google-analytics') %>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind compiled CSS -->
   <link rel="stylesheet" href="/styles/output.css">
 
   <!-- Theme overrides -->
   <link rel="stylesheet" href="/styles/theme.css">
+
+  <!-- Local Feather Icons -->
+  <script src="/js/feather.min.js" defer></script>
 </head>
 <body class="font-sans bg-brand text-light">
 
@@ -31,7 +46,7 @@
     <div class="container">
       <div class="card">
         <div id="bmEngine" style="background:#FFF; width:520px; min-height:370px; padding:5px;">
-        <iframe width="100%" height="440" frameborder="0" scrolling="no" src="https://www.tatajuba.travel/es/microsite/manu/engine/iframe"></iframe>
+        <iframe width="100%" height="440" frameborder="0" scrolling="no" src="https://www.tatajuba.travel/es/microsite/manu/engine/v2-iframe"></iframe>
         </div>
       </div>
     </div>
@@ -39,5 +54,7 @@
 
   <!-- Footer -->
   <%- include('partials/footer') %>
+
+  <script src="/js/main.js" defer></script>
 </body>
 </html>

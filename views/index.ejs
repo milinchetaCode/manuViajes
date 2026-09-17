@@ -5,8 +5,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manu Figueroa Viajes</title>
+  <meta name="description" content="Una boutique de viajes y eventos deportivos de primer nivel, incluyendo paquetes exclusivos de Fórmula 1, Fútbol, Tenis y Básquet.">
+  <meta property="og:title" content="Manu Figueroa Viajes">
+  <meta property="og:description" content="Una boutique de viajes y eventos deportivos de primer nivel, incluyendo paquetes exclusivos de Fórmula 1, Fútbol, Tenis y Básquet.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= siteUrl %>">
+  <meta property="og:image" content="<%= siteUrl %>/images/hero.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/fav1616.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/fav3232.png">
 
   <%- include('partials/google-analytics') %>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind compiled CSS -->
   <link rel="stylesheet" href="/styles/output.css">
@@ -38,7 +50,7 @@
           name="manu"
           sandbox="allow-scripts allow-same-origin"
           scrolling="yes"
-          src="https://www.tatajuba.travel/es/microsite/manu"
+          src="https://www.tatajuba.travel/es/microsite/manu/engine/v2-iframe"
           tabindex="-1"
           style="border: none;">
         </iframe>
@@ -112,7 +124,7 @@
                 <div class="overflow-hidden rounded-xl mb-4">
                   <img
                     src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
-                    alt="<%= pkg.eventName %>" class="w-full h-48 object-cover rounded-xl transition-transform duration-300 hover:scale-105 bg-gray-100" loading="lazy" />
+                    alt="<%= pkg.eventName %>" width="600" height="400" class="w-full h-48 object-cover rounded-xl transition-transform duration-300 hover:scale-105 bg-gray-100" loading="lazy" />
                 </div>
                 <h3 class="text-xl font-bold tracking-tight mb-2 font-serif text-brand">
                   <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
