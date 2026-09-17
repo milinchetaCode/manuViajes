@@ -35,25 +35,17 @@
   <!-- Header -->
   <%- include('partials/header') %>
 
-  <!-- Tatajuba travel widget - responsive -->
+  <!-- Tatajuba travel widget - script-based embed -->
+  <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/manu/engine/v2-scripts" language="javascript"></script>
+  
   <section class="px-4 md:px-[10%] py-8 mb-12">
     <div class="text-center mb-6">
       <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2">Busca tu destino</h2>
       <div class="divider mx-auto"></div>
     </div>
-    <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-xl">
-      <div class="relative w-full" style="padding-bottom: 125%;">
-        <iframe
-          class="absolute inset-0 w-full h-full"
-          allow="autoplay"
-          frameborder="1"
-          name="manu"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-          scrolling="yes"
-          src="https://www.tatajuba.travel/es/microsite/manu/engine/v2-iframe"
-          tabindex="-1"
-          style="border: none;">
-        </iframe>
+    <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-white p-4">
+      <div id="bmEngine">
+        <script type="text/javascript" src="https://www.tatajuba.travel/es/microsite/manu/engine/v2" language="javascript"></script>
       </div>
     </div>
   </section>
