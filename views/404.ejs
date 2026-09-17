@@ -1,50 +1,49 @@
-<%- include('partials/header') %>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 - Página no encontrada</title>
+  <title>404 - Página no encontrada | Manu Figueroa Viajes</title>
+  <meta name="description" content="La página que buscas no existe. Volvé al inicio y seguí explorando nuestros paquetes turísticos.">
+  <meta property="og:title" content="404 - Página no encontrada | Manu Figueroa Viajes">
+  <meta property="og:description" content="La página que buscas no existe. Volvé al inicio y seguí explorando nuestros paquetes turísticos.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= siteUrl %>">
+  <meta property="og:image" content="<%= siteUrl %>/images/hero.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/fav1616.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/fav3232.png">
+
   <%- include('partials/google-analytics') %>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#1D4ED8',
-            accent: '#22C55E',
-            brandRed: '#DC2626'
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body {
-      background-color: white;
-      background-image: none;
-    }
-  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/styles/output.css">
+  <link rel="stylesheet" href="/styles/theme.css">
+
+  <script src="/js/feather.min.js" defer></script>
 </head>
-<body class="text-gray-800 font-sans">
+<body class="font-sans bg-brand text-light">
 
-<section class="relative bg-cover bg-center h-96 md:h-[32rem] rounded-2xl overflow-hidden shadow-lg mb-12" style="background-image: url('/images/hero.jpeg');">
-  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center px-4">
-    <div class="text-center text-white w-full max-w-2xl">
-      <h1 class="text-6xl font-extrabold mb-4">404</h1>
-      <h2 class="text-2xl sm:text-3xl font-semibold mb-4 tracking-tight">Página no encontrada</h2>
-      <p class="text-base sm:text-lg mb-6 leading-relaxed">Lo sentimos, no pudimos encontrar lo que buscas.</p>
+  <%- include('partials/header') %>
 
-      <a href="/" class="inline-block bg-accent text-white text-sm font-semibold px-6 py-3 rounded-full hover:bg-brand transition-shadow-lg shadow-md">
-        Volver al inicio
-      </a>
-    </div>
-  </div>
-</section>
+  <main class="max-w-3xl mx-auto px-4 py-24 md:py-32 text-center">
+    <span class="badge-accent">Error 404</span>
+    <h1 class="text-7xl md:text-8xl font-bold text-accent mt-6">404</h1>
+    <div class="divider mx-auto mt-4"></div>
+    <h2 class="text-2xl md:text-3xl font-bold mt-8 mb-4">Página no encontrada</h2>
+    <p class="text-lg opacity-90 mb-10">
+      <%= (typeof message !== 'undefined' && message) ? message : 'Lo sentimos, no pudimos encontrar lo que buscas.' %>
+    </p>
+    <a href="/" class="btn-accent inline-flex items-center gap-2 px-8 py-3 text-base">
+      <i data-feather="home" class="w-5 h-5"></i>
+      Volver al inicio
+    </a>
+  </main>
 
-<%- include('partials/footer') %>
+  <%- include('partials/footer') %>
 
+  <script src="/js/main.js" defer></script>
 </body>
 </html>

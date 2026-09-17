@@ -4,9 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiénes somos - Manuel Figueroa Viajes</title>
+  <title>Quiénes somos - Manu Figueroa Viajes</title>
+  <meta name="description" content="Más de 20 años de experiencia en turismo: paquetes turísticos, hoteles, reservas aéreas y asesoramiento personalizado para tu próximo viaje.">
+  <meta property="og:title" content="Quiénes somos - Manu Figueroa Viajes">
+  <meta property="og:description" content="Más de 20 años de experiencia en turismo: paquetes turísticos, hoteles, reservas aéreas y asesoramiento personalizado para tu próximo viaje.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= siteUrl %>/about">
+  <meta property="og:image" content="<%= siteUrl %>/images/hero.jpeg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/fav1616.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/fav3232.png">
 
   <%- include('partials/google-analytics') %>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind compiled CSS -->
   <link rel="stylesheet" href="/styles/output.css">
@@ -14,19 +26,8 @@
   <!-- Theme overrides -->
   <link rel="stylesheet" href="/styles/theme.css">
 
-  <script src="https://unpkg.com/feather-icons"></script>
-
-  <style>
-    /* Fix: ensure text inside white cards uses dark text */
-    .bg-white {
-      color: var(--card-text) !important;
-    }
-
-    .bg-white p {
-      color: rgba(17, 24, 39, 0.85) !important;
-      /* softer dark gray for readability */
-    }
-  </style>
+  <!-- Local Feather Icons -->
+  <script src="/js/feather.min.js" defer></script>
 </head>
 
 <body class="font-sans bg-brand text-light">
@@ -36,7 +37,7 @@
     <main class="min-h-screen py-16 px-4 md:px-6 lg:px-8 max-w-5xl mx-auto">
 
       <!-- Page Title -->
-      <h1 class="text-4xl md:text-5xl font-bold text-center mb-10 text-brand">
+      <h1 class="text-4xl md:text-5xl font-bold text-center mb-10">
         ¿Quiénes somos?
       </h1>
       <div class="divider mx-auto mb-12"></div>
@@ -62,16 +63,16 @@
 
       <!-- CTA -->
       <div class="text-center">
-        <h3 class="text-2xl md:text-3xl font-bold text-brand mb-4">
+        <h3 class="text-2xl md:text-3xl font-bold mb-4">
           ¿Quieres saber más sobre nosotros?
         </h3>
         <p class="mb-6 text-light">
           Estamos aquí para ayudarte a descubrir el mundo.
         </p>
         <a href="https://wa.me/5491133931500?text=<%= encodeURIComponent(
-          'Hola, quiero más información sobre Manuel Figueroa Viajes y sus servicios.'
+          'Hola, quiero más información sobre Manu Figueroa Viajes y sus servicios.'
         ) %>" target="_blank" rel="noopener noreferrer" class="btn-accent inline-flex items-center gap-3">
-          <i data-feather="message-circle" class="w-5 h-5 text-white"></i>
+          <i data-feather="message-circle" class="w-5 h-5"></i>
           Contáctanos por WhatsApp
         </a>
       </div>
@@ -80,9 +81,7 @@
 
     <%- include('partials/footer') %>
 
-      <script>
-        feather.replace();
-      </script>
+    <script src="/js/main.js" defer></script>
 </body>
 
 </html>
