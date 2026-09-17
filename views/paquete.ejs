@@ -61,6 +61,7 @@
             alt="<%= paquete.eventName %>" 
             width="800" height="600"
             class="w-full h-64 object-cover rounded-2xl shadow-sm border border-gray-200"
+            onerror="this.onerror=null;this.src='/images/default.jpeg';"
           />
           <% if (paquete.continent) { %>
             <span class="absolute top-4 left-4 chip text-xs sm:text-sm font-semibold px-4 py-2 rounded-full shadow-md">
@@ -148,7 +149,8 @@
                    alt="<%= pkg.eventName %>" 
                    width="600" height="400"
                    class="w-full h-40 object-cover rounded-xl transition-transform duration-300 hover:scale-105" 
-                   loading="lazy" />
+                   loading="lazy"
+                   onerror="this.onerror=null;this.src='/images/default.jpeg';" />
             </div>
             <h3 class="text-lg font-bold tracking-tight mb-2 font-serif text-brand">
               <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">

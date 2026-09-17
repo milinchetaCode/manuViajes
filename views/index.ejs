@@ -48,7 +48,6 @@
           allow="autoplay"
           frameborder="1"
           name="manu"
-          sandbox="allow-scripts allow-same-origin"
           scrolling="yes"
           src="https://www.tatajuba.travel/es/microsite/manu/engine/v2-iframe"
           tabindex="-1"
@@ -124,7 +123,8 @@
                 <div class="overflow-hidden rounded-xl mb-4">
                   <img
                     src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
-                    alt="<%= pkg.eventName %>" width="600" height="400" class="w-full h-48 object-cover rounded-xl transition-transform duration-300 hover:scale-105 bg-gray-100" loading="lazy" />
+                    alt="<%= pkg.eventName %>" width="600" height="400" class="w-full h-48 object-cover rounded-xl transition-transform duration-300 hover:scale-105 bg-gray-100" loading="lazy"
+                    onerror="this.onerror=null;this.src='/images/default.jpeg';" />
                 </div>
                 <h3 class="text-xl font-bold tracking-tight mb-2 font-serif text-brand">
                   <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
