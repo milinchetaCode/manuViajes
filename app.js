@@ -93,6 +93,7 @@ app.use(session({
 // ✅ Set default currentPage to prevent EJS ReferenceError
 app.use((req, res, next) => {
   res.locals.currentPage = null;
+  res.locals.siteUrl = `${req.protocol}://${req.get('host')}`;
   next();
 });
 
@@ -113,10 +114,6 @@ app.get('/hoteles', (req, res) => {
 
 app.get('/about', (req, res) => {
   res.render('about', { currentPage: 'about' });
-});
-
-app.get('/faq', (req, res) => {
-  res.render('faq', { currentPage: 'faq' });
 });
 
 // ✅ Catch-all 404 handler (must go LAST, after static and all routes)

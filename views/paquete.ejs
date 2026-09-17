@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <% const imgSrc = paquete.photoUrl && paquete.photoUrl.trim() !== ''
+        ? paquete.photoUrl.trim()
+        : (paquete.foto && paquete.foto.trim() !== '' ? '/images/' + paquete.foto.trim() + '.jpeg' : '/images/default.jpeg'); %>
+  <% const ogImage = imgSrc.startsWith('http') ? imgSrc : siteUrl + imgSrc; %>
+  <% const desc = (paquete.description || '').replace(/\s+/g, ' ').trim(); %>
+  <% const metaDesc = desc ? (desc.length > 155 ? desc.substring(0, 155).trim() + '…' : desc) : 'Paquete turístico exclusivo de Manu Figueroa Viajes. Consultá fechas, precio y detalles.'; %>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= paquete.eventName %> - Manu Figueroa Viajes</title>
+  <meta name="description" content="<%= metaDesc %>">
+  <meta property="og:title" content="<%= paquete.eventName %> - Manu Figueroa Viajes">
+  <meta property="og:description" content="<%= metaDesc %>">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="<%= siteUrl %>/paquete/<%= paquete.id %>">
+  <meta property="og:image" content="<%= ogImage %>">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/fav1616.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/fav3232.png">
 
   <%- include('partials/google-analytics') %>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind + Theme -->
   <link rel="stylesheet" href="/styles/output.css">
@@ -24,12 +42,12 @@
     
     <!-- Breadcrumb Navigation -->
     <nav aria-label="Breadcrumb" class="mb-6">
-      <ol class="flex items-center gap-2 text-sm text-gray-400">
-        <li><a href="/" class="hover:text-accent transition">Inicio</a></li>
-        <li><span class="text-gray-600">/</span></li>
-        <li><a href="/#packages-grid" class="hover:text-accent transition">Paquetes</a></li>
-        <li><span class="text-gray-600">/</span></li>
-        <li class="text-light" aria-current="page"><%= paquete.eventName %></li>
+      <ol class="flex items-center gap-2 text-sm">
+        <li><a href="/" class="text-slate-300 hover:text-accent transition">Inicio</a></li>
+        <li aria-hidden="true"><span class="text-slate-500">/</span></li>
+        <li><a href="/#packages-grid" class="text-slate-300 hover:text-accent transition">Paquetes</a></li>
+        <li aria-hidden="true"><span class="text-slate-500">/</span></li>
+        <li class="text-white" aria-current="page"><%= paquete.eventName %></li>
       </ol>
     </nav>
 
@@ -39,10 +57,9 @@
         <!-- Image + Badge -->
         <div class="relative">
           <img 
-            src="<%= paquete.photoUrl && paquete.photoUrl.trim() !== '' 
-                    ? paquete.photoUrl.trim() 
-                    : (paquete.foto && paquete.foto.trim() !== '' ? '/images/' + paquete.foto.trim() + '.jpeg' : '/images/default.jpeg') %>" 
+            src="<%= imgSrc %>" 
             alt="<%= paquete.eventName %>" 
+            width="800" height="600"
             class="w-full h-64 object-cover rounded-2xl shadow-sm border border-gray-200"
           />
           <% if (paquete.continent) { %>
@@ -123,12 +140,13 @@
         <h2 class="text-2xl sm:text-3xl font-bold">También te puede interesar</h2>
         <div class="divider mx-auto"></div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
         <% relatedPackages.forEach(pkg => { %>
           <li class="card">
             <div class="overflow-hidden rounded-xl mb-4">
               <img src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
                    alt="<%= pkg.eventName %>" 
+                   width="600" height="400"
                    class="w-full h-40 object-cover rounded-xl transition-transform duration-300 hover:scale-105" 
                    loading="lazy" />
             </div>
@@ -155,7 +173,7 @@
             </a>
           </li>
         <% }) %>
-      </div>
+      </ul>
     </section>
     <% } %>
 
