@@ -54,7 +54,7 @@
               <% heroImages.forEach(imgUrl=> { %>
                 <div class="min-w-full relative">
                   <img src="<%= imgUrl %>"
-                    class="w-full h-[250px] md:h-[350px] lg:h-[500px] object-cover object-center cursor-pointer hero-img"
+                    class="w-full h-[250px] md:h-[350px] lg:h-[500px] object-cover object-top cursor-pointer hero-img"
                     alt="Hero image"
                     loading="<%= heroImages.indexOf(imgUrl) === 0 ? 'eager' : 'lazy' %>" />
                   <!-- Overlay but non-blocking for clicks -->
