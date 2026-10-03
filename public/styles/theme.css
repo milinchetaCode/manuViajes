@@ -94,11 +94,11 @@ p {
 }
 
 .divider {
-  width: 80px;
+  width: 100px;
   height: 4px;
-  background: var(--accent);
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
   border-radius: 999px;
-  margin: 8px 0 0;
+  margin: 12px 0 0;
 }
 
 /* Hero slider */
@@ -208,26 +208,31 @@ p {
 .card {
   background: #fff;
   color: var(--card-text);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 16px;
+  padding: 20px;
   box-shadow: 0 10px 30px rgba(2, 6, 23, 0.15);
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  transition: transform .18s ease, box-shadow .18s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.2);
 }
 
 .card img {
   width: 100%;
-  height: 180px;
+  height: 208px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 12px;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.03);
 }
 
 .card .badge-accent {
@@ -237,52 +242,74 @@ p {
 
 /* Card text */
 .card h3 {
-  font-size: 1.15rem;
-  margin-bottom: 6px;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
   color: var(--card-text);
+  line-height: 1.3;
 }
 
 .card p {
   color: rgba(17, 24, 39, 0.8);
   font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 /* Price text */
 .price {
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--accent);
-  margin-top: 12px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  letter-spacing: -0.3px;
 }
 
 /* Buttons */
 .btn-brand {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   background: var(--brand);
   color: #fff;
-  padding: 10px 14px;
-  border-radius: 999px;
+  padding: 12px 24px;
+  border-radius: 12px;
   font-weight: 600;
-  margin-top: 10px;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  margin-top: 12px;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: background .12s ease, transform .12s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-brand:hover {
-  background: #0f172a;
-  transform: translateY(-1px);
+  background: var(--accent);
+  color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
 }
 
 .btn-accent {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   background: var(--accent);
   color: var(--brand);
-  padding: 9px 14px;
-  border-radius: 999px;
+  padding: 12px 24px;
+  border-radius: 12px;
   font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
   border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-accent:hover {
+  background: #c9a430;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
 }
 
 /* small badge */
@@ -298,10 +325,12 @@ p {
 
 /* Footer (keeps navy canvas but subtle separator) */
 .footer {
-  padding: 36px 0;
+  padding: 48px 0;
   color: var(--text);
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   margin-top: 36px;
+  font-size: 0.925rem;
+  line-height: 1.6;
 }
 
 /* small responsive tweaks */
@@ -324,15 +353,15 @@ p {
 .btn-brand,
 .btn-accent {
   display: inline-flex;
-  /* was inline-block */
   align-items: center;
-  /* vertical centering */
   gap: 0.5rem;
-  /* spacing between icon & text */
   text-decoration: none;
-  border-radius: 999px;
+  border-radius: 12px;
   font-weight: 600;
-  padding: 9px 14px;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Brand button */
@@ -340,12 +369,13 @@ p {
   background: var(--brand);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: background .12s ease, transform .12s ease;
 }
 
 .btn-brand:hover {
-  background: #0f172a;
-  transform: translateY(-1px);
+  background: var(--accent);
+  color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
 }
 
 /* Accent button */
@@ -354,6 +384,12 @@ p {
   color: var(--brand);
   border: none;
   font-weight: 700;
+}
+
+.btn-accent:hover {
+  background: #c9a430;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
 }
 
 /* Normalize feather icons */
@@ -368,6 +404,7 @@ p {
 /* Global typography & spacing */
 html {
   line-height: 1.6;
+  scroll-behavior: smooth;
 }
 
 h1,
@@ -376,9 +413,20 @@ h3 {
   letter-spacing: -0.4px;
 }
 
+/* Consistent transition for interactive elements */
+a,
+button,
+.card,
+.chip,
+.btn-brand,
+.btn-accent {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Header sticky and contrast */
 .header-brand {
-  background: rgba(26, 34, 56, .93);
+  background: rgba(26, 34, 56, .95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 header.header-brand {
@@ -386,7 +434,7 @@ header.header-brand {
   top: 0;
   width: 100%;
   z-index: 30;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
 }
 
 /* Slider arrow colors */
@@ -401,8 +449,8 @@ header.header-brand {
 
 /* Card hover elevation */
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 45px rgba(2, 6, 23, .22);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, .2);
 }
 
 /* Button focus & active states */
@@ -421,7 +469,7 @@ header.header-brand {
 .footer {
   padding: 48px 0;
   font-size: 0.925rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* Badge accent tweak */
@@ -437,11 +485,17 @@ header.header-brand {
   }
 
   .card img {
-    height: 140px;
+    height: 160px;
   }
 
   .header-brand {
     padding: 1rem;
+  }
+
+  .btn-brand,
+  .btn-accent {
+    padding: 14px 28px;
+    font-size: 0.95rem;
   }
 }
 
@@ -462,23 +516,26 @@ body {
   background: transparent;
   color: var(--accent);
   border: 1.5px solid var(--accent);
-  padding: 6px 16px;
+  padding: 8px 20px;
   border-radius: 999px;
   font-weight: 600;
   font-size: 0.875rem;
-  transition: all 0.2s ease;
+  min-height: 40px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 .chip:hover {
-  background: rgba(212, 175, 55, 0.1);
-  transform: scale(1.03);
+  background: rgba(212, 175, 55, 0.15);
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
 }
 
 .chip.active {
   background: var(--accent);
   color: var(--brand);
   border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 /* Chip badge for cards (continent label) */
