@@ -24,12 +24,12 @@
   <%- include('partials/header') %>
 
   <!-- Tatajuba travel widget - responsive -->
-  <section class="px-4 md:px-[10%] py-8 mb-12">
-    <div class="text-center mb-6">
+  <section class="px-4 md:px-6 lg:px-8 py-16">
+    <div class="text-center mb-8">
       <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2">Busca tu destino</h2>
       <div class="divider mx-auto"></div>
     </div>
-    <div class="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-xl">
+    <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl">
       <iframe
         width="100%"
         height="500"
@@ -42,8 +42,8 @@
   </section>
 
     <!-- Hero Slider -->
-    <section class="relative mb-16">
-      <div class="text-center mb-6">
+    <section class="px-4 md:px-6 lg:px-8 py-16">
+      <div class="text-center mb-8">
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2">Nuestros destacados</h2>
         <div class="divider mx-auto"></div>
       </div>
@@ -54,7 +54,7 @@
               <% heroImages.forEach(imgUrl=> { %>
                 <div class="min-w-full relative">
                   <img src="<%= imgUrl %>"
-                    class="w-full h-[250px] md:h-[350px] lg:h-[500px] object-contain object-center cursor-pointer hero-img"
+                    class="w-full h-[250px] md:h-[350px] lg:h-[500px] object-cover object-center cursor-pointer hero-img"
                     alt="Hero image"
                     loading="<%= heroImages.indexOf(imgUrl) === 0 ? 'eager' : 'lazy' %>" />
                   <!-- Overlay but non-blocking for clicks -->
@@ -78,18 +78,18 @@
     </section>
 
     <!-- Paquetes turísticos -->
-    <main class="px-4 md:px-6 lg:px-8">
-      <section class="mb-16">
+    <main class="px-4 md:px-6 lg:px-8 py-16">
+      <section>
         <div class="text-center mb-10">
           <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center gap-2">
             Paquetes turísticos
           </h2>
-          <div class="divider"></div>
+          <div class="divider mx-auto"></div>
         </div>
 
         <!-- Continent Filter Chips -->
         <% if (continents && continents.length) { %>
-        <div class="flex flex-wrap gap-2 justify-center mb-8" id="continent-filters">
+        <div class="flex flex-wrap gap-3 justify-center mb-10" id="continent-filters">
           <button class="chip active" data-continent="all">Todos</button>
           <% continents.forEach(cont => { %>
             <button class="chip" data-continent="<%= cont %>"><%= cont %></button>
@@ -98,7 +98,7 @@
         <% } %>
 
         <% if (packages && packages.length) { %>
-          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto" id="packages-grid">
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto" id="packages-grid">
             <% packages.filter(pkg=> pkg.visible).forEach(pkg => { %>
               <li class="card relative" data-continent="<%= pkg.continent || 'unknown' %>">
                 <% if (pkg.continent) { %>
@@ -107,7 +107,7 @@
                 <div class="overflow-hidden rounded-xl mb-4">
                   <img
                     src="<%= pkg.photoUrl && pkg.photoUrl.trim() !== '' ? pkg.photoUrl.trim() : (pkg.foto && pkg.foto.trim() !== '' ? '/images/' + pkg.foto.trim() + '.jpeg' : '/images/default.jpeg') %>"
-                    alt="<%= pkg.eventName %>" class="w-full h-48 object-cover rounded-xl transition-transform duration-300 hover:scale-105 bg-gray-100" loading="lazy" />
+                    alt="<%= pkg.eventName %>" class="w-full h-52 object-cover rounded-xl bg-gray-100" loading="lazy" />
                 </div>
                 <h3 class="text-xl font-bold tracking-tight mb-2 font-serif text-brand">
                   <a href="/paquete/<%= pkg.id %>" class="hover:text-accent transition-colors">
@@ -119,7 +119,7 @@
                   <strong>Fechas:</strong>
                   <%= pkg.availabilityDates %>
                 </p>
-                <p class="text-lg font-bold text-accent mt-3 flex items-center gap-1">
+                <p class="text-xl font-bold text-accent mt-4 pt-3 border-t border-gray-100 flex items-center gap-1">
                   <i data-feather="credit-card" class="w-4 h-4 text-accent"></i>
                   <% if (pkg.ticketPrice) { %>
                     <%= pkg.ticketPrice.toLocaleString('es-ES') %>
@@ -127,7 +127,7 @@
                         Precio no disponible
                         <% } %>
                 </p>
-                <a href="/paquete/<%= pkg.id %>" class="btn-brand mt-4 inline-block">
+                <a href="/paquete/<%= pkg.id %>" class="btn-brand mt-4 inline-flex">
                   Ver detalles
                 </a>
               </li>
