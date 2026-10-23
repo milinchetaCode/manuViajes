@@ -41,19 +41,39 @@
     </div>
   </section>
 
-<!-- Banner Promocional -->
-  <section class="px-4 md:px-6 lg:px-8 pb-16">
-    <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl transition transform hover:scale-[1.01]">
-      <a href="https://cuartocontinente.com/es/moreideas" target="_blank" rel="noopener noreferrer" class="block">
-        <img 
-          src="/images/arg.jpeg" 
-          alt="Promoción Cuarto Continente" 
-          class="w-full h-[200px] sm:h-[280px] md:h-[350px] object-cover rounded-2xl cursor-pointer"
-          loading="lazy" 
+
+<!-- Banner Promocional Argentina -->
+<section class="px-4 md:px-6 lg:px-8 pb-16">
+  <div class="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-xl transition transform hover:scale-[1.01]">
+    <a
+      href="https://cuartocontinente.com/es/moreideas"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block"
+      aria-label="Ver ofertas de viajes por Argentina"
+    >
+      <picture>
+        <source
+          media="(max-width: 639px)"
+          srcset="/images/arg-mobile.webp"
+          type="image/webp"
         />
-      </a>
-    </div>
-  </section>
+        <source
+          srcset="/images/arg-desktop.webp"
+          type="image/webp"
+        />
+        <img
+          src="/images/arg-desktop.webp"
+          alt="Viajá por Argentina. Los mejores destinos, al mejor precio. En 6 y 12 cuotas. Ver ofertas."
+          class="block w-full h-auto cursor-pointer"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    </a>
+  </div>
+</section>
+
 
     <!-- Hero Slider -->
     <section class="px-4 md:px-6 lg:px-8 py-16">
