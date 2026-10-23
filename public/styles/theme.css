@@ -574,3 +574,17 @@ body {
     display: none;
   }
 }
+
+/* Header: white-tinted frosted glass */
+header.header-brand {
+  background: rgba(255, 255, 255, 0.97) !important;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26, 34, 56, 0.08);
+  box-shadow: 0 4px 18px rgba(26, 34, 56, 0.08);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30;
+}
