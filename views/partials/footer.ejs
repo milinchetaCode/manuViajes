@@ -1,71 +1,48 @@
 
-<footer class="bg-brand text-gray-300 px-6 py-12 text-sm border-t border-white/5">
-  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-8 text-center sm:text-left">
-
-    <!-- Brand -->
-    <div class="flex flex-col items-center sm:items-start">
-      <a href="/" class="flex items-center gap-3">
-        <img
-          src="/images/manu-figueroa-viajes-icon-transparent.png"
-          alt="Manu Figueroa Viajes"
-          class="h-12 w-12 object-contain"
-          width="48"
-          height="48"
-        />
-        <span class="text-white font-semibold text-base">
-          Manu Figueroa Viajes
-        </span>
-      </a>
-
-      <div class="mt-2 text-xs text-gray-400 text-center sm:text-left">
-        <p></p>
-        <p></p>
-      </div>
-    </div>
+<footer class="bg-brand text-gray-300 px-6 py-6 text-sm border-t border-white/5">
+  <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
 
     <!-- Contact -->
-    <div class="flex flex-col items-center sm:items-end">
-      <h3 class="text-base font-semibold text-white mb-2">Consultas</h3>
+    <div class="flex flex-col items-center sm:items-start gap-2">
+      <h3 class="text-sm font-semibold text-white">Consultas</h3>
 
-      <div class="flex flex-col items-center sm:items-end gap-2">
-        <p class="flex items-center gap-2">
-          <i data-feather="mail" class="w-4 h-4"></i>
-          <a
-            href="mailto:ventas@manufigueroaviajes.com"
-            class="hover:text-accent transition-colors"
-          >
-            ventas@manufigueroaviajes.com
-          </a>
-        </p>
+      <p class="flex items-center justify-center sm:justify-start gap-2">
+        <i data-feather="mail" class="w-4 h-4"></i>
+        <a
+          href="mailto:ventas@manufigueroaviajes.com"
+          class="hover:text-accent transition-colors"
+        >
+          ventas@manufigueroaviajes.com
+        </a>
+      </p>
 
-        <p class="flex items-center gap-2">
-          <i data-feather="phone" class="w-4 h-4"></i>
-          <a
-            href="tel:+5491133931500"
-            class="hover:text-accent transition-colors"
-          >
-            +54 9 11 3393-1500
-          </a>
-        </p>
-      </div>
+      <p class="flex items-center justify-center sm:justify-start gap-2">
+        <i data-feather="phone" class="w-4 h-4"></i>
+        <a
+          href="tel:+5491133931500"
+          class="hover:text-accent transition-colors"
+        >
+          +54 9 11 3393-1500
+        </a>
+      </p>
     </div>
-  </div>
 
-  <!-- Experience button -->
-  <div class="mt-8 text-center">
-    <a href="/about" class="btn-accent inline-flex items-center gap-2">
-      <i data-feather="star" class="w-4 h-4"></i>
-      Experiencia
-    </a>
+    <!-- Experience button -->
+    <div>
+      <a href="/about" class="btn-accent inline-flex items-center gap-2">
+        <i data-feather="star" class="w-4 h-4"></i>
+        Experiencia
+      </a>
+    </div>
   </div>
 
   <!-- Copyright -->
-  <div class="mt-10 text-center text-xs text-gray-500 border-t border-white/5 pt-6">
+  <div class="max-w-6xl mx-auto mt-5 pt-4 text-center text-xs text-gray-400 border-t border-white/10">
     © <%= new Date().getFullYear() %> Manu Figueroa Viajes.
 
     <a
       href="/admin/login"
-      class="ml-4 text-xs opacity-60 text-gray-500 hover:text-gray-400 transition-colors"
+      class="ml-3 opacity-60 hover:opacity-100 hover:text-white transition-colors"
     >
       Panel Admin
     </a>
