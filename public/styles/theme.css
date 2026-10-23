@@ -1,20 +1,15 @@
-/* output.css - navy flyer-style theme */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
   --brand: #1A2238;
-  /* navy */
   --accent: #D4AF37;
-  /* gold */
   --bg: #dce3eb;
-  /* global background */
   --text: #1A2238;
-  /* global text on navy */
   --card-text: #1f2937;
-  /* text inside white cards */
 }
 
-/* Reset & ensure navy canvas takes precedence */
+/* Reset */
 * {
   box-sizing: border-box;
 }
@@ -26,17 +21,15 @@ body,
   height: 100%;
   min-height: 100vh;
   background: var(--bg) !important;
-  /* force navy everywhere */
   color: var(--text) !important;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
 }
 
-/* Defensive overrides: some partials or Tailwind utilities may set white bg.
-   These make most wrappers transparent so the navy canvas shows through. */
+/* Transparent page wrappers */
 header,
 .header,
 .site-header,
@@ -50,7 +43,7 @@ main,
   color: var(--text) !important;
 }
 
-/* Layout container */
+/* Layout */
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -58,18 +51,43 @@ main,
   padding-right: 1rem;
 }
 
-/* Typography */
+/* Modern typography */
+html {
+  font-size: 16px;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-weight: 400;
+}
+
 h1,
 h2,
 h3,
-h4 {
-  font-family: "Playfair Display", serif;
+h4,
+h5,
+h6,
+.font-serif {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
   margin: 0;
 }
 
 p {
-  margin: 0 0 0.6rem 0;
+  margin: 0 0 0.6rem;
   color: rgba(247, 247, 250, 0.95);
 }
 
@@ -87,8 +105,8 @@ p {
 
 .hero .title {
   font-size: clamp(28px, 6vw, 56px);
-  line-height: 0.98;
-  letter-spacing: -0.6px;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
   color: var(--text);
   margin-bottom: 10px;
 }
@@ -130,14 +148,17 @@ p {
   filter: brightness(0.92);
 }
 
-/* optional dark overlay on slides */
 .slide .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.32) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.32) 100%
+  );
 }
 
-/* Slider arrows (simple, visible on navy) */
+/* Slider arrows */
 .slider-arrow {
   position: absolute;
   top: 50%;
@@ -149,8 +170,8 @@ p {
   place-items: center;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text);
+  background: var(--accent);
+  color: var(--brand);
   font-size: 20px;
   line-height: 1;
   transition: background .18s ease, transform .12s ease;
@@ -158,10 +179,8 @@ p {
 }
 
 .slider-arrow:hover {
-  background: var(--accent);
-  color: var(--brand);
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 .slider-arrow.left {
@@ -197,14 +216,13 @@ p {
   margin-right: 6px;
 }
 
-/* responsive card grid */
 .grid {
   display: grid;
   gap: 28px;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
-/* Card style to pop against the navy canvas */
+/* Package cards */
 .card {
   background: #fff;
   color: var(--card-text);
@@ -254,7 +272,7 @@ p {
   line-height: 1.5;
 }
 
-/* Price text */
+/* Prices */
 .price {
   font-size: 1.25rem;
   font-weight: 700;
@@ -262,91 +280,7 @@ p {
   margin-top: 16px;
   padding-top: 12px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-  letter-spacing: -0.3px;
-}
-
-/* Buttons */
-.btn-brand {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  background: var(--brand);
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 0.3px;
-  margin-top: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-brand:hover {
-  background: var(--accent);
-  color: var(--brand);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
-}
-
-.btn-accent {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  background: var(--accent);
-  color: var(--brand);
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 0.3px;
-  border: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-accent:hover {
-  background: #c9a430;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
-}
-
-/* small badge */
-.badge-accent {
-  color: var(--brand);
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  padding: .25rem .6rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: .82rem;
-}
-
-/* Footer (keeps navy canvas but subtle separator) */
-.footer {
-  padding: 48px 0;
-  color: var(--text);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  margin-top: 36px;
-  font-size: 0.925rem;
-  line-height: 1.6;
-}
-
-/* small responsive tweaks */
-@media (max-width: 720px) {
-  .slide img {
-    height: 260px;
-  }
-
-  .hero .title {
-    font-size: 28px;
-  }
-
-  .divider {
-    width: 60px;
-    height: 3px;
-  }
+  letter-spacing: -0.02em;
 }
 
 /* Buttons */
@@ -354,17 +288,17 @@ p {
 .btn-accent {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   text-decoration: none;
   border-radius: 12px;
   font-weight: 600;
   padding: 12px 24px;
   font-size: 0.9rem;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.01em;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Brand button */
 .btn-brand {
   background: var(--brand);
   color: #fff;
@@ -378,7 +312,6 @@ p {
   box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
 }
 
-/* Accent button */
 .btn-accent {
   background: var(--accent);
   color: var(--brand);
@@ -388,72 +321,17 @@ p {
 
 .btn-accent:hover {
   background: #c9a430;
+  color: var(--brand);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
 }
 
-/* Normalize feather icons */
 .btn-brand svg,
 .btn-accent svg {
   display: inline-block;
   vertical-align: middle;
 }
 
-/* -------------- Look & Feel Enhancements -------------- */
-
-/* Global typography & spacing */
-html {
-  line-height: 1.6;
-  scroll-behavior: smooth;
-}
-
-h1,
-h2,
-h3 {
-  letter-spacing: -0.4px;
-}
-
-/* Consistent transition for interactive elements */
-a,
-button,
-.card,
-.chip,
-.btn-brand,
-.btn-accent {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Header sticky and contrast */
-.header-brand {
-  background: rgba(26, 34, 56, .95);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-header.header-brand {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 30;
-  backdrop-filter: blur(8px);
-}
-
-/* Slider arrow colors */
-.slider-arrow {
-  background: var(--accent);
-  color: var(--brand);
-}
-
-.slider-arrow:hover {
-  transform: scale(1.08);
-}
-
-/* Card hover elevation */
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(2, 6, 23, .2);
-}
-
-/* Button focus & active states */
 .btn-brand:focus,
 .btn-accent:focus {
   outline: 2px solid var(--accent);
@@ -465,53 +343,60 @@ header.header-brand {
   transform: translateY(1px);
 }
 
-/* Footer spacing */
+/* Accent badges */
+.badge-accent {
+  color: var(--brand);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: .25rem .6rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: .82rem;
+}
+
+/* Footer */
 .footer {
   padding: 48px 0;
+  color: var(--text);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 36px;
   font-size: 0.925rem;
   line-height: 1.6;
 }
 
-/* Badge accent tweak */
-.badge-accent {
-  background: rgba(212, 175, 55, .15);
-  border-color: rgba(212, 175, 55, .3);
+/* Consistent transitions */
+a,
+button,
+.card,
+.chip,
+.btn-brand,
+.btn-accent {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Mobile-first tweaks */
-@media (max-width: 640px) {
-  .hero .title {
-    font-size: 1.75rem;
-  }
-
-  .card img {
-    height: 160px;
-  }
-
-  .header-brand {
-    padding: 1rem;
-  }
-
-  .btn-brand,
-  .btn-accent {
-    padding: 14px 28px;
-    font-size: 0.95rem;
-  }
+/* Fixed header: white frosted glass */
+.header-brand {
+  background: rgba(255, 255, 255, 0.97) !important;
+  border-bottom: 1px solid rgba(26, 34, 56, 0.08);
 }
 
-/* Lightbox transition (if using) */
-#lightboxImg {
-  transition: opacity .3s ease-out;
+header.header-brand {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 18px rgba(26, 34, 56, 0.08);
 }
 
-/* Added top margin for fixed header */
+/* Space for fixed header */
 body {
   padding-top: 80px;
-  /* adjust based on header height */
 }
 
-/* -------------- Filter Chip Styles -------------- */
-/* Lighter pill-style filter chips with outlined border */
+/* Filter chips */
 .chip {
   background: transparent;
   color: var(--accent);
@@ -538,20 +423,20 @@ body {
   box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
-/* Chip badge for cards (continent label) */
 .chip.shadow-md {
   background: var(--accent);
   color: var(--brand);
   border: none;
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
 }
 
-/* -------------- WhatsApp Tooltip -------------- */
+/* WhatsApp tooltip */
 .whatsapp-tooltip {
   position: fixed;
   bottom: 22px;
   right: 72px;
-  background: white;
+  background: #fff;
   color: #333;
   padding: 6px 12px;
   border-radius: 8px;
@@ -569,22 +454,47 @@ body {
   opacity: 1;
 }
 
+/* Responsive styles */
+@media (max-width: 720px) {
+  .slide img {
+    height: 260px;
+  }
+
+  .hero .title {
+    font-size: 28px;
+  }
+
+  .divider {
+    width: 60px;
+    height: 3px;
+  }
+}
+
 @media (max-width: 640px) {
+  .hero .title {
+    font-size: 1.75rem;
+  }
+
+  .card img {
+    height: 160px;
+  }
+
+  .header-brand {
+    padding: 1rem;
+  }
+
+  .btn-brand,
+  .btn-accent {
+    padding: 14px 28px;
+    font-size: 0.95rem;
+  }
+
   .whatsapp-tooltip {
     display: none;
   }
 }
 
-/* Header: white-tinted frosted glass */
-header.header-brand {
-  background: rgba(255, 255, 255, 0.97) !important;
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(26, 34, 56, 0.08);
-  box-shadow: 0 4px 18px rgba(26, 34, 56, 0.08);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 30;
+/* Lightbox */
+#lightboxImg {
+  transition: opacity .3s ease-out;
 }
