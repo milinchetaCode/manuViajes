@@ -1,50 +1,37 @@
-<%- include('partials/header') %>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 - Página no encontrada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Página no encontrada | Manu Figueroa Viajes</title>
   <%- include('partials/google-analytics') %>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#1D4ED8',
-            accent: '#22C55E',
-            brandRed: '#DC2626'
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body {
-      background-color: white;
-      background-image: none;
-    }
-  </style>
+  <link rel="stylesheet" href="/styles/output.css" />
+  <link rel="stylesheet" href="/styles/theme.css" />
 </head>
-<body class="text-gray-800 font-sans">
+<body>
+  <%- include('partials/header') %>
 
-<section class="relative bg-cover bg-center h-96 md:h-[32rem] rounded-2xl overflow-hidden shadow-lg mb-12" style="background-image: url('/images/hero.jpeg');">
-  <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center px-4">
-    <div class="text-center text-white w-full max-w-2xl">
-      <h1 class="text-6xl font-extrabold mb-4">404</h1>
-      <h2 class="text-2xl sm:text-3xl font-semibold mb-4 tracking-tight">Página no encontrada</h2>
-      <p class="text-base sm:text-lg mb-6 leading-relaxed">Lo sentimos, no pudimos encontrar lo que buscas.</p>
+  <main class="min-h-[60vh] flex items-center justify-center px-4 py-16">
+    <div class="text-center max-w-lg mx-auto">
+      <p class="text-6xl sm:text-8xl font-extrabold mb-4">404</p>
 
-      <a href="/" class="inline-block bg-accent text-white text-sm font-semibold px-6 py-3 rounded-full hover:bg-brand transition-shadow-lg shadow-md">
+      <h1 class="text-2xl sm:text-3xl font-bold mb-4">
+        Página no encontrada
+      </h1>
+
+      <p class="text-base mb-8">
+        Lo sentimos, no pudimos encontrar la página que buscas.
+      </p>
+
+      <a
+        href="/"
+        class="btn-accent inline-flex items-center justify-center px-6 py-3 rounded-full font-semibold"
+      >
         Volver al inicio
       </a>
     </div>
-  </div>
-</section>
+  </main>
 
-<%- include('partials/footer') %>
-
+  <%- include('partials/footer') %>
 </body>
 </html>
